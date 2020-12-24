@@ -1,0 +1,31 @@
+{
+  "course": "DevOps",
+  "module": 3,
+  "group": 5,
+  "members": [
+    {
+      "name": "Claudio Montoya",
+      "email": "claudio.montoya@biopc.cl"
+    },
+    {
+      "name": "Luis Garrido",
+      "email": "garrluis@gmail.com"
+    },
+    {
+      "name": "Rafael Ortiz",
+      "email": "rafael.ortiz.barrera@gmail.com"
+    },
+    {
+      "name": "Roddy Vitali",
+      "email": "roddicks@gmail.com"
+    },
+    {
+      "name": "Sebastian Aracena",
+      "email": "supersbx00@gmail.com"
+    }
+  ],
+  "teacher": {
+    "name": "Rodrigo Pino",
+    "email": "rodrigo.pino.g@usach.cl"
+  }
+}

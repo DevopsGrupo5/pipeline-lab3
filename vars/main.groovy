@@ -12,7 +12,7 @@ pipeline {
                     script {
                         stage('Load Build Tool') {
                             println "Select $params.BUILD_TOOL"
-
+                            env.STAGE = ''
                             if (params.BUILD_TOOL == 'gradle')  {
                                 gradle.call()
                             } else {

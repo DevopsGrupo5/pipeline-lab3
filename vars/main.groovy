@@ -11,12 +11,23 @@ pipeline {
                 steps {
                     script {
                         stage('Load Build Tool') {
+                            slackSend color: "warning", message: "[GRUPO_5][${env.JOB_NAME}][${params.TIPO_PIPELINE}] init pipeline"
                             println "Select $params.BUILD_TOOL"
                             env.STAGE = ''
                             if (params.BUILD_TOOL == 'gradle')  {
-                                gradle.call()
+                                def existsGradle = fileExists './gradlew'
+                                if (existsGradle)  {
+                                    gradle.call()
+                                } else {
+                                    println "not found gradlew"
+                                }
                             } else {
-                                maven.call()
+                                def existsMaven = fileExists './pom.xml'
+                                if (existsMaven)  {
+                                    maven.call()
+                                } else {
+                                    println "not found maven"
+                                }
                             }
                         }
                     }

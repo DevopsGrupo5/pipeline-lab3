@@ -4,7 +4,7 @@ def call(){
     }
     stage('build') {
 	    env.STAGE = 'build'
-	    sh 'gradle clean build'
+	    sh './gradlew clean build'
 	}
 	stage('sonar'){
 	    env.STAGE = 'sonar'

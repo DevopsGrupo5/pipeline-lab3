@@ -23,6 +23,14 @@ pipeline {
                 }
             }
         }
+        post {
+          success {
+            slackSend color: "good", message: "[GRUPO_5][${env.JOB_NAME}][${params.TIPO_PIPELINE}] ejecución exitosa"
+          }
+          failure {
+            slackSend color: "danger", message: "[GRUPO_5][${env.JOB_NAME}][${params.TIPO_PIPELINE}] ejecución fallida en stage [${env.STAGE}]"
+          }
+        }
     }
 }
 

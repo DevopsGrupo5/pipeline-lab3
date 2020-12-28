@@ -4,20 +4,20 @@ def call(){
     }
     stage('compile') {
 	    env.STAGE = 'compile'
-	   	sh 'mvn clean compile -e'
+	   	sh './mvnw clean compile -e'
 	}
 	stage('test') {
 	    env.STAGE = 'test'
-	    sh 'mvn clean test -e'
+	    sh './mvnw clean test -e'
 	}
 	stage('package') {
 	    env.STAGE = 'jar'
-	    sh 'mvn clean package -e'
+	    sh './mvnw clean package -e'
 	}
 	stage('sonar'){
 	    env.STAGE = 'sonar'
 	    withSonarQubeEnv(installationName: 'lab_sonar') { // You can override the credential to be used
-	      sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+	      sh './mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
 	    }
 	}
 	stage('run'){

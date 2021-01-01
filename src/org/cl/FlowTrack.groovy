@@ -84,9 +84,9 @@ class FlowTrack implements Pipelines, Branches, Tools {
         ${utils.generateRow("+--------------------------------------------+", 56, 4)}
         ${utils.generateRow("")}
         +------------------------------------------------------+
-        | Message: [Grupo${data_project.group}][Pipeline ${this.pipeline}][Rama: ${this.branch}]
-        |          [Stage: build][Resultado: Ok]
-        | Status: Success
+        ${utils.generateRow("Message: [Grupo${data_project.group}][Pipeline ${this.pipeline}][Rama: ${this.branch}]")}
+        ${utils.generateRow("[Stage: build][Resultado: Ok]", 56, 10)}
+        ${utils.generateRow("Status: Success")}
         +------------------------------------------------------+
         """
     }

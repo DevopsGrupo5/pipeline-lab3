@@ -14,7 +14,6 @@ def call() {
                     script {
                         def flow = new FlowTrack(env.GIT_URL, env.BRANCH_NAME, params.BUILD_TOOL);
                         stage('Setup') {
-                            def flow = new FlowTrack(env.GIT_URL, env.BRANCH_NAME, params.BUILD_TOOL);
                             def branchType = flow.getType()
                             if (!flow.isValidBranch()) {
                                 env.ERROR_MESSAGE = "Branch Type $branchType is not valid!"

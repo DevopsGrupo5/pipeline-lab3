@@ -67,20 +67,20 @@ class FlowTrack implements Pipelines, Branches, Tools {
         +------------------------------------------------------+
         ${utils.generateRow("")}
         |    +---------------------------------------------+
-        |    ${utils.generateRow("${data_project.members[0].name}")}
-        |    ${utils.generateRow("${data_project.members[0].email}")}
+        |    ${utils.generateRow(utils.generateRow("${data_project.members[0].name}", 44))}
+        |    ${utils.generateRow(utils.generateRow("${data_project.members[0].email}", 44))}
         |    +---------------------------------------------+
-        |    | ${data_project.members[1].name}
-        |    | ${data_project.members[1].email}
+        |    ${utils.generateRow("${data_project.members[1].name}", 44)}
+        |    ${utils.generateRow("${data_project.members[1].email}", 44)}
         |    +---------------------------------------------+
-        |    | ${data_project.members[2].name}
-        |    | ${data_project.members[2].email}
+        |    ${utils.generateRow("${data_project.members[1].name}", 44)}
+        |    ${utils.generateRow("${data_project.members[1].email}", 44)}
         |    +---------------------------------------------+
-        |    | ${data_project.members[3].name}
-        |    | ${data_project.members[3].email}
+        |    ${utils.generateRow("${data_project.members[1].name}", 44)}
+        |    ${utils.generateRow("${data_project.members[1].email}", 44)}
         |    +---------------------------------------------+
-        |    | ${data_project.members[4].name}
-        |    | ${data_project.members[4].email}
+        |    ${utils.generateRow("${data_project.members[1].name}", 44)}
+        |    ${utils.generateRow("${data_project.members[1].email}", 44)}
         |    +---------------------------------------------+
         ${utils.generateRow("")}
         +------------------------------------------------------+

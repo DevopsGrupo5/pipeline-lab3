@@ -5,4 +5,8 @@ def getData() {
 	return readJSON text: request
 }
 
+def cleanRepo(String url) {
+	return url.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
+}
+
 return this;

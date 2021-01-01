@@ -9,29 +9,30 @@ def call() {
         }
 
         stages {
-            stage('Setup') {
-                def flow = new FlowTrack(env.GIT_URL, env.BRANCH_NAME, params.BUILD_TOOL);
-                def branchType = flow.getType()
-                if (!flow.isValidBranch()) {
-                    env.ERROR_MESSAGE = "Branch Type $branchType is not valid!"
-                    throw new Exception(env.ERROR_MESSAGE);
-                }
-
-                if ( flow.isContinuousIntegration() ) {
-                    println "call ic"
-                    // run ic-maven.call()
-                } else if ( flow.isContinuousDelivery() ) {
-                    println "call release"
-                    // run relese-maven.call()
-                } else {
-                    env.ERROR_MESSAGE = "Branch type $branchType not found!"
-                    throw new Exception(env.ERROR_MESSAGE);
-                }
-            }
             stage('Pipeline'){
-                def flow = new FlowTrack(env.GIT_URL, env.BRANCH_NAME, params.BUILD_TOOL);
                 steps {
                     script {
+                        def flow = new FlowTrack(env.GIT_URL, env.BRANCH_NAME, params.BUILD_TOOL);
+                        stage('Setup') {
+                            def flow = new FlowTrack(env.GIT_URL, env.BRANCH_NAME, params.BUILD_TOOL);
+                            def branchType = flow.getType()
+                            if (!flow.isValidBranch()) {
+                                env.ERROR_MESSAGE = "Branch Type $branchType is not valid!"
+                                throw new Exception(env.ERROR_MESSAGE);
+                            }
+
+                            if ( flow.isContinuousIntegration() ) {
+                                println "call ic"
+                                // run ic-maven.call()
+                            } else if ( flow.isContinuousDelivery() ) {
+                                println "call release"
+                                // run relese-maven.call()
+                            } else {
+                                env.ERROR_MESSAGE = "Branch type $branchType not found!"
+                                throw new Exception(env.ERROR_MESSAGE);
+                            }
+                        }
+
                         stage('Load Build Tool') {
                             // slackSend color: "warning", message: "[GRUPO_5][${env.JOB_NAME}][${params.TIPO_PIPELINE}] init pipeline"
                             // println "Select $params.BUILD_TOOL"

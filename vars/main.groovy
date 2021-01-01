@@ -27,21 +27,10 @@ def call() {
                             is not valid ${flow.isValidFormatRelease('release-v1.2.9999')}
                             is not valid ${flow.isValidFormatRelease('fix-v1.2.99')}
                             """)
-                        stage('Setup') {
+                        stage('Validation') {
                             def branchType = flow.getType()
                             if (!flow.isValidBranch()) {
                                 env.ERROR_MESSAGE = "Branch Type $branchType is not valid!"
-                                throw new Exception(env.ERROR_MESSAGE);
-                            }
-
-                            if ( flow.isContinuousIntegration() ) {
-                                println "call continuous integration"
-                                // run ci-maven.call()
-                            } else if ( flow.isContinuousDelivery() ) {
-                                println "call continuous delivery"
-                                // run cd-maven.call()
-                            } else {
-                                env.ERROR_MESSAGE = "Branch type $branchType not found!"
                                 throw new Exception(env.ERROR_MESSAGE);
                             }
                         }
@@ -56,7 +45,13 @@ def call() {
                                 // gradle.call()
                                 println "call gradle"
                             } else if (flow.isMaven() && hasMavenConfiguratio/*flow.hasMavenConfiguration()*/)  {
-                                maven.call(flow)
+                                if ( flow.isContinuousIntegration() ) {
+                                    println "call continuous integration"
+                                    ci-maven.call(flow)
+                                } else if ( flow.isContinuousDelivery() ) {
+                                    println "call continuous delivery"
+                                    cd-maven.call(flow)
+                                } 
                                 println "call maven"
                             } else {
                                 env.ERROR_MESSAGE = "$flow.buildTool Configuration not found!"
@@ -77,7 +72,7 @@ def call() {
         //     slackSend color: "good", message: "[GRUPO_5][${env.JOB_NAME}][${params.TIPO_PIPELINE}] ejecución exitosa"
         //   }
         //   failure {
-        //     slackSend color: "danger", message: "[GRUPO_5][${env.JOB_NAME}][${params.TIPO_PIPELINE}] ejecución fallida en stage [${env.STAGE}]"
+        //     slackSend color: "danger", message: "[GRUPO_5][${env.JOB_NAME}][${params.TIPO_PIPELINE}] ejecución fallida en stage [${env.FAILED_STAGE}]"
         //   }
         // }
     }

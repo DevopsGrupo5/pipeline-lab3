@@ -57,17 +57,18 @@ class FlowTrack implements Pipelines, Branches, Tools {
         |                 Profesor: Rodrigo Pino               |
         |                         CI / CD                      |
         +------------------------------------------------------+
-        | Branch: ${this.branch}
-        | Branch Type: ${this.type}
-        | Tech: ${this.tech}
-        | Pipeline: ${this.pipeline}
-        | Build Tool: ${this.buildTool}
+        ${utils.generateRow("Branch: ${this.branch}")}
+        ${utils.generateRow("Branch Type: ${this.type}")}
+        ${utils.generateRow("Tech: ${this.tech}")}
+        ${utils.generateRow("Pipeline: ${this.pipeline}")}
+        ${utils.generateRow("Build Tool: ${this.buildTool}")}
         +------------------------------------------------------+
-        |                     Team Group ${data_project.group}
+        ${utils.generateRow("Team Group ${data_project.group}")}
         +------------------------------------------------------+
+        ${utils.generateRow("")}
         |    +---------------------------------------------+
-        |    | ${data_project.members[0].name}
-        |    | ${data_project.members[0].email}
+        |    ${utils.generateRow("${data_project.members[0].name}")}
+        |    ${utils.generateRow("${data_project.members[0].email}")}
         |    +---------------------------------------------+
         |    | ${data_project.members[1].name}
         |    | ${data_project.members[1].email}
@@ -81,7 +82,7 @@ class FlowTrack implements Pipelines, Branches, Tools {
         |    | ${data_project.members[4].name}
         |    | ${data_project.members[4].email}
         |    +---------------------------------------------+
-        |
+        ${utils.generateRow("")}
         +------------------------------------------------------+
         | Message: [Grupo${data_project.group}][Pipeline ${this.pipeline}][Rama: ${this.branch}]
         |          [Stage: build][Resultado: Ok]

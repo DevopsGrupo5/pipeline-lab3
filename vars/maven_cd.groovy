@@ -4,7 +4,7 @@ def call(flow) {
     if (flow.canRunStage(Step.GIT_DIFF)) {
         stage(Step.GIT_DIFF) {
             env.FAILED_STAGE = Step.GIT_DIFF
-            // sh 'git ...'
+            sh 'git diff origin/main'
         }
     }
     if (flow.canRunStage(Step.NEXUS_DOWNLOAD)) {

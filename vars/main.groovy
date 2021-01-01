@@ -16,7 +16,7 @@ def call() {
                         println(env.BRANCH_NAME);
                         println(env.GIT_BRANCH);
                         println(env.BUILD_TOOL);
-                        def flow = new FlowTrack(env.GIT_URL, env.BRANCH_NAME, params.BUILD_TOOL);
+                        def flow = new FlowTrack(env.GIT_URL, env.GIT_BRANCH, params.BUILD_TOOL);
                         stage('Setup') {
                             def branchType = flow.getType()
                             if (!flow.isValidBranch()) {

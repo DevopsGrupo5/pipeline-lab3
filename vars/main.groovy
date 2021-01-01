@@ -14,7 +14,7 @@ def call() {
                     script {
                         println(env.GIT_URL);
                         println(env.BRANCH_NAME);
-                        println(BRANCH_NAME);
+                        println(env.GIT_BRANCH);
                         println(env.BUILD_TOOL);
                         def flow = new FlowTrack(env.GIT_URL, env.BRANCH_NAME, params.BUILD_TOOL);
                         stage('Setup') {

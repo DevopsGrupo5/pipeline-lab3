@@ -18,8 +18,9 @@ def cleanRepo(String url) {
 	try {
 		println("cleanRepo $url")
 		// def repo = url.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
+		def repo = url.replace('https://github.com/DevopsGrupo5/','')
 		// return repo
-		return "ms-iclab"
+		return repo
 
 	} catch (e) {
 		println(e)

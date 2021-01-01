@@ -12,10 +12,10 @@ def call() {
             stage('Pipeline'){
                 steps {
                     script {
-                        println(env.GIT_URL);
-                        println(env.BRANCH_NAME);
-                        println(env.GIT_BRANCH);
-                        println(env.BUILD_TOOL);
+                        // println(env.GIT_URL);
+                        // //println(env.BRANCH_NAME);
+                        // println(env.GIT_BRANCH);
+                        // println(env.BUILD_TOOL);
                         def flow = new FlowTrack(env.GIT_URL, env.GIT_BRANCH, params.BUILD_TOOL);
                         stage('Setup') {
                             def branchType = flow.getType()
@@ -40,10 +40,10 @@ def call() {
                             // slackSend color: "warning", message: "[GRUPO_5][${env.JOB_NAME}][${params.TIPO_PIPELINE}] init pipeline"
                             // println "Select $params.BUILD_TOOL"
                             // env.STAGE = ''
-                            if (flow.isGradle() && flow.hasGradleConfiguration())  {
+                            if (flow.isGradle() && fileExists './gradlew'/*flow.hasGradleConfiguration()*/)  {
                                 // gradle.call()
                                 println "call gradle"
-                            } else if (flow.isMaven() && flow.hasMavenConfiguration())  {
+                            } else if (flow.isMaven() && fileExists './pom.xml'/*flow.hasMavenConfiguration()*/)  {
                                 // maven.call()
                                 println "call maven"
                             } else {

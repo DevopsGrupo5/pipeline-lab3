@@ -62,23 +62,24 @@ class Flow implements Pipeline, Branch, Tool, Step {
         Boolean runAllStages = true
         if (this.stagesSelected.trim()) {
             runAllStages = false
+            String ERROR_MESSAGE
             for( String stageToRun : this.stagesToRun ) {
                 if( this.type == Branch.FEATURE ) {
                     if (!(stageToRun in stepsValidsForFeature)) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
-                        throw new Exception(env.ERROR_MESSAGE);
+                        throw new Exception(ERROR_MESSAGE);
                     } 
 
                 } else if( this.type == Branch.DEVELOP ) {
                     if (!(stageToRun in stepsValidsForDevelop)) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
-                        throw new Exception(env.ERROR_MESSAGE);
+                        throw new Exception(ERROR_MESSAGE);
                     } 
 
                 } else if( this.type == Branch.RELEASE ) {
                     if (!(stageToRun in stepsValidsForRelease)) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
-                        throw new Exception(env.ERROR_MESSAGE);
+                        throw new Exception(ERROR_MESSAGE);
                     } 
                 }
             }

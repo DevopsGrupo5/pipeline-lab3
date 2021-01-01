@@ -66,22 +66,22 @@ class FlowTrack implements Pipelines, Branches, Tools {
         ${utils.generateRow("Team Group ${data_project.group}")}
         +------------------------------------------------------+
         ${utils.generateRow("")}
-        |    +---------------------------------------------+
-        |    ${utils.generateRow(utils.generateRow("${data_project.members[0].name}", 44))}
-        |    ${utils.generateRow(utils.generateRow("${data_project.members[0].email}", 44))}
-        |    +---------------------------------------------+
-        |    ${utils.generateRow("${data_project.members[1].name}", 44)}
-        |    ${utils.generateRow("${data_project.members[1].email}", 44)}
-        |    +---------------------------------------------+
-        |    ${utils.generateRow("${data_project.members[1].name}", 44)}
-        |    ${utils.generateRow("${data_project.members[1].email}", 44)}
-        |    +---------------------------------------------+
-        |    ${utils.generateRow("${data_project.members[1].name}", 44)}
-        |    ${utils.generateRow("${data_project.members[1].email}", 44)}
-        |    +---------------------------------------------+
-        |    ${utils.generateRow("${data_project.members[1].name}", 44)}
-        |    ${utils.generateRow("${data_project.members[1].email}", 44)}
-        |    +---------------------------------------------+
+        ${utils.generateRow("+---------------------------------------------+", 56, 4)}
+        ${utils.generateRow(utils.generateRow("${data_project.members[0].name}", 44), 56, 4)}
+        ${utils.generateRow(utils.generateRow("${data_project.members[0].email}", 44), 56, 4)}
+        ${utils.generateRow("+---------------------------------------------+", 56, 4)}
+        ${utils.generateRow(utils.generateRow("${data_project.members[1].name}", 44), 56, 4)}
+        ${utils.generateRow(utils.generateRow("${data_project.members[1].email}", 44), 56, 4)}
+        ${utils.generateRow("+---------------------------------------------+", 56, 4)}
+        ${utils.generateRow(utils.generateRow("${data_project.members[2].name}", 44), 56, 4)}
+        ${utils.generateRow(utils.generateRow("${data_project.members[2].email}", 44), 56, 4)}
+        ${utils.generateRow("+---------------------------------------------+", 56, 4)}
+        ${utils.generateRow(utils.generateRow("${data_project.members[3].name}", 44), 56, 4)}
+        ${utils.generateRow(utils.generateRow("${data_project.members[3].email}", 44), 56, 4)}
+        ${utils.generateRow("+---------------------------------------------+", 56, 4)}
+        ${utils.generateRow(utils.generateRow("${data_project.members[4].name}", 44), 56, 4)}
+        ${utils.generateRow(utils.generateRow("${data_project.members[4].email}", 44), 56, 4)}
+        ${utils.generateRow("+---------------------------------------------+", 56, 4)}
         ${utils.generateRow("")}
         +------------------------------------------------------+
         | Message: [Grupo${data_project.group}][Pipeline ${this.pipeline}][Rama: ${this.branch}]

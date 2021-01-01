@@ -1,13 +1,15 @@
 package org.cl
 
 def getData() {
+	def String json
 	try{
 		def request = libraryResource 'org/cl/data.json'
-		def json = readJSON text: request
+		json = readJSON text: request
 		return json
 	} catch (e){
 		println(e)
-		return readJSON text: "{}"
+		json = readJSON text: "{}"
+		return json
 	}
 
 }

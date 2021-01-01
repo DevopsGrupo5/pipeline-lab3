@@ -42,15 +42,21 @@ def call() {
                             def hasGradleConfiguration = fileExists './gradlew'
                             def hasMavenConfiguratio = fileExists './pom.xml'
                             if (flow.isGradle() && hasGradleConfiguration)  {
-                                // gradle.call()
+                                if ( flow.isContinuousIntegration() ) {
+                                    println "call continuous integration"
+                                    // gradle_ci.call(flow)
+                                } else if ( flow.isContinuousDelivery() ) {
+                                    println "call continuous delivery"
+                                    // gradle_cd.call(flow)
+                                } 
                                 println "call gradle"
                             } else if (flow.isMaven() && hasMavenConfiguratio)  {
                                 if ( flow.isContinuousIntegration() ) {
                                     println "call continuous integration"
-                                    ci-maven.call(flow)
+                                    maven_ci.call(flow)
                                 } else if ( flow.isContinuousDelivery() ) {
                                     println "call continuous delivery"
-                                    cd-maven.call(flow)
+                                    maven_cd.call(flow)
                                 } 
                                 println "call maven"
                             } else {

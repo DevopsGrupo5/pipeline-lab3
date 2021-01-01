@@ -63,8 +63,8 @@ class FlowTrack implements Pipelines, Branches, Tools {
         | Pipeline: ${this.pipeline}
         | Build Tool: ${this.buildTool}
         +------------------------------------------------------+
-        | Team Group ${data_project.group}:
-        |
+        |                     Team Group ${data_project.group}
+        +------------------------------------------------------+
         |    +---------------------------------------------+
         |    | ${data_project.members[0].name}
         |    | ${data_project.members[0].email}

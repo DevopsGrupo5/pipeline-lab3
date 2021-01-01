@@ -14,7 +14,8 @@ class FlowTrack implements Pipelines, Branches, Tools {
 
     FlowTrack(String git_url, String branch_name, String build_tool) {
         println(git_url);
-        this.url = "ms-iclab" // utils.cleanRepo(git_url);
+        println(env)
+        this.url = utils.cleanRepo(git_url);
         this.tech = this.url.split('-')[0];
         this.branch = branch_name;
         this.type = branch_name.replace('origin/','').split('-')[0];
@@ -35,15 +36,17 @@ class FlowTrack implements Pipelines, Branches, Tools {
     Boolean isGradle() { (this.buildTool == Tools.GRADLE) ? true : false; }
 
     Boolean isMaven() { (this.buildTool == Tools.MAVEN)  ? true : false; }
+    
+    Boolean isValidFormatRelease(String branch_version) { utils.validateBranchRelease(branch_version); }
 
     Boolean hasGradleConfiguration() {
         def existsGradle = fileExists './gradlew'
-        return (existsGradle) ? true : false
+        return existsGradle
     }
 
     Boolean hasMavenConfiguration() {
         def existsMaven = fileExists './pom.xml'
-        return (existsMaven) ? true : false
+        return existsMaven
     }
 
     String toString() {

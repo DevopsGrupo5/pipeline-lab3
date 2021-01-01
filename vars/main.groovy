@@ -16,7 +16,14 @@ def call() {
                         // //println(env.BRANCH_NAME);
                         // println(env.GIT_BRANCH);
                         // println(env.BUILD_TOOL);
+                        println(env)
+
                         def flow = new FlowTrack(env.GIT_URL, env.GIT_BRANCH, params.BUILD_TOOL);
+                        println ("""
+                            is valid $flow.isValidFormatRelease('release-v1.2.99')
+                            is not valid $flow.isValidFormatRelease('release-v1.2.9999')
+                            is not valid $flow.isValidFormatRelease('fix-v1.2.99')
+                            """)
                         stage('Setup') {
                             def branchType = flow.getType()
                             if (!flow.isValidBranch()) {
@@ -53,6 +60,11 @@ def call() {
                                 throw new Exception(env.ERROR_MESSAGE);
                             }
                         }
+
+                        stage('Finish') {
+                            println flow.toString()
+                        }
+
                     }
                 }
             }

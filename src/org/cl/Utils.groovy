@@ -1,15 +1,10 @@
 package org.cl
 
 def getData() {
-	try {
-		def request = libraryResource 'org/cl/data.json'
-		def json    = readJSON text: request
+	def request = libraryResource 'org/cl/data.json'
+	def json    = readJSON text: request
 
-		return json
-	} catch (e) {
-		println (e)
- 		return {}
-	}
+	return json
 }
 
 def cleanRepo(String url) {

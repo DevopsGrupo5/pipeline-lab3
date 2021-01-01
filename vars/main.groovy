@@ -40,14 +40,16 @@ def call() {
                             // slackSend color: "warning", message: "[GRUPO_5][${env.JOB_NAME}][${params.TIPO_PIPELINE}] init pipeline"
                             // println "Select $params.BUILD_TOOL"
                             // env.STAGE = ''
-                            if (flow.isGradle() && fileExists './gradlew'/*flow.hasGradleConfiguration()*/)  {
+                            def hasGradleConfiguration = fileExists './gradlew'
+                            def hasMavenConfiguratio = fileExists './pom.xml'
+                            if (flow.isGradle() && hasGradleConfiguration/*flow.hasGradleConfiguration()*/)  {
                                 // gradle.call()
                                 println "call gradle"
-                            } else if (flow.isMaven() && fileExists './pom.xml'/*flow.hasMavenConfiguration()*/)  {
+                            } else if (flow.isMaven() && hasMavenConfiguratio/*flow.hasMavenConfiguration()*/)  {
                                 // maven.call()
                                 println "call maven"
                             } else {
-                                env.ERROR_MESSAGE = "Configuration not found!"
+                                env.ERROR_MESSAGE = "$flow.buildTool Configuration not found!"
                                 throw new Exception(env.ERROR_MESSAGE);
                             }
                         }

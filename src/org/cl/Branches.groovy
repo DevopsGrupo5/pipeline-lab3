@@ -1,7 +1,7 @@
 package org.cl
 
 public interface Branches {
-    public String FEATURE = 'feature'
-    public String DEVELOP = 'develop'
-    public String RELEASE = 'release'
+    public static final String FEATURE = 'feature'
+    public static final String DEVELOP = 'develop'
+    public static final String RELEASE = 'release'
 }

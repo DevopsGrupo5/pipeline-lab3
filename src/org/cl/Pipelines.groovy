@@ -1,6 +1,6 @@
 package org.cl
 
 public interface Pipelines {
-    public String CONTINUOUS_INTEGRATION = 'CI'
-    public String CONTINUOUS_DELIVERY = 'CD'
+    public static final String CONTINUOUS_INTEGRATION = 'CI'
+    public static final String CONTINUOUS_DELIVERY = 'CD'
 }

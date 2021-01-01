@@ -1,18 +1,10 @@
 package org.cl
 
 def getData() {
-	def String json
-	try {
-		def request = libraryResource 'org/cl/data.json'
-		json = readJSON text: request
-		println(json)
-		return json
-	} catch (e){
-		println(e)
-		json = readJSON text: "{}"
-		return json
-	}
-
+	def request = libraryResource 'org/cl/data.json'
+	def json = readJSON text: request
+	println(json)
+	return json
 }
 
 def cleanRepo(String url) {
@@ -22,7 +14,6 @@ def cleanRepo(String url) {
 		def repo = url.replace('https://github.com/DevopsGrupo5/','')
 		// return repo
 		return repo
-
 	} catch (e) {
 		println(e)
 		return "ms-iclab"

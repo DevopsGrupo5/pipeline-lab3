@@ -70,7 +70,7 @@ class FlowTrack implements Branches, Pipelines, Tools {
         |    + ${data_poject.members[4].name}
         |    + ${data_poject.members[4].email}
         +------------------------------------------------------+
-        | Message: [Grupo${data_project.group}][Pipeline ${this.pipeline}][Rama: $this.branch]
+        | Message: [Grupo${data_project.group}][Pipeline ${this.pipeline}][Rama: ${this.branch}]
         |          [Stage: build][Resultado: Ok]
         | Status: Success
         +------------------------------------------------------+

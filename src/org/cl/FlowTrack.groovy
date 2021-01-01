@@ -17,7 +17,7 @@ class FlowTrack implements Pipelines, Branches, Tools {
         this.url = "ms-iclab" // utils.cleanRepo(git_url);
         this.tech = this.url.split('-')[0];
         this.branch = branch_name;
-        this.type = branch_name.split('-')[0];
+        this.type = branch_name.replace('origin/','').split('-')[0];
         this.buildTool = build_tool;
         if ( this.type == Branches.DEVELOP || this.type == Branches.FEATURE ) {
             this.pipeline = Pipelines.CONTINUOUS_INTEGRATION;

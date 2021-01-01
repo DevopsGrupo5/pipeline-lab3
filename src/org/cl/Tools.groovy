@@ -1,6 +1,6 @@
 package org.cl
 
-public interface Tools {
-    public static final String GRADLE = 'gradle'
-    public static final String MAVEN = 'maven'
+interface Tools {
+    static final String GRADLE = 'gradle'
+    static final String MAVEN = 'maven'
 }

@@ -43,7 +43,7 @@ def upVersion(String type) {
 }
 
 String generateRow(String text, int size = 56, padding = 1, separator = ' ') {
-	String content = "|${text.padLeft(padding), separator}"
+	String content = "|${text.padLeft(padding, separator)}"
 	int currentSize = content.length()
 	return "${content.padRight(size-1, separator)}|"
 }

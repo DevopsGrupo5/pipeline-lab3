@@ -10,12 +10,14 @@ class FlowTrack implements Pipelines, Branches, Tools {
     String tech;
     String pipeline;
     String buildTool;
-    String url;
+    String repo;
+    String gitUrl;
 
     FlowTrack(String git_url, String branch_name, String build_tool) {
         println(git_url);
-        this.url = "ms-iclab" // utils.cleanRepo(git_url);
-        this.tech = this.url.split('-')[0];
+        this.repo = "ms-iclab" // utils.cleanRepo(git_url);
+        this.gitUrl = git_url;
+        this.tech = this.repo.split('-')[0];
         this.branch = branch_name;
         this.type = branch_name.replace('origin/','').split('-')[0];
         this.buildTool = build_tool;
@@ -63,7 +65,12 @@ class FlowTrack implements Pipelines, Branches, Tools {
         ${utils.generateRow("Pipeline: ${this.pipeline}")}
         ${utils.generateRow("Build Tool: ${this.buildTool}")}
         +----------------------------------------------------------+
+        ${utils.generateRow("Repository: ${this.gitUrl}")}
+        ${utils.generateRow("Sonar: ")}
+        ${utils.generateRow("Nexus: ")}
+        +----------------------------------------------------------+
         ${utils.generateRow("Team Group ${data_project.group}", 60, 23)}
+        ${utils.generateRow("${data_project.git_user}", 60, 23)}
         +----------------------------------------------------------+
         ${utils.generateRow("")}
         ${utils.generateRow("+--------------------------------------------+", 60, 6)}

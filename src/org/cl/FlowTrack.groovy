@@ -1,5 +1,6 @@
-import org.cl.*
 package org.cl
+
+import org.cl.*
 
 class FlowTrack implements Branches, Pipelines, Tools {
     def validBranchs = [Pipelines.FEATURE, Pipelines.DEVELOP, Pipelines.RELEASE];

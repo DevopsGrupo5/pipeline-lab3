@@ -14,7 +14,7 @@ class FlowTrack implements Pipelines, Branches, Tools {
 
     FlowTrack(String git_url, String branch_name, String build_tool) {
         println(git_url);
-        this.url = utils.cleanRepo(git_url);
+        this.url = "ms-iclab" // utils.cleanRepo(git_url);
         this.tech = this.url.split('-')[0];
         this.branch = branch_name;
         this.type = branch_name.split('-')[0];

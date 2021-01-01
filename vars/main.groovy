@@ -53,8 +53,7 @@ def call() {
                             } else if (flow.isMaven() && hasMavenConfiguratio)  {
                                 if ( flow.isContinuousIntegration() ) {
                                     println "call continuous integration"
-                                    maven_cd.call(flow)
-                                    // maven_ci.call(flow)
+                                    maven_ci.call(flow)
                                 } else if ( flow.isContinuousDelivery() ) {
                                     println "call continuous delivery"
                                     maven_cd.call(flow)

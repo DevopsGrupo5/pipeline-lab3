@@ -1,6 +1,10 @@
 import org.cl.*
 
 def call(flow) {
+    stage(Step.GIT_DIFF) {
+        env.FAILED_STAGE = Step.GIT_DIFF
+        sh 'git diff origin/main'
+    }
     if (flow.canRunStage(Step.COMPILE)) {
         stage(Step.COMPILE) {
 		    env.FAILED_STAGE = Step.COMPILE

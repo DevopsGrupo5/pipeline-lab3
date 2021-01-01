@@ -17,8 +17,10 @@ def getData() {
 def cleanRepo(String url) {
 	try {
 		println("cleanRepo $url")
-		def repo = url.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
-		return repo
+		// def repo = url.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
+		// return repo
+		return "ms-iclab"
+
 	} catch (e) {
 		println(e)
 		return "ms-iclab"

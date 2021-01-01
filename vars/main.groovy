@@ -20,7 +20,7 @@ def call() {
                         println ("""
                             is valid ${flow.isValidFormatRelease('release-v1.2.99')}
                             is not valid ${flow.isValidFormatRelease('release-v1.2.9999')}
-                            is not valid ${flow.isValidFormatRelease('fix-v1.2.99')}s
+                            is not valid ${flow.isValidFormatRelease('fix-v1.2.99')}
                             """)
                         stage('Setup') {
                             def branchType = flow.getType()

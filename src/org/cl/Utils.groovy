@@ -5,6 +5,7 @@ def getData() {
 	try {
 		def request = libraryResource 'org/cl/data.json'
 		json = readJSON text: request
+		println(json)
 		return json
 	} catch (e){
 		println(e)

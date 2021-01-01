@@ -18,9 +18,9 @@ def call() {
                         // println(env.BUILD_TOOL);
                         def flow = new FlowTrack(env.GIT_URL, env.GIT_BRANCH, params.BUILD_TOOL);
                         println ("""
-                            is valid $flow.isValidFormatRelease('release-v1.2.99')
-                            is not valid $flow.isValidFormatRelease('release-v1.2.9999')
-                            is not valid $flow.isValidFormatRelease('fix-v1.2.99')
+                            is valid ${flow.isValidFormatRelease('release-v1.2.99')}
+                            is not valid ${flow.isValidFormatRelease('release-v1.2.9999')}
+                            is not valid ${flow.isValidFormatRelease('fix-v1.2.99')}s
                             """)
                         stage('Setup') {
                             def branchType = flow.getType()

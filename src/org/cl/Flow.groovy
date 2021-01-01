@@ -28,7 +28,7 @@ class Flow implements Pipeline, Branch, Tool, Step {
         this.type = branch_name.replace('origin/','').split('-')[0];
         this.buildTool = build_tool;
         this.stagesSelected = stagesSelected;
-        this.stagesToRun = stagesToRun.replaceAll(" ","").split(';');
+        this.stagesToRun = stagesSelected.replaceAll(" ","").split(';');
         if ( this.type == Branch.DEVELOP || this.type == Branch.FEATURE ) {
             this.pipeline = Pipeline.CONTINUOUS_INTEGRATION;
         } else if ( this.type == Branch.RELEASE ) {

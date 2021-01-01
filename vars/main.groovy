@@ -35,11 +35,11 @@ def call() {
                             }
 
                             if ( flow.isContinuousIntegration() ) {
-                                println "call ic"
-                                // run ic-maven.call()
+                                println "call continuous integration"
+                                // run ci-maven.call()
                             } else if ( flow.isContinuousDelivery() ) {
-                                println "call release"
-                                // run relese-maven.call()
+                                println "call continuous delivery"
+                                // run cd-maven.call()
                             } else {
                                 env.ERROR_MESSAGE = "Branch type $branchType not found!"
                                 throw new Exception(env.ERROR_MESSAGE);

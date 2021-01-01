@@ -37,12 +37,12 @@ class FlowTrack implements Pipelines, Branches, Tools {
     Boolean isMaven() { (this.buildTool == Tools.MAVEN)  ? true : false; }
 
     Boolean hasGradleConfiguration() {
-        def existsGradle = fileExists '../../../gradlew'
+        def existsGradle = fileExists './gradlew'
         return (existsGradle) ? true : false
     }
 
     Boolean hasMavenConfiguration() {
-        def existsMaven = fileExists '../../../pom.xml'
+        def existsMaven = fileExists './pom.xml'
         return (existsMaven) ? true : false
     }
 

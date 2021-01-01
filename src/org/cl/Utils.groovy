@@ -3,7 +3,6 @@ package org.cl
 def getData() {
 	def request = libraryResource 'org/cl/data.json'
 	def json = readJSON text: request
-	println(json)
 	return json
 }
 
@@ -21,9 +20,9 @@ def cleanRepo(String url) {
 }
 
 def validateBranchRelease(String branch) {
-	def patternBranchRelease = ~/^release-v(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
+	def patternBranchRelease = /release-v(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
 	def clean_branch = branch.replace('origin/','')
-	return ( clean_branch == patternBranchRelease) ? true : false
+	return ( clean_branch ==~ patternBranchRelease) ? true : false
 }
 
 def upVersion(String type){

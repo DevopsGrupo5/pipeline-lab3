@@ -65,15 +65,15 @@ class FlowTrack implements Pipelines, Branches, Tools {
         +------------------------------------------------------+
         | Team Group ${data_project.group}:
         |    + ${data_project.members[0].name}
-        |    + ${data_project.members[0].email}
+        |       +-> ${data_project.members[0].email}
         |    + ${data_project.members[1].name}
-        |    + ${data_project.members[1].email}
+        |       +-> ${data_project.members[1].email}
         |    + ${data_project.members[2].name}
-        |    + ${data_project.members[2].email}
+        |       +-> ${data_project.members[2].email}
         |    + ${data_project.members[3].name}
-        |    + ${data_project.members[3].email}
+        |       +-> ${data_project.members[3].email}
         |    + ${data_project.members[4].name}
-        |    + ${data_project.members[4].email}
+        |       +-> ${data_project.members[4].email}
         +------------------------------------------------------+
         | Message: [Grupo${data_project.group}][Pipeline ${this.pipeline}][Rama: ${this.branch}]
         |          [Stage: build][Resultado: Ok]

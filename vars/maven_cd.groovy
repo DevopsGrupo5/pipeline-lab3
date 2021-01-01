@@ -1,3 +1,5 @@
+import org.cl.*
+
 def call(flow) {
     if (flow.canRunStage(Step.GIT_DIFF)) {
         stage(Step.GIT_DIFF) {

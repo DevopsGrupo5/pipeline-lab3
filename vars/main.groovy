@@ -56,7 +56,7 @@ def call() {
                                 // gradle.call()
                                 println "call gradle"
                             } else if (flow.isMaven() && hasMavenConfiguratio/*flow.hasMavenConfiguration()*/)  {
-                                maven.call()
+                                maven.call(flow)
                                 println "call maven"
                             } else {
                                 env.ERROR_MESSAGE = "$flow.buildTool Configuration not found!"

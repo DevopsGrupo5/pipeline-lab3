@@ -1,4 +1,4 @@
-def call(){
+def call(flow){
 	if (flow.canRunStage('compile')) {
 		stage('Maven') {
 			echo "Inside Maven"

@@ -4,7 +4,7 @@ import org.cl.*
 
 class FlowTrack implements Pipelines, Branches, Tools {
     def validBranchs = [Branches.FEATURE, Branches.DEVELOP, Branches.RELEASE];
-    def utils = new Functions();
+    def utils = new Utils();
     String branch;
     String type;
     String tech;

@@ -1,6 +1,6 @@
 package org.cl
 
-interface Branches {
+interface Branch {
     static final String FEATURE = 'feature'
     static final String DEVELOP = 'develop'
     static final String RELEASE = 'release'

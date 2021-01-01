@@ -6,6 +6,10 @@ def call() {
 
         parameters {
             choice(name: 'BUILD_TOOL', choices: ['maven', 'gradle'], description: 'Select a build tool')
+            string(name: 'STAGES_TO_RUN', defaultValue: '', description: '''
+                Choice one or more between: [compile, unitTest, jar, sonar, nexusUpload, gitCreateRelease,
+                gitDiff, nexusDownload, run, test, gitMergeMaster, gitMergeDevelop, gitTagMaster] - separator: ";"
+            ''')
         }
 
         stages {
@@ -16,7 +20,7 @@ def call() {
                         // //println(env.BRANCH_NAME);
                         // println(env.GIT_BRANCH);
                         // println(env.BUILD_TOOL);
-                        def flow = new FlowTrack(env.GIT_URL, env.GIT_BRANCH, params.BUILD_TOOL);
+                        def flow = new Flow(env.GIT_URL, env.GIT_BRANCH, params.BUILD_TOOL, params.STAGES_TO_RUN);
 
                         println ("""
                             is valid ${flow.isValidFormatRelease('release-v1.2.99')}
@@ -52,7 +56,7 @@ def call() {
                                 // gradle.call()
                                 println "call gradle"
                             } else if (flow.isMaven() && hasMavenConfiguratio/*flow.hasMavenConfiguration()*/)  {
-                                // maven.call()
+                                maven.call()
                                 println "call maven"
                             } else {
                                 env.ERROR_MESSAGE = "$flow.buildTool Configuration not found!"

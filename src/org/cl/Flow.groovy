@@ -38,7 +38,7 @@ class Flow implements Pipeline, Step {
         }
     }
 
-    Boolean isValidBranch() { (this.branchType in validBranches) ? true : false }
+    Boolean isValidBranch() { return validBranches.any{it == this.branchType}}
 
     Boolean isContinuousIntegration() { (this.pipeline == Pipeline.CONTINUOUS_INTEGRATION) ? true : false }
 

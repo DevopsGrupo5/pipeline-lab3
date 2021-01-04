@@ -18,7 +18,7 @@ public enum BranchTypeEnum {
     }
 
     public static BranchTypeEnum getBranchTypeEnum(String tipoBranch){
-        Optional<BranchTypeEnum> branchTypeEnum = Arrays.stream(BranchTypeEnum.values()).filter(branchType -> branchType.branchType == tipoBranch).findFirst()
-        return branchTypeEnum.isPresent() ? branchTypeEnum.get() : null
+        def branchTypeEnum = BranchTypeEnum.values().find(it -> it.branchType.equals(tipoBranch))
+        return branchTypeEnum
     }
 }

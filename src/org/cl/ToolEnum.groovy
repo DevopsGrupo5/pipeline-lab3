@@ -15,7 +15,7 @@ public enum ToolEnum {
     }
 
     public static ToolEnum getToolEnum(String nombre){
-        Optional<ToolEnum> toolEnum = Arrays.stream(ToolEnum.values()).filter(toolEnum -> toolEnum.nombre == nombre).findFirst()
-        return toolEnum.isPresent() ? toolEnum.get() : null;
+        def toolEnum = ToolEnum.values().find(toolEnum -> toolEnum.nombre.equals(nombre))
+        return toolEnum
     }
 }

@@ -60,7 +60,7 @@ class Flow implements Pipeline, Branch, Tool, Step {
 
     Boolean canRunAllStages() {
         Boolean runAllStages = true
-        if (this.stagesSelected.trim()) {
+        if (this.stagesSelected.trim(stage)) {
             runAllStages = false
             String ERROR_MESSAGE
             for( String stageToRun : this.stagesToRun ) {
@@ -83,13 +83,32 @@ class Flow implements Pipeline, Branch, Tool, Step {
                     } 
                 }
             }
+        } else {
+            if( this.type == Branch.FEATURE ) {
+                if (!(stage in stepsValidsForFeature)) {
+                    ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
+                    throw new Exception(ERROR_MESSAGE);
+                } 
+
+            } else if( this.type == Branch.DEVELOP ) {
+                if (!(stage in stepsValidsForDevelop)) {
+                    ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
+                    throw new Exception(ERROR_MESSAGE);
+                } 
+
+            } else if( this.type == Branch.RELEASE ) {
+                if (!(stage in stepsValidsForRelease)) {
+                    ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
+                    throw new Exception(ERROR_MESSAGE);
+                } 
+            }
         }
          
         return runAllStages
     }
 
     Boolean canRunStage(String stage) {
-        return (this.canRunAllStages() || this.stagesToRun.contains(stage)) 
+        return (this.canRunAllStages(stage) || this.stagesToRun.contains(stage)) 
     }
 
     String toString() {

@@ -2,9 +2,8 @@ import org.cl.*
 
 def call(flow) {
     withCredentials([usernamePassword(credentialsId: 'git-grupo5', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-        echo "git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git release-v0.0.1"
+        echo "username $USERNAME"
     }
-    echo "git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git release-v0.0.1"
     if (flow.canRunStage(StepEnum.COMPILE)) {
         stage(StepEnum.COMPILE.getNombre()) {
 		    env.FAILED_STAGE = StepEnum.COMPILE

@@ -22,9 +22,9 @@ def call(flow) {
     if (flow.canRunStage(Step.SONAR)) {
         stage(Step.SONAR) {
             env.FAILED_STAGE = Step.SONAR
-            withSonarQubeEnv(installationName: 'lab_sonar') { // You can override the credential to be used
-                sh './mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
-            }
+            // withSonarQubeEnv(installationName: 'lab_sonar') { // You can override the credential to be used
+            //     sh './mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+            // }
         }
     }
     if (flow.canRunStage(Step.NEXUS_UPLOAD)) {
@@ -36,8 +36,8 @@ def call(flow) {
     if (flow.canRunStage(Step.GIT_CREATE_RELEASE)) {
         stage(Step.GIT_CREATE_RELEASE) {
 		    env.FAILED_STAGE = Step.GIT_CREATE_RELEASE
-            sh "git checkout -b relese"
-            sh 'git push origin relese'
+            sh "git checkout -b release-v0.0.1"
+            sh 'git push origin release-v0.0.1'
         }
     }
 }

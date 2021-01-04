@@ -86,17 +86,18 @@ class Flow implements Pipeline, Branch, Tool, Step {
         } else {
             if( this.type == Branch.FEATURE ) {
                 if (!(stage in stepsValidsForFeature)) {
-                    runAllStages = false                } 
+                    runAllStages = false
                 } 
 
             } else if( this.type == Branch.DEVELOP ) {
                 if (!(stage in stepsValidsForDevelop)) {
-                    runAllStages = false                } 
+                    runAllStages = false 
                 } 
 
             } else if( this.type == Branch.RELEASE ) {
                 if (!(stage in stepsValidsForRelease)) {
-                    runAllStages = false                } 
+                    runAllStages = false
+                } 
             }
         }
          

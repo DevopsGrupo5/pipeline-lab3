@@ -1,18 +1,16 @@
 package org.cl
 
-import org.cl.*
-
-class Flow implements Pipeline, Branch, Tool, Step {
-    String[] validBranches = [Branch.FEATURE, Branch.DEVELOP, Branch.RELEASE]
+class Flow implements Pipeline, Step {
+    String[] validBranches = [BranchTypeEnum.FEATURE, BranchTypeEnum.DEVELOP, BranchTypeEnum.RELEASE]
     String[] stepsValidsForFeature = [Step.COMPILE, Step.UNIT_TEST, Step.JAR, Step.SONAR, Step.NEXUS_UPLOAD]
     String[] stepsValidsForDevelop = [Step.COMPILE, Step.UNIT_TEST, Step.JAR, Step.SONAR, Step.NEXUS_UPLOAD, Step.GIT_CREATE_RELEASE]
     String[] stepsValidsForRelease = [Step.GIT_DIFF, Step.NEXUS_DOWNLOAD, Step.RUN, Step.TEST, Step.GIT_MERGE_MASTER, Step.GIT_MERGE_DEVELOP, Step.GIT_TAG_MASTER]
     def utils = new Utils()
     String branch
-    String type
+    BranchTypeEnum branchType;
     String tech
     String pipeline
-    String buildTool
+    ToolEnum buildTool
     String repo
     String gitUrl
 
@@ -25,26 +23,27 @@ class Flow implements Pipeline, Branch, Tool, Step {
         this.gitUrl = git_url
         this.tech = this.repo.split('-')[0]
         this.branch = branch_name
-        this.type = branch_name.replace('origin/','').split('-')[0]
-        this.buildTool = build_tool
+        def type = branch_name.replace('origin/','').split('-')[0]
+        this.branchType = BranchTypeEnum.getBranchTypeEnum(type)
+        this.buildTool = ToolEnum.getToolEnum(build_tool)
         this.stagesSelected = stagesSelected
         this.stagesToRun = stagesSelected.replaceAll(" ","").split('')
-        if ( this.type == Branch.DEVELOP || this.type == Branch.FEATURE ) {
+        if ( branchType == BranchTypeEnum.DEVELOP || branchType == BranchTypeEnum.FEATURE ) {
             this.pipeline = Pipeline.CONTINUOUS_INTEGRATION
-        } else if ( this.type == Branch.RELEASE ) {
+        } else if ( branchType == BranchTypeEnum.RELEASE ) {
             this.pipeline = Pipeline.CONTINUOUS_DELIVERY
         }
     }
 
-    Boolean isValidBranch() { (this.type in validBranches) ? true : false }
+    Boolean isValidBranch() { (branchType in validBranches) ? true : false }
 
     Boolean isContinuousIntegration() { (this.pipeline == Pipeline.CONTINUOUS_INTEGRATION) ? true : false }
 
     Boolean isContinuousDelivery() { (this.pipeline == Pipeline.CONTINUOUS_DELIVERY) ? true : false }
 
-    Boolean isGradle() { (this.buildTool == Tool.GRADLE) ? true : false }
+    Boolean isGradle() { (this.buildTool == ToolEnum.GRADLE) ? true : false }
 
-    Boolean isMaven() { (this.buildTool == Tool.MAVEN)  ? true : false }
+    Boolean isMaven() { (this.buildTool == ToolEnum.MAVEN)  ? true : false }
     
     Boolean isValidFormatRelease(String branch_version = this.branch_name.replace('origin/','')) { utils.validateBranchRelease(branch_version) }
 
@@ -64,19 +63,19 @@ class Flow implements Pipeline, Branch, Tool, Step {
             runAllStages = false
             String ERROR_MESSAGE
             for( String stageToRun : this.stagesToRun ) {
-                if( this.type == Branch.FEATURE ) {
+                if( branchType == BranchTypeEnum.FEATURE.getTipoBranch() ) {
                     if (!(stageToRun in stepsValidsForFeature)) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
                         throw new Exception(ERROR_MESSAGE)
                     } 
 
-                } else if( this.type == Branch.DEVELOP ) {
+                } else if( branchType == BranchTypeEnum.DEVELOP.getTipoBranch() ) {
                     if (!(stageToRun in stepsValidsForDevelop)) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
                         throw new Exception(ERROR_MESSAGE)
                     } 
 
-                } else if( this.type == Branch.RELEASE ) {
+                } else if( branchType == BranchTypeEnum.RELEASE ) {
                     if (!(stageToRun in stepsValidsForRelease)) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
                         throw new Exception(ERROR_MESSAGE)
@@ -84,17 +83,17 @@ class Flow implements Pipeline, Branch, Tool, Step {
                 }
             }
         } else {
-            if( this.type == Branch.FEATURE ) {
+            if( branchType == BranchTypeEnum.FEATURE ) {
                 if (!(stage in stepsValidsForFeature)) {
                     runAllStages = false
                 } 
 
-            } else if( this.type == Branch.DEVELOP ) {
+            } else if( branchType == BranchTypeEnum.DEVELOP ) {
                 if (!(stage in stepsValidsForDevelop)) {
                     runAllStages = false 
                 } 
 
-            } else if( this.type == Branch.RELEASE ) {
+            } else if( branchType == BranchTypeEnum.RELEASE ) {
                 if (!(stage in stepsValidsForRelease)) {
                     runAllStages = false
                 } 
@@ -118,7 +117,7 @@ class Flow implements Pipeline, Branch, Tool, Step {
         |                          CI / CD                         |
         +----------------------------------------------------------+
         ${utils.generateRow("Branch: ${this.branch}")}
-        ${utils.generateRow("Branch Type: ${this.type}")}
+        ${utils.generateRow("Branch Type: ${this.branchType.getTipoBranch()}")}
         ${utils.generateRow("Tech: ${this.tech}")}
         ${utils.generateRow("Pipeline: ${this.pipeline}")}
         ${utils.generateRow("Build Tool: ${this.buildTool}")}

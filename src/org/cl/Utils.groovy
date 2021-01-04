@@ -31,9 +31,9 @@ def upVersion(String type) {
 	def pom = readMavenPom file: 'pom.xml'
 	println pom.version
 
-	int upPatch = type == Branch.HOTFIX ? 1 : 0
-	int upMinor = type == Branch.FEATURE ? 1 : 0
-	int upMajor = type == Branch.CORE ? 1 : 0
+	int upPatch = type == BranchTypeEnum.HOTFIX ? 1 : 0
+	int upMinor = type == BranchTypeEnum.FEATURE ? 1 : 0
+	int upMajor = type == BranchTypeEnum.CORE ? 1 : 0
 
 	def version = pom.version.replaceFirst(patternBranchRelease) { _, major, minor, patch ->
 		"release-v${(major as int) + upMajor}.${(minor as int) + upMinor}.${(patch as int) + upPatch}"

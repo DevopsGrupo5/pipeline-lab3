@@ -1,7 +1,7 @@
 package org.cl
 
 class Flow implements Pipeline, Step {
-    String[] validBranches = [BranchTypeEnum.FEATURE, BranchTypeEnum.DEVELOP, BranchTypeEnum.RELEASE]
+    BranchTypeEnum[] validBranches = [BranchTypeEnum.FEATURE, BranchTypeEnum.DEVELOP, BranchTypeEnum.RELEASE]
     String[] stepsValidsForFeature = [Step.COMPILE, Step.UNIT_TEST, Step.JAR, Step.SONAR, Step.NEXUS_UPLOAD]
     String[] stepsValidsForDevelop = [Step.COMPILE, Step.UNIT_TEST, Step.JAR, Step.SONAR, Step.NEXUS_UPLOAD, Step.GIT_CREATE_RELEASE]
     String[] stepsValidsForRelease = [Step.GIT_DIFF, Step.NEXUS_DOWNLOAD, Step.RUN, Step.TEST, Step.GIT_MERGE_MASTER, Step.GIT_MERGE_DEVELOP, Step.GIT_TAG_MASTER]

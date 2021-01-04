@@ -15,7 +15,7 @@ public enum ToolEnum {
     }
 
     public static ToolEnum getToolEnum(String nombre){
-        def toolEnum = ToolEnum.values().find(toolEnum -> toolEnum.nombre.equals(nombre))
+        def toolEnum = ToolEnum.values().find{ it.nombre.equals(nombre)}
         return toolEnum
     }
 }

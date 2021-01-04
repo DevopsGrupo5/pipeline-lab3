@@ -24,8 +24,13 @@ class Flow implements Pipeline, Step {
         this.tech = this.repo.split('-')[0]
         this.branch = branch_name
         def type = branch_name.replace('origin/','').split('-')[0]
-        this.branchType = BranchTypeEnum.getBranchTypeEnum(type)
-        this.buildTool = ToolEnum.getToolEnum(build_tool)
+        try{
+            this.branchType = BranchTypeEnum.getBranchTypeEnum(type)
+            this.buildTool = ToolEnum.getToolEnum(build_tool)
+        } catch (Exception e){
+            e.printStackTrace()
+        }
+
         this.stagesSelected = stagesSelected
         this.stagesToRun = stagesSelected.replaceAll(" ","").split('')
         if ( branchType == BranchTypeEnum.DEVELOP || branchType == BranchTypeEnum.FEATURE ) {

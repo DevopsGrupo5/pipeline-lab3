@@ -26,8 +26,9 @@ class Flow implements Pipeline, Step {
         def type = branch_name.replace('origin/','').split('-')[0]
 
         this.branchType = BranchTypeEnum.getBranchTypeEnum(type)
+        println 'branchType ${branchType}'
         this.buildTool = ToolEnum.getToolEnum(build_tool)
-
+        println 'buildTool ${buildTool}'
         this.stagesSelected = stagesSelected
         this.stagesToRun = stagesSelected.replaceAll(" ","").split('')
         if ( branchType == BranchTypeEnum.DEVELOP || branchType == BranchTypeEnum.FEATURE ) {
@@ -37,7 +38,7 @@ class Flow implements Pipeline, Step {
         }
     }
 
-    Boolean isValidBranch() { (branchType in validBranches) ? true : false }
+    Boolean isValidBranch() { (this.branchType in validBranches) ? true : false }
 
     Boolean isContinuousIntegration() { (this.pipeline == Pipeline.CONTINUOUS_INTEGRATION) ? true : false }
 

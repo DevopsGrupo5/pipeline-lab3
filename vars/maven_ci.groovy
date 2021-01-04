@@ -1,6 +1,10 @@
 import org.cl.*
 
 def call(flow) {
+    withCredentials([usernamePassword(credentialsId: 'git-grupo5', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        echo "git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git release-v0.0.1"
+    }
+    echo "git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git release-v0.0.1"
     if (flow.canRunStage(StepEnum.COMPILE)) {
         stage(StepEnum.COMPILE.getNombre()) {
 		    env.FAILED_STAGE = StepEnum.COMPILE
@@ -38,7 +42,11 @@ def call(flow) {
 		    env.FAILED_STAGE = StepEnum.GIT_CREATE_RELEASE
             sh "git branch -d release-v0.0.1"
             sh "git checkout -b release-v0.0.1"
-            sh 'git push https://DiplomadoDevOps5:dev123ops@github.com/DevopsGrupo5/ms-iclab-test.git release-v0.0.1'
+            withCredentials([usernamePassword(credentialsId: 'git-grupo5', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                sh "git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git release-v0.0.1"
+            // sh 'git push https://DiplomadoDevOps5:dev123ops@github.com/DevopsGrupo5/ms-iclab-test.git release-v0.0.1'
+            }
+            // sh 'git push https://DiplomadoDevOps5:dev123ops@github.com/DevopsGrupo5/ms-iclab-test.git release-v0.0.1'
         }
     }
 }

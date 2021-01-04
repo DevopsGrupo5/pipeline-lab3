@@ -58,9 +58,9 @@ class Flow implements Pipeline, Branch, Tool, Step {
         return existsMaven
     }
 
-    Boolean canRunAllStages() {
+    Boolean canRunAllStages(stage) {
         Boolean runAllStages = true
-        if (this.stagesSelected.trim(stage)) {
+        if (this.stagesSelected.trim()) {
             runAllStages = false
             String ERROR_MESSAGE
             for( String stageToRun : this.stagesToRun ) {

@@ -57,7 +57,9 @@ def call() {
                                 } else if ( flow.isContinuousDelivery() && flow.isValidFormatRelease() ) {
                                     println "call continuous delivery"
                                     maven_cd.call(flow)
-                                } 
+                                } else {
+                                    println "exit"
+                                }
                                 println "call maven"
                             } else {
                                 env.ERROR_MESSAGE = "$flow.buildTool Configuration not found!"

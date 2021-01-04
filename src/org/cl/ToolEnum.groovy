@@ -2,7 +2,7 @@ package org.cl
 
 import com.cloudbees.groovy.cps.NonCPS
 
-public enum ToolEnum {
+enum ToolEnum {
     GRADLE ("gradle"),
     MAVEN ("maven")
     

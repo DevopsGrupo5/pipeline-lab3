@@ -1,41 +1,41 @@
 import org.cl.*
 
 def call(flow) {
-    if (flow.canRunStage(Step.COMPILE)) {
-        stage(Step.COMPILE) {
-		    env.FAILED_STAGE = Step.COMPILE
+    if (flow.canRunStage(StepEnum.COMPILE)) {
+        stage(StepEnum.COMPILE) {
+		    env.FAILED_STAGE = StepEnum.COMPILE
             sh './mvnw clean compile -e'
         }
     }
-    if (flow.canRunStage(Step.UNIT_TEST)) {
-        stage(Step.UNIT_TEST) {
-		    env.FAILED_STAGE = Step.UNIT_TEST
+    if (flow.canRunStage(StepEnum.UNIT_TEST)) {
+        stage(StepEnum.UNIT_TEST) {
+		    env.FAILED_STAGE = StepEnum.UNIT_TEST
             sh './mvnw clean test -e'
         }
     }
-    if (flow.canRunStage(Step.JAR)) {
-        stage(Step.JAR) {
-		    env.FAILED_STAGE = Step.JAR
+    if (flow.canRunStage(StepEnum.JAR)) {
+        stage(StepEnum.JAR) {
+		    env.FAILED_STAGE = StepEnum.JAR
             sh './mvnw clean package -e'
         }
     }
-    if (flow.canRunStage(Step.SONAR)) {
-        stage(Step.SONAR) {
-            env.FAILED_STAGE = Step.SONAR
+    if (flow.canRunStage(StepEnum.SONAR)) {
+        stage(StepEnum.SONAR) {
+            env.FAILED_STAGE = StepEnum.SONAR
             withSonarQubeEnv(installationName: 'sonar') {
                 sh './mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
             }
         }
     }
-    if (flow.canRunStage(Step.NEXUS_UPLOAD)) {
-        stage(Step.NEXUS_UPLOAD) {
-            env.FAILED_STAGE = Step.NEXUS_UPLOAD
+    if (flow.canRunStage(StepEnum.NEXUS_UPLOAD)) {
+        stage(StepEnum.NEXUS_UPLOAD) {
+            env.FAILED_STAGE = StepEnum.NEXUS_UPLOAD
 	        nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'grupo-5', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: '/var/lib/jenkins/workspace/ms-iclab-test/build/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '0.0.1']]]
         }
     }
-    if (flow.canRunStage(Step.GIT_CREATE_RELEASE)) {
-        stage(Step.GIT_CREATE_RELEASE) {
-		    env.FAILED_STAGE = Step.GIT_CREATE_RELEASE
+    if (flow.canRunStage(StepEnum.GIT_CREATE_RELEASE)) {
+        stage(StepEnum.GIT_CREATE_RELEASE) {
+		    env.FAILED_STAGE = StepEnum.GIT_CREATE_RELEASE
             sh "git branch -d release-v0.0.1"
             sh "git checkout -b release-v0.0.1"
             sh 'git push https://DiplomadoDevOps5:dev123ops@github.com/DevopsGrupo5/ms-iclab-test.git release-v0.0.1'

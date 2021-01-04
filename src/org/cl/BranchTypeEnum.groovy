@@ -2,7 +2,7 @@ package org.cl
 
 import com.cloudbees.groovy.cps.NonCPS
 
-public enum BranchTypeEnum {
+enum BranchTypeEnum {
     FEATURE('feature'),
     DEVELOP('develop'),
     RELEASE('release'),

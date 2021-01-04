@@ -1,21 +1,21 @@
 package org.cl
 
-class Flow implements Pipeline, Step {
+class Flow {
     BranchTypeEnum[] validBranches = [BranchTypeEnum.FEATURE, BranchTypeEnum.DEVELOP, BranchTypeEnum.RELEASE]
-    String[] stepsValidsForFeature = [Step.COMPILE, Step.UNIT_TEST, Step.JAR, Step.SONAR, Step.NEXUS_UPLOAD]
-    String[] stepsValidsForDevelop = [Step.COMPILE, Step.UNIT_TEST, Step.JAR, Step.SONAR, Step.NEXUS_UPLOAD, Step.GIT_CREATE_RELEASE]
-    String[] stepsValidsForRelease = [Step.GIT_DIFF, Step.NEXUS_DOWNLOAD, Step.RUN, Step.TEST, Step.GIT_MERGE_MASTER, Step.GIT_MERGE_DEVELOP, Step.GIT_TAG_MASTER]
+    StepEnum[] stepsValidsForFeature = [StepEnum.COMPILE, StepEnum.UNIT_TEST, StepEnum.JAR, StepEnum.SONAR, StepEnum.NEXUS_UPLOAD]
+    StepEnum[] stepsValidsForDevelop = [StepEnum.COMPILE, StepEnum.UNIT_TEST, StepEnum.JAR, StepEnum.SONAR, StepEnum.NEXUS_UPLOAD, StepEnum.GIT_CREATE_RELEASE]
+    StepEnum[] stepsValidsForRelease = [StepEnum.GIT_DIFF, StepEnum.NEXUS_DOWNLOAD, StepEnum.RUN, StepEnum.TEST, StepEnum.GIT_MERGE_MASTER, StepEnum.GIT_MERGE_DEVELOP, StepEnum.GIT_TAG_MASTER]
     def utils = new Utils()
     String branch
     BranchTypeEnum branchType;
     String tech
-    String pipeline
+    PipelineEnum pipeline
     ToolEnum buildTool
     String repo
     String gitUrl
 
     String stagesSelected
-    String[] stagesToRun
+    StepEnum[] stagesToRun
 
     Flow(String git_url, String branch_name, String build_tool, String stagesSelected = '') {
         println(git_url)
@@ -30,25 +30,27 @@ class Flow implements Pipeline, Step {
         this.buildTool = ToolEnum.getToolEnum(build_tool)
         println 'buildTool ${buildTool}'
         this.stagesSelected = stagesSelected
-        this.stagesToRun = stagesSelected.replaceAll(" ","").split('')
+        stagesSelected.replaceAll(" ","").split('').each {
+            stagesToRun.plus(StepEnum.getStepEnum(it))
+        }
         if ( branchType == BranchTypeEnum.DEVELOP || branchType == BranchTypeEnum.FEATURE ) {
-            this.pipeline = Pipeline.CONTINUOUS_INTEGRATION
+            this.pipeline = PipelineEnum.CONTINUOUS_INTEGRATION
         } else if ( branchType == BranchTypeEnum.RELEASE ) {
-            this.pipeline = Pipeline.CONTINUOUS_DELIVERY
+            this.pipeline = PipelineEnum.CONTINUOUS_DELIVERY
         }
     }
 
     Boolean isValidBranch() { return validBranches.any{it == this.branchType}}
 
-    Boolean isContinuousIntegration() { (this.pipeline == Pipeline.CONTINUOUS_INTEGRATION) ? true : false }
+    Boolean isContinuousIntegration() { this.pipeline == PipelineEnum.CONTINUOUS_INTEGRATION }
 
-    Boolean isContinuousDelivery() { (this.pipeline == Pipeline.CONTINUOUS_DELIVERY) ? true : false }
+    Boolean isContinuousDelivery() { this.pipeline == PipelineEnum.CONTINUOUS_DELIVERY }
 
-    Boolean isGradle() { (this.buildTool == ToolEnum.GRADLE) ? true : false }
+    Boolean isGradle() { this.buildTool == ToolEnum.GRADLE }
 
-    Boolean isMaven() { (this.buildTool == ToolEnum.MAVEN)  ? true : false }
+    Boolean isMaven() { this.buildTool == ToolEnum.MAVEN }
     
-    Boolean isValidFormatRelease(String branch_version = this.branch_name.replace('origin/','')) { utils.validateBranchRelease(branch_version) }
+    Boolean isValidFormatRelease(String branch_version = this.branch.replace('origin/','')) { utils.validateBranchRelease(branch_version) }
 
     Boolean hasGradleConfiguration() {
         def existsGradle = fileExists './gradlew'
@@ -60,19 +62,19 @@ class Flow implements Pipeline, Step {
         return existsMaven
     }
 
-    Boolean canRunAllStages(String stage) {
+    Boolean canRunAllStages(StepEnum stage) {
         Boolean runAllStages = true
         if (this.stagesSelected.trim()) {
             runAllStages = false
             String ERROR_MESSAGE
-            for( String stageToRun : this.stagesToRun ) {
-                if( branchType == BranchTypeEnum.FEATURE.getTipoBranch() ) {
+            for( StepEnum stageToRun : this.stagesToRun ) {
+                if( branchType == BranchTypeEnum.FEATURE ) {
                     if (!(stageToRun in stepsValidsForFeature)) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
                         throw new Exception(ERROR_MESSAGE)
                     } 
 
-                } else if( branchType == BranchTypeEnum.DEVELOP.getTipoBranch() ) {
+                } else if( branchType == BranchTypeEnum.DEVELOP ) {
                     if (!(stageToRun in stepsValidsForDevelop)) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
                         throw new Exception(ERROR_MESSAGE)
@@ -106,7 +108,7 @@ class Flow implements Pipeline, Step {
         return runAllStages
     }
 
-    Boolean canRunStage(String stage) {
+    Boolean canRunStage(StepEnum stage) {
         return (this.canRunAllStages(stage) || this.stagesToRun.contains(stage)) 
     }
 

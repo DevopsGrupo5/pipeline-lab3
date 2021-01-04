@@ -1,7 +1,6 @@
 import org.cl.*
 
 def call(flow) {
-    sh "git branch -d release-v0.0.2"
     sh "git checkout -b release-v0.0.2"
     withCredentials([usernamePassword(credentialsId: 'git-grupo5', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
         sh "git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git release-v0.0.2"

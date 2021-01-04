@@ -29,4 +29,8 @@ enum StepEnum {
     static def getStepEnum(String nombre){
         return StepEnum.values().find{it.nombre.equals(nombre)}
     }
+
+    String getNombre() {
+        return nombre
+    }
 }

@@ -19,4 +19,8 @@ enum BranchTypeEnum {
     static def getBranchTypeEnum(String tipoBranch){
         return BranchTypeEnum.values().find{it.branchType.equals(tipoBranch)}
     }
+
+    String getBranchType() {
+        return branchType
+    }
 }

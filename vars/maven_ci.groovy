@@ -6,7 +6,6 @@ def call(flow) {
 		    env.FAILED_STAGE = Step.GIT_CREATE_RELEASE
             sh "git remote -v"
             sh "git remote show origin"
-            sh "git config --global user.name 'DevopsGrupo5'"
             sh "git branch -d release-v0.0.1"
             sh "git checkout -b release-v0.0.1"
             sh 'git push origin release-v0.0.1'

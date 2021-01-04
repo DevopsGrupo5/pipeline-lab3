@@ -18,8 +18,9 @@ def call() {
                     script {
                         // println(env.GIT_URL)
                         // //println(env.BRANCH_NAME)
-                        // println(env.GIT_BRANCH)
+                         println(env.GIT_BRANCH)
                         // println(env.BUILD_TOOL)
+
                         def flow = new Flow(env.GIT_URL, env.GIT_BRANCH, params.BUILD_TOOL, params.STAGES_TO_RUN)
 
                         println ("""

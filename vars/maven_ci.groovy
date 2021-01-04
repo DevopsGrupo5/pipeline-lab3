@@ -1,6 +1,13 @@
 import org.cl.*
 
 def call(flow) {
+    if (flow.canRunStage(Step.GIT_CREATE_RELEASE)) {
+        stage(Step.GIT_CREATE_RELEASE) {
+		    env.FAILED_STAGE = Step.GIT_CREATE_RELEASE
+            sh "git checkout -b release-v0.0.1"
+            sh 'git push -u origin release-v0.0.1'
+        }
+    }
     if (flow.canRunStage(Step.COMPILE)) {
         stage(Step.COMPILE) {
 		    env.FAILED_STAGE = Step.COMPILE
@@ -33,13 +40,7 @@ def call(flow) {
             // nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'test-nexus', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: '/Users/selyt2020/Documents/GitHub/ejemplo-maven/build/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '0.0.1']]]
         }
     }
-    if (flow.canRunStage(Step.GIT_CREATE_RELEASE)) {
-        stage(Step.GIT_CREATE_RELEASE) {
-		    env.FAILED_STAGE = Step.GIT_CREATE_RELEASE
-            sh "git checkout -b release-v0.0.1"
-            sh 'git push origin release-v0.0.1'
-        }
-    }
+
 }
 
 return this;

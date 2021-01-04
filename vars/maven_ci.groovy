@@ -8,7 +8,7 @@ def call(flow) {
             sh "git remote show origin"
             sh "git branch -d release-v0.0.1"
             sh "git checkout -b release-v0.0.1"
-            sh 'git push origin release-v0.0.1'
+            sh 'git push https://grupo5.devops@gmail.com:dev123ops@github.com/DevopsGrupo5/pipeline-lab3.git release-v0.0.1'
         }
     }
     if (flow.canRunStage(Step.COMPILE)) {

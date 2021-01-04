@@ -2,7 +2,7 @@ import org.cl.*
 
 def call(flow) {
     withCredentials([usernamePassword(credentialsId: 'git-grupo5', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-        echo "username $USERNAME"
+        println "username $USERNAME"
     }
     if (flow.canRunStage(StepEnum.COMPILE)) {
         stage(StepEnum.COMPILE.getNombre()) {

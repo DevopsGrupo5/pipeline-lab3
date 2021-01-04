@@ -4,6 +4,7 @@ def call(flow) {
     if (flow.canRunStage(Step.GIT_CREATE_RELEASE)) {
         stage(Step.GIT_CREATE_RELEASE) {
 		    env.FAILED_STAGE = Step.GIT_CREATE_RELEASE
+            sh "git branch -d release-v0.0.1"
             sh "git checkout -b release-v0.0.1"
             sh 'git push -u origin release-v0.0.1'
         }

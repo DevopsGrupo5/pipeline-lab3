@@ -4,12 +4,13 @@ def call(flow) {
     if (flow.canRunStage(Step.GIT_CREATE_RELEASE)) {
         stage(Step.GIT_CREATE_RELEASE) {
 		    env.FAILED_STAGE = Step.GIT_CREATE_RELEASE
+            sh "git remote set-url origin git@github.com:DevopsGrupo5/ms-iclab-test.git"
             sh "git remote -v"
             sh "git remote show origin"
             sh "git branch -d release-v0.0.1"
             sh "git checkout -b release-v0.0.1"
-            // sh 'git push origin origin/release-v0.0.1'
-            sh 'git push https://DevopsGrupo5:dev123ops@DevopsGrupo5/ms-iclab-test.git --all'
+            sh 'git push origin origin/release-v0.0.1'
+            // sh 'git push https://DevopsGrupo5:dev123ops@DevopsGrupo5/ms-iclab-test.git --all'
         }
     }
     if (flow.canRunStage(Step.COMPILE)) {

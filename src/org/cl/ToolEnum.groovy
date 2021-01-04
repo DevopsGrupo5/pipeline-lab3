@@ -13,11 +13,6 @@ public enum ToolEnum {
     }
 
     @NonCPS
-    String getNombre() {
-        return nombre
-    }
-
-    @NonCPS
     static def getToolEnum(String nombre){
         return ToolEnum.values().find{ it.nombre.equals(nombre)}
     }

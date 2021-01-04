@@ -16,11 +16,6 @@ public enum BranchTypeEnum {
     }
 
     @NonCPS
-    String getTipoBranch() {
-        return branchType
-    }
-
-    @NonCPS
     static def getBranchTypeEnum(String tipoBranch){
         return BranchTypeEnum.values().find{it.branchType.equals(tipoBranch)}
     }

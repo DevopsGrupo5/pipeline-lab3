@@ -28,7 +28,7 @@ def call() {
                             is not valid ${flow.isValidFormatRelease('fix-v1.2.99')}
                             """)
                         stage('Validation') {
-                            def branchType = flow.getType()
+                            def branchType = flow.getBranchType()
                             if (!flow.isValidBranch()) {
                                 env.ERROR_MESSAGE = "Branch Type $branchType is not valid!"
                                 throw new Exception(env.ERROR_MESSAGE)

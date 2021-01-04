@@ -1,5 +1,7 @@
 package org.cl
 
+import com.cloudbees.groovy.cps.NonCPS
+
 public enum ToolEnum {
     GRADLE ("gradle"),
     MAVEN ("maven")
@@ -14,6 +16,7 @@ public enum ToolEnum {
         return nombre
     }
 
+    @NonCPS
     static def getToolEnum(String nombre){
         return ToolEnum.values().find{ it.nombre.equals(nombre)}
     }

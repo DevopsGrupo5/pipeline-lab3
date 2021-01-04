@@ -1,5 +1,7 @@
 package org.cl
 
+import com.cloudbees.groovy.cps.NonCPS
+
 public enum BranchTypeEnum {
     FEATURE('feature'),
     DEVELOP('develop'),
@@ -17,6 +19,7 @@ public enum BranchTypeEnum {
         return branchType
     }
 
+    @NonCPS
     static def getBranchTypeEnum(String tipoBranch){
         return BranchTypeEnum.values().find{it.branchType.equals(tipoBranch)}
     }

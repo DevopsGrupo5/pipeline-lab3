@@ -4,7 +4,7 @@ def call(flow) {
     if (flow.canRunStage(Step.GIT_DIFF)) {
         stage(Step.GIT_DIFF) {
             env.FAILED_STAGE = Step.GIT_DIFF
-            sh 'git diff origin/main'
+            sh 'git diff origin/master'
         }
     }
     if (flow.canRunStage(Step.NEXUS_DOWNLOAD)) {
@@ -41,19 +41,25 @@ def call(flow) {
     if (flow.canRunStage(Step.GIT_MERGE_MASTER)) {
         stage(Step.GIT_MERGE_MASTER) {
 		    env.FAILED_STAGE = Step.GIT_MERGE_MASTER
-            // sh 'git ...'
+            sh 'git pull origin master'
+            sh 'git merge master'
+            sh 'git commit -am "Merged release-v1.0.0 branch to master'
+            sh 'git push origin master'
         }
     }
     if (flow.canRunStage(Step.GIT_MERGE_DEVELOP)) {
         stage(Step.GIT_MERGE_DEVELOP) {
             env.FAILED_STAGE = Step.GIT_MERGE_DEVELOP
-            // sh 'git ...'
+            sh 'git pull origin develop'
+            sh 'git merge develop'
+            sh 'git commit -am "Merged release-v1.0.0 branch to develop'
+            sh 'git push origin develop'
         }
     }
     if (flow.canRunStage(Step.GIT_TAG_MASTER)) {
         stage(Step.GIT_TAG_MASTER) {
             env.FAILED_STAGE = Step.GIT_TAG_MASTER
-            // sh 'git ...'
+            sh 'git push -f origin/master v1.0.0'
         }
     }
 }

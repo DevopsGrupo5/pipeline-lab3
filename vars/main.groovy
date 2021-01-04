@@ -54,7 +54,7 @@ def call() {
                                 if ( flow.isContinuousIntegration() ) {
                                     println "call continuous integration"
                                     maven_ci.call(flow)
-                                } else if ( flow.isContinuousDelivery() ) {
+                                } else if ( flow.isContinuousDelivery() && flow.isValidFormatRelease() ) {
                                     println "call continuous delivery"
                                     maven_cd.call(flow)
                                 } 

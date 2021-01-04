@@ -46,7 +46,7 @@ class Flow implements Pipeline, Branch, Tool, Step {
 
     Boolean isMaven() { (this.buildTool == Tool.MAVEN)  ? true : false; }
     
-    Boolean isValidFormatRelease(String branch_version) { utils.validateBranchRelease(branch_version); }
+    Boolean isValidFormatRelease(String branch_version = this.branch_name.replace('origin/','')) { utils.validateBranchRelease(branch_version); }
 
     Boolean hasGradleConfiguration() {
         def existsGradle = fileExists './gradlew'

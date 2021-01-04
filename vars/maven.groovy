@@ -34,7 +34,7 @@ def call(){
 	    echo 'Esperando a que inicie el servidor'
 	    sleep(time: 10, unit: "SECONDS")
 	    script {
-	      final String url = "http://localhost:8082/rest/mscovid/test?msg=testing"
+	      final String url = "http://localhost:8383/rest/mscovid/test?msg=testing"
 	      final String response = sh(script: "curl -X GET $url", returnStdout: true).trim()
 
 	      echo response

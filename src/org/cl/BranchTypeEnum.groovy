@@ -20,6 +20,7 @@ enum BranchTypeEnum {
         return BranchTypeEnum.values().find{it.branchType.equals(tipoBranch)}
     }
 
+    @NonCPS
     String getBranchType() {
         return branchType
     }

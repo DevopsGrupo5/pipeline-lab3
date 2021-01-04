@@ -12,6 +12,7 @@ public enum ToolEnum {
         this.nombre = nombre
     }
 
+    @NonCPS
     String getNombre() {
         return nombre
     }

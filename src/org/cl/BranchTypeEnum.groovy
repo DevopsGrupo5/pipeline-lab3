@@ -15,6 +15,7 @@ public enum BranchTypeEnum {
         this.branchType = branchType
     }
 
+    @NonCPS
     String getTipoBranch() {
         return branchType
     }

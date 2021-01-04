@@ -30,6 +30,7 @@ enum StepEnum {
         return StepEnum.values().find{it.nombre.equals(nombre)}
     }
 
+    @NonCPS
     String getNombre() {
         return nombre
     }

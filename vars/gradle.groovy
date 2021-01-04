@@ -8,7 +8,7 @@ def call(){
 	}
 	stage('sonar'){
 	    env.STAGE = 'sonar'
-	    def scannerHome = tool 'sonar';
+	    def scannerHome = tool 'sonar'
 	    withSonarQubeEnv('sonar-local') { 
 	      sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build"
 	    }
@@ -41,4 +41,4 @@ def call(){
 	}
 }
 
-return this;
+return this

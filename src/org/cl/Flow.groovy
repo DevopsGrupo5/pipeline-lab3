@@ -3,50 +3,50 @@ package org.cl
 import org.cl.*
 
 class Flow implements Pipeline, Branch, Tool, Step {
-    String[] validBranches = [Branch.FEATURE, Branch.DEVELOP, Branch.RELEASE];
-    String[] stepsValidsForFeature = [Step.COMPILE, Step.UNIT_TEST, Step.JAR, Step.SONAR, Step.NEXUS_UPLOAD];
-    String[] stepsValidsForDevelop = [Step.COMPILE, Step.UNIT_TEST, Step.JAR, Step.SONAR, Step.NEXUS_UPLOAD, Step.GIT_CREATE_RELEASE];
-    String[] stepsValidsForRelease = [Step.GIT_DIFF, Step.NEXUS_DOWNLOAD, Step.RUN, Step.TEST, Step.GIT_MERGE_MASTER, Step.GIT_MERGE_DEVELOP, Step.GIT_TAG_MASTER];
-    def utils = new Utils();
-    String branch;
-    String type;
-    String tech;
-    String pipeline;
-    String buildTool;
-    String repo;
-    String gitUrl;
+    String[] validBranches = [Branch.FEATURE, Branch.DEVELOP, Branch.RELEASE]
+    String[] stepsValidsForFeature = [Step.COMPILE, Step.UNIT_TEST, Step.JAR, Step.SONAR, Step.NEXUS_UPLOAD]
+    String[] stepsValidsForDevelop = [Step.COMPILE, Step.UNIT_TEST, Step.JAR, Step.SONAR, Step.NEXUS_UPLOAD, Step.GIT_CREATE_RELEASE]
+    String[] stepsValidsForRelease = [Step.GIT_DIFF, Step.NEXUS_DOWNLOAD, Step.RUN, Step.TEST, Step.GIT_MERGE_MASTER, Step.GIT_MERGE_DEVELOP, Step.GIT_TAG_MASTER]
+    def utils = new Utils()
+    String branch
+    String type
+    String tech
+    String pipeline
+    String buildTool
+    String repo
+    String gitUrl
 
-    String stagesSelected;
-    String[] stagesToRun;
+    String stagesSelected
+    String[] stagesToRun
 
     Flow(String git_url, String branch_name, String build_tool, String stagesSelected = '') {
-        println(git_url);
-        this.repo = "ms-iclab" // utils.cleanRepo(git_url);
-        this.gitUrl = git_url;
-        this.tech = this.repo.split('-')[0];
-        this.branch = branch_name;
-        this.type = branch_name.replace('origin/','').split('-')[0];
-        this.buildTool = build_tool;
-        this.stagesSelected = stagesSelected;
-        this.stagesToRun = stagesSelected.replaceAll(" ","").split(';');
+        println(git_url)
+        this.repo = "ms-iclab" // utils.cleanRepo(git_url)
+        this.gitUrl = git_url
+        this.tech = this.repo.split('-')[0]
+        this.branch = branch_name
+        this.type = branch_name.replace('origin/','').split('-')[0]
+        this.buildTool = build_tool
+        this.stagesSelected = stagesSelected
+        this.stagesToRun = stagesSelected.replaceAll(" ","").split('')
         if ( this.type == Branch.DEVELOP || this.type == Branch.FEATURE ) {
-            this.pipeline = Pipeline.CONTINUOUS_INTEGRATION;
+            this.pipeline = Pipeline.CONTINUOUS_INTEGRATION
         } else if ( this.type == Branch.RELEASE ) {
-            this.pipeline = Pipeline.CONTINUOUS_DELIVERY;
+            this.pipeline = Pipeline.CONTINUOUS_DELIVERY
         }
     }
 
-    Boolean isValidBranch() { (this.type in validBranches) ? true : false; }
+    Boolean isValidBranch() { (this.type in validBranches) ? true : false }
 
-    Boolean isContinuousIntegration() { (this.pipeline == Pipeline.CONTINUOUS_INTEGRATION) ? true : false; }
+    Boolean isContinuousIntegration() { (this.pipeline == Pipeline.CONTINUOUS_INTEGRATION) ? true : false }
 
-    Boolean isContinuousDelivery() { (this.pipeline == Pipeline.CONTINUOUS_DELIVERY) ? true : false; }
+    Boolean isContinuousDelivery() { (this.pipeline == Pipeline.CONTINUOUS_DELIVERY) ? true : false }
 
-    Boolean isGradle() { (this.buildTool == Tool.GRADLE) ? true : false; }
+    Boolean isGradle() { (this.buildTool == Tool.GRADLE) ? true : false }
 
-    Boolean isMaven() { (this.buildTool == Tool.MAVEN)  ? true : false; }
+    Boolean isMaven() { (this.buildTool == Tool.MAVEN)  ? true : false }
     
-    Boolean isValidFormatRelease(String branch_version = this.branch_name.replace('origin/','')) { utils.validateBranchRelease(branch_version); }
+    Boolean isValidFormatRelease(String branch_version = this.branch_name.replace('origin/','')) { utils.validateBranchRelease(branch_version) }
 
     Boolean hasGradleConfiguration() {
         def existsGradle = fileExists './gradlew'
@@ -58,7 +58,7 @@ class Flow implements Pipeline, Branch, Tool, Step {
         return existsMaven
     }
 
-    Boolean canRunAllStages(stage) {
+    Boolean canRunAllStages(String stage) {
         Boolean runAllStages = true
         if (this.stagesSelected.trim()) {
             runAllStages = false
@@ -67,40 +67,36 @@ class Flow implements Pipeline, Branch, Tool, Step {
                 if( this.type == Branch.FEATURE ) {
                     if (!(stageToRun in stepsValidsForFeature)) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
-                        throw new Exception(ERROR_MESSAGE);
+                        throw new Exception(ERROR_MESSAGE)
                     } 
 
                 } else if( this.type == Branch.DEVELOP ) {
                     if (!(stageToRun in stepsValidsForDevelop)) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
-                        throw new Exception(ERROR_MESSAGE);
+                        throw new Exception(ERROR_MESSAGE)
                     } 
 
                 } else if( this.type == Branch.RELEASE ) {
                     if (!(stageToRun in stepsValidsForRelease)) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
-                        throw new Exception(ERROR_MESSAGE);
+                        throw new Exception(ERROR_MESSAGE)
                     } 
                 }
             }
         } else {
             if( this.type == Branch.FEATURE ) {
                 if (!(stage in stepsValidsForFeature)) {
-                    ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
-                    throw new Exception(ERROR_MESSAGE);
+                    runAllStages = false                } 
                 } 
 
             } else if( this.type == Branch.DEVELOP ) {
                 if (!(stage in stepsValidsForDevelop)) {
-                    ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
-                    throw new Exception(ERROR_MESSAGE);
+                    runAllStages = false                } 
                 } 
 
             } else if( this.type == Branch.RELEASE ) {
                 if (!(stage in stepsValidsForRelease)) {
-                    ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
-                    throw new Exception(ERROR_MESSAGE);
-                } 
+                    runAllStages = false                } 
             }
         }
          
@@ -112,7 +108,7 @@ class Flow implements Pipeline, Branch, Tool, Step {
     }
 
     String toString() {
-        def data_project = utils.getData();
+        def data_project = utils.getData()
         return """
         +----------------------------------------------------------+
         |                  Diplomado DevOps Usach                  |

@@ -48,4 +48,4 @@ String generateRow(String text, int size = 60, padding = 1, separator = ' ') {
 	return "${content.padRight(size-1, separator)}|"
 }
 
-return this;
+return this

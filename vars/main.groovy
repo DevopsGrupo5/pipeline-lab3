@@ -8,7 +8,7 @@ def call() {
             choice(name: 'BUILD_TOOL', choices: ['maven', 'gradle'], description: 'Select a build tool')
             string(name: 'STAGES_TO_RUN', defaultValue: '', description: '''
                 Choice one or more between: [compile, unitTest, jar, sonar, nexusUpload, gitCreateRelease,
-                gitDiff, nexusDownload, run, test, gitMergeMaster, gitMergeDevelop, gitTagMaster] - separator: ""
+                gitDiff, nexusDownload, run, test, gitMergeMaster, gitMergeDevelop, gitTagMaster] - separator: ";"
             ''')
             gitParameter(branch: '', branchFilter: 'origin/(.*)', defaultValue: '', name: 'BRANCH_NAME', type: 'PT_BRANCH')
         }

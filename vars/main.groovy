@@ -24,8 +24,10 @@ def call() {
                         // println(env.BUILD_TOOL)
                         def branchName = ''
                         if(params.BRANCH_NAME.equals('')){
+                            println 'branch por parametro'
                             branchName = env.GIT_BRANCH
                         } else {
+                            println 'branch por push'
                             branchName = params.BRANCH_NAME
                         }
 

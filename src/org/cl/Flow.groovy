@@ -34,7 +34,7 @@ class Flow {
         this.stagesSelected = stagesSelected
         stagesSelected.split(";").each{
             if(!it.equals("")){
-                stagesToRun.plus(StepEnum.getStepEnum(it))
+                stagesToRun.add(StepEnum.getStepEnum(it))
             }
         }
         if ( this.branchType == BranchTypeEnum.DEVELOP || this.branchType == BranchTypeEnum.FEATURE ) {

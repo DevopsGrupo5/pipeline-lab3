@@ -1,5 +1,7 @@
 package org.cl
 
+import com.cloudbees.groovy.cps.NonCPS
+
 class Flow {
     BranchTypeEnum[] validBranches = [BranchTypeEnum.FEATURE, BranchTypeEnum.DEVELOP, BranchTypeEnum.RELEASE]
     StepEnum[] stepsValidsForFeature = [StepEnum.COMPILE, StepEnum.UNIT_TEST, StepEnum.JAR, StepEnum.SONAR, StepEnum.NEXUS_UPLOAD]
@@ -114,6 +116,7 @@ class Flow {
         return runAllStages
     }
 
+    @NonCPS
     Boolean canRunStage(StepEnum stage) {
 
         println "can run all: ${this.canRunAllStages(stage)}"
@@ -169,6 +172,7 @@ class Flow {
         """
     }
 
+    @NonCPS
     StepEnum[] getStagesToRun() {
         return stagesToRun
     }

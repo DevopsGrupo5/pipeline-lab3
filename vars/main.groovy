@@ -10,6 +10,7 @@ def call() {
                 Choice one or more between: [compile, unitTest, jar, sonar, nexusUpload, gitCreateRelease,
                 gitDiff, nexusDownload, run, test, gitMergeMaster, gitMergeDevelop, gitTagMaster] - separator: ""
             ''')
+            gitParameter(branch: '', branchFileter: 'origin/(.*)', defaultValue: '', name: 'BRANCH_NAME', type: 'PT_BRANCH')
         }
 
         stages {
@@ -18,6 +19,7 @@ def call() {
                     script {
                         // println(env.GIT_URL)
                         // //println(env.BRANCH_NAME)
+                        println(params.BRANCH_NAME)
                          println(env.GIT_BRANCH)
                         // println(env.BUILD_TOOL)
 

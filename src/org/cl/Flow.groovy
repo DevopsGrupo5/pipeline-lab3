@@ -32,11 +32,10 @@ class Flow {
         this.buildTool = ToolEnum.getToolEnum(build_tool)
         println 'buildTool ${buildTool}'
         this.stagesSelected = stagesSelected
-        stagesSelected.split(";").each{
-            if(!it.equals("")){
-                this.stagesToRun.add(StepEnum.getStepEnum(it))
-            }
-        }
+        this.stagesToRun.add(StepEnum.GIT_MERGE_DEVELOP)
+
+        this.stagesToRun = stagesSelected.split(";"){StepEnum.getStepEnum(it)}
+
         if ( this.branchType == BranchTypeEnum.DEVELOP || this.branchType == BranchTypeEnum.FEATURE ) {
             this.pipeline = PipelineEnum.CONTINUOUS_INTEGRATION
         } else if ( this.branchType == BranchTypeEnum.RELEASE ) {

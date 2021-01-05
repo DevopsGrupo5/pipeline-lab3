@@ -117,7 +117,6 @@ class Flow {
         return runAllStages
     }
 
-    @NonCPS
     Boolean canRunStage(StepEnum stage) {
 
         println "can run all: ${this.canRunAllStages(stage)}"

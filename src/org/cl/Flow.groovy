@@ -26,16 +26,16 @@ class Flow {
         def type = branch_name.replace('origin/','').split('-')[0]
 
         this.branchType = BranchTypeEnum.getBranchTypeEnum(type)
-        println 'branchType ${branchType}'
+        println 'branchType ${this.branchType}'
         this.buildTool = ToolEnum.getToolEnum(build_tool)
         println 'buildTool ${buildTool}'
         this.stagesSelected = stagesSelected
         stagesSelected.replaceAll(" ","").split('').each {
             stagesToRun.plus(StepEnum.getStepEnum(it))
         }
-        if ( branchType == BranchTypeEnum.DEVELOP || branchType == BranchTypeEnum.FEATURE ) {
+        if ( this.branchType == BranchTypeEnum.DEVELOP || this.branchType == BranchTypeEnum.FEATURE ) {
             this.pipeline = PipelineEnum.CONTINUOUS_INTEGRATION
-        } else if ( branchType == BranchTypeEnum.RELEASE ) {
+        } else if ( this.branchType == BranchTypeEnum.RELEASE ) {
             this.pipeline = PipelineEnum.CONTINUOUS_DELIVERY
         }
     }
@@ -67,20 +67,24 @@ class Flow {
         if (this.stagesSelected.trim()) {
             runAllStages = false
             String ERROR_MESSAGE
+            println "inside canRunAllStages"
             for( StepEnum stageToRun : this.stagesToRun ) {
-                if( branchType == BranchTypeEnum.FEATURE ) {
+                println "inside ${stageToRun}"
+                if( this.branchType == BranchTypeEnum.FEATURE ) {
+                    println "inside feature"
+
                     if (!(stageToRun in stepsValidsForFeature)) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
                         throw new Exception(ERROR_MESSAGE)
                     } 
 
-                } else if( branchType == BranchTypeEnum.DEVELOP ) {
+                } else if( this.branchType == BranchTypeEnum.DEVELOP ) {
                     if (!(stageToRun in stepsValidsForDevelop)) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
                         throw new Exception(ERROR_MESSAGE)
                     } 
 
-                } else if( branchType == BranchTypeEnum.RELEASE ) {
+                } else if( this.branchType == BranchTypeEnum.RELEASE ) {
                     if (!(stageToRun in stepsValidsForRelease)) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
                         throw new Exception(ERROR_MESSAGE)
@@ -88,17 +92,19 @@ class Flow {
                 }
             }
         } else {
-            if( branchType == BranchTypeEnum.FEATURE ) {
+            println "inside false canRunAllStages"
+
+            if( this.branchType == BranchTypeEnum.FEATURE ) {
                 if (!(stage in stepsValidsForFeature)) {
                     runAllStages = false
                 } 
 
-            } else if( branchType == BranchTypeEnum.DEVELOP ) {
+            } else if( this.branchType == BranchTypeEnum.DEVELOP ) {
                 if (!(stage in stepsValidsForDevelop)) {
                     runAllStages = false 
                 } 
 
-            } else if( branchType == BranchTypeEnum.RELEASE ) {
+            } else if( this.branchType == BranchTypeEnum.RELEASE ) {
                 if (!(stage in stepsValidsForRelease)) {
                     runAllStages = false
                 } 
@@ -109,6 +115,9 @@ class Flow {
     }
 
     Boolean canRunStage(StepEnum stage) {
+
+        println "can run all: ${this.canRunAllStages(stage)}"
+        println "contains step: ${this.stagesToRun.contains(stage)}"
         return (this.canRunAllStages(stage) || this.stagesToRun.contains(stage)) 
     }
 

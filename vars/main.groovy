@@ -44,7 +44,7 @@ def call() {
                             // println "Select $params.BUILD_TOOL"
                             // env.STAGE = ''
                             def hasGradleConfiguration = fileExists './gradlew'
-                            def hasMavenConfiguratio = fileExists './pom.xml'
+                            def hasMavenConfiguration = fileExists './pom.xml'
                             if (flow.isGradle() && hasGradleConfiguration)  {
                                 if ( flow.isContinuousIntegration() ) {
                                     println "call continuous integration"
@@ -54,7 +54,7 @@ def call() {
                                     // gradle_cd.call(flow)
                                 } 
                                 println "call gradle"
-                            } else if (flow.isMaven() && hasMavenConfiguratio)  {
+                            } else if (flow.isMaven() && hasMavenConfiguration)  {
                                 if ( flow.isContinuousIntegration() ) {
                                     println "call continuous integration"
                                     maven_ci.call(flow)

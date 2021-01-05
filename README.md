@@ -31,9 +31,35 @@ Pipeline (Multibranch) para Laboratorio del Módulo 3
 - [ ] ...
 - [ ] ...
 
+### TODO
+
+1.  add version to pom and branch release - Sebas
+2.  add params for select type branch - Rafa
+3.  execute pipe release (cd) when develop exec `gitCreateRealease` is successful and release branch is created - Rafa (git flow init)
+4.  additional validation 1 - Claudio
+5.  additional validation 2 - Luis
+6.  fix type validation (from project name) - Claudio
+7.  ...
+8.  Create Docu - Roddy
+
+### Links
+
+Git init Flow - https://gfourmis.co/gitflow-sin-morir-en-el-intento/
+Wait Quality Gate - https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-jenkins/
+
 ### Continuos Integration
 
-Ejecución para las branches develop & Feature
+Ejecución para las branches Feature
+
+#### Steps
+
+- compile
+- unitTest
+- jar
+- sonar
+- nexusUpload
+
+Ejecución para las branches Develop
 
 #### Steps
 

@@ -34,7 +34,7 @@ class Flow {
         this.stagesSelected = stagesSelected
         this.stagesToRun.add(StepEnum.GIT_MERGE_DEVELOP)
 
-        this.stagesToRun = stagesSelected.split(";"){StepEnum.getStepEnum(it)}
+        this.stagesToRun = stagesSelected.split(";").collect{StepEnum.getStepEnum(it)}
 
         if ( this.branchType == BranchTypeEnum.DEVELOP || this.branchType == BranchTypeEnum.FEATURE ) {
             this.pipeline = PipelineEnum.CONTINUOUS_INTEGRATION

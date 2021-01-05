@@ -1,7 +1,6 @@
 import org.cl.*
 
 def call(flow) {
-    echo 'can run ' + flow.getStagesToRun()
     if (flow.canRunStage(StepEnum.COMPILE)) {
         stage(StepEnum.COMPILE.getNombre()) {
 		    env.FAILED_STAGE = StepEnum.COMPILE

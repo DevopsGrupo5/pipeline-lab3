@@ -70,7 +70,6 @@ class Flow {
             println "inside canRunAllStages"
             for( StepEnum stageToRun : this.stagesToRun ) {
                 println "inside ${stageToRun}"
-                println "type ${instanceof stageToRun}"
                 if( this.branchType == BranchTypeEnum.FEATURE ) {
                     println "inside feature"
 

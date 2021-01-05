@@ -17,7 +17,7 @@ class Flow {
     String gitUrl
 
     String stagesSelected
-    StepEnum[] stagesToRun = []
+    def stagesToRun = []
 
     Flow(String git_url, String branch_name, String build_tool, String stagesSelected = '') {
         println(git_url)

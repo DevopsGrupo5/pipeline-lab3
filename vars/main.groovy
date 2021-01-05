@@ -10,7 +10,7 @@ def call() {
                 Choice one or more between: [compile, unitTest, jar, sonar, nexusUpload, gitCreateRelease,
                 gitDiff, nexusDownload, run, test, gitMergeMaster, gitMergeDevelop, gitTagMaster] - separator: ";"
             ''')
-            gitParameter(branch: '', branchFilter: 'origin/(.*)', defaultValue: '', name: 'BRANCH_NAME', type: 'PT_BRANCH')
+            gitParameter(branch: '', branchFilter: 'origin/(.*)', defaultValue: '', selectedValue: 'NONE', name: 'BRANCH_NAME', type: 'PT_BRANCH')
         }
 
         stages {
@@ -23,7 +23,7 @@ def call() {
                         //println(env.GIT_BRANCH)
                         // println(env.BUILD_TOOL)
                         def branchName = ''
-                        if(params.BRANCH_NAME.equals('')){
+                        if(params.BRANCH_NAME.equals('') ){
                             println 'branch por push'
                             branchName = env.GIT_BRANCH
                         } else {

@@ -20,7 +20,7 @@ def call() {
                         // println(env.GIT_URL)
                         println(env.BRANCH_NAME)
                         println(params.BRANCH_NAME)
-                        //println(env.GIT_BRANCH)
+                        println(env.GIT_BRANCH)
                         // println(env.BUILD_TOOL)
                         def branchName = ''
                         if(params.BRANCH_NAME.equals('') ){

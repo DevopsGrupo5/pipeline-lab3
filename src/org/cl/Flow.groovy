@@ -67,8 +67,13 @@ class Flow {
         if (this.stagesSelected.trim()) {
             runAllStages = false
             String ERROR_MESSAGE
+            println "inside canRunAllStages"
             for( StepEnum stageToRun : this.stagesToRun ) {
+                println "inside ${stageToRun}"
+                println "type ${instanceof stageToRun}"
                 if( this.branchType == BranchTypeEnum.FEATURE ) {
+                    println "inside feature"
+
                     if (!(stageToRun in stepsValidsForFeature)) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
                         throw new Exception(ERROR_MESSAGE)
@@ -88,6 +93,8 @@ class Flow {
                 }
             }
         } else {
+            println "inside false canRunAllStages"
+
             if( this.branchType == BranchTypeEnum.FEATURE ) {
                 if (!(stage in stepsValidsForFeature)) {
                     runAllStages = false
@@ -109,6 +116,9 @@ class Flow {
     }
 
     Boolean canRunStage(StepEnum stage) {
+
+        println "can run all: ${this.canRunAllStages(stage)}"
+        println "contains step: ${this.stagesToRun.contains(stage)}"
         return (this.canRunAllStages(stage) || this.stagesToRun.contains(stage)) 
     }
 

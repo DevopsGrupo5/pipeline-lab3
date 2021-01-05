@@ -10,7 +10,7 @@ def call() {
                 Choice one or more between: [compile, unitTest, jar, sonar, nexusUpload, gitCreateRelease,
                 gitDiff, nexusDownload, run, test, gitMergeMaster, gitMergeDevelop, gitTagMaster] - separator: ""
             ''')
-            gitParameter(branch: '', branchFileter: 'origin/(.*)', defaultValue: '', name: 'BRANCH_NAME', type: 'PT_BRANCH')
+            gitParameter(branch: '', branchFilter: 'origin/(.*)', defaultValue: '', name: 'BRANCH_NAME', type: 'PT_BRANCH')
         }
 
         stages {

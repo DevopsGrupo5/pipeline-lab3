@@ -18,16 +18,16 @@ def call() {
                 steps {
                     script {
                         // println(env.GIT_URL)
-                        // //println(env.BRANCH_NAME)
-                        //println(params.BRANCH_NAME)
+                        println(env.BRANCH_NAME)
+                        println(params.BRANCH_NAME)
                         //println(env.GIT_BRANCH)
                         // println(env.BUILD_TOOL)
                         def branchName = ''
                         if(params.BRANCH_NAME.equals('')){
-                            println 'branch por parametro'
+                            println 'branch por push'
                             branchName = env.GIT_BRANCH
                         } else {
-                            println 'branch por push'
+                            println 'branch por parametro'
                             branchName = params.BRANCH_NAME
                         }
 

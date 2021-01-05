@@ -19,11 +19,19 @@ def call() {
                     script {
                         // println(env.GIT_URL)
                         // //println(env.BRANCH_NAME)
-                        println(params.BRANCH_NAME)
-                         println(env.GIT_BRANCH)
+                        //println(params.BRANCH_NAME)
+                        //println(env.GIT_BRANCH)
                         // println(env.BUILD_TOOL)
+                        def branchName = ''
+                        if(params.BRANCH_NAME.equals('')){
+                            branchName = env.GIT_BRANCH
+                        } else {
+                            branchName = params.BRANCH_NAME
+                        }
 
-                        def flow = new Flow(env.GIT_URL, env.GIT_BRANCH, params.BUILD_TOOL, params.STAGES_TO_RUN)
+                        println 'Se ejecutara con la rama ' + branchName
+
+                        def flow = new Flow(env.GIT_URL, branchName, params.BUILD_TOOL, params.STAGES_TO_RUN)
                         println 'stages ' + params.STAGES_TO_RUN.split(";")
                         println ("""
                             is valid ${flow.isValidFormatRelease('release-v1.2.99')}

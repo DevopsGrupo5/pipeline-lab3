@@ -22,9 +22,9 @@ def call() {
                         println(params.BRANCH_NAME)
                          println(env.GIT_BRANCH)
                         // println(env.BUILD_TOOL)
-
+                        
                         def flow = new Flow(env.GIT_URL, env.GIT_BRANCH, params.BUILD_TOOL, params.STAGES_TO_RUN)
-                        println 'stages ' + params.STAGES_TO_RUN.replaceAll(" ","").split('')
+                        println 'stages ' + params.STAGES_TO_RUN.split(";")
                         println ("""
                             is valid ${flow.isValidFormatRelease('release-v1.2.99')}
                             is not valid ${flow.isValidFormatRelease('release-v1.2.9999')}

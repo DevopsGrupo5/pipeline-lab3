@@ -36,7 +36,7 @@ def call(flow) {
     if (flow.canRunStage(StepEnum.GIT_CREATE_RELEASE)) {
         stage(StepEnum.GIT_CREATE_RELEASE.getNombre()) {
 		    env.FAILED_STAGE = StepEnum.GIT_CREATE_RELEASE
-            sh "git branch -d release-v0.0.1"
+            sh "git branch -D release-v0.0.1"
             sh "git checkout -b release-v0.0.1"
             withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 sh "git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git release-v0.0.1"

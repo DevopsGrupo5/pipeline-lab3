@@ -65,8 +65,10 @@ def checkIfBranchExist(String branchName){
 
 def deleteBranch(String branchName){
     print 'DELETE BRANCH ' + branchName
+    withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        sh "git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git origin --delete ${branchName}"
 
-    sh "git push origin --delete ${branchName}"
+    }
 }
 
 def createBranch(String origin, String newBranch){
@@ -81,7 +83,7 @@ def createBranch(String origin, String newBranch){
             git fetch -p
             git checkout '''+origin+'''; git pull
             git checkout -b '''+newBranch+'''
-            git push origin https://'''+USERNAME+''':'''+PASSWORD'''+@github.com/DevopsGrupo5/ms-iclab-test.git '''+newBranch+'''
+            git push https://'''+USERNAME+''':'''+PASSWORD'''+@github.com/DevopsGrupo5/ms-iclab-test.git origin '''+newBranch+'''
             git checkout '''+origin+'''; git pull
             git branch -d '''+newBranch+'''
 

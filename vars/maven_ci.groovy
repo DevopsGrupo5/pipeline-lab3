@@ -30,19 +30,66 @@ def call(flow) {
     if (flow.canRunStage(StepEnum.NEXUS_UPLOAD)) {
         stage(StepEnum.NEXUS_UPLOAD.getNombre()) {
             env.FAILED_STAGE = StepEnum.NEXUS_UPLOAD
-	        nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'grupo-5', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: '/var/lib/jenkins/workspace/ms-iclab-test/build/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '0.0.1']]]
+	        //nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'grupo-5', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: '/var/lib/jenkins/workspace/ms-iclab-test/build/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '0.0.1']]]
         }
     }
     if (flow.canRunStage(StepEnum.GIT_CREATE_RELEASE)) {
         stage(StepEnum.GIT_CREATE_RELEASE.getNombre()) {
 		    env.FAILED_STAGE = StepEnum.GIT_CREATE_RELEASE
-            sh "git branch -D release-v0.0.1"
+            if(checkIfBranchExist('release-v0.0.1')){
+                deleteBranch('release-v0.0.1')
+                createBranch(env.GIT_BRANCH, 'release-v0.0.1')
+            } else {
+                createBranch(env.GIT_BRANCH, 'release-v0.0.1')
+            }
+            /*sh "git branch -D release-v0.0.1"
             sh "git checkout -b release-v0.0.1"
             withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 sh "git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git release-v0.0.1"
-            }
+            }*/
         }
     }
+}
+
+def checkIfBranchExist(String branchName){
+    def output = sh (script = 'git ls-remote --heads origin ${branchName}', returnStdout: true)
+    if(output?.trim()){
+        print 'existe ' + branchName
+        return true
+    } else {
+        print 'NO existe ' + branchName
+        return false
+    }
+
+}
+
+def deleteBranch(String branchName){
+    print 'DELETE BRANCH ' + branchName
+
+    sh 'git push origin --delete ${branchName}'
+}
+
+def createBranch(String origin, String newBranch){
+        print "ORIGEN BRANCH " + origin + " NEW BRANCH " + newBranch
+
+    /*sh 'git pull'
+    sh 'git checkout ${origin}'
+    sh 'git checkout -b ${newBranch}' 
+    sh 'git push origin ${newBranch}'*/
+    withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        sh '''
+            git fetch -p
+            git checkout '''+origin+'''; git pull
+            git checkout -b '''+newBranch+'''
+            git push origin https://'''+USERNAME+''':'''+PASSWORD'''+@github.com/DevopsGrupo5/ms-iclab-test.git '''+newBranch+'''
+            git checkout '''+origin+'''; git pull
+            git branch -d '''+newBranch+'''
+
+        '''
+    }
+
+    
+
 }
 
 return this

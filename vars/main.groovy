@@ -91,10 +91,10 @@ def call() {
         }
         // post {
         //   success {
-        //     slackSend color: "good", message: "[GRUPO_5][${env.JOB_NAME}][${params.TIPO_PIPELINE}] ejecución exitosa"
+        //     slackSend color: "good", message: "[GRUPO_5][${env.JOB_NAME}][${params.BUILD_TOOL}] ejecución exitosa"
         //   }
         //   failure {
-        //     slackSend color: "danger", message: "[GRUPO_5][${env.JOB_NAME}][${params.TIPO_PIPELINE}] ejecución fallida en stage [${env.FAILED_STAGE}]"
+        //     slackSend color: "danger", message: "[GRUPO_5][${env.JOB_NAME}][${params.BUILD_TOOL}] ejecución fallida en stage [${env.FAILED_STAGE}]"
         //   }
         // }
     }

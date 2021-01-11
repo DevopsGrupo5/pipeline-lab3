@@ -52,7 +52,7 @@ def call(flow) {
 }
 
 def checkIfBranchExist(String branchName){
-    def output = sh (script = 'git ls-remote --heads origin ${branchName}', returnStdout: true)
+    def output = sh(script: "git ls-remote --heads origin ${branchName}", returnStdout: true)
     if(output?.trim()){
         print 'existe ' + branchName
         return true

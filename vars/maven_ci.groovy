@@ -66,7 +66,7 @@ def checkIfBranchExist(String branchName){
 def deleteBranch(String branchName){
     print 'DELETE BRANCH ' + branchName
 
-    sh 'git push origin --delete ${branchName}'
+    sh "git push origin --delete ${branchName}"
 }
 
 def createBranch(String origin, String newBranch){

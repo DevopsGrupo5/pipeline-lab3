@@ -20,7 +20,7 @@ def call(flow) {
             withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
                 sh 'java -version'
                 sh """
-                    JENKINS_NODE_COOKIE=dontKillMe nohup java -jar DevOpsUsach2020-0.0.1.jar &
+                    JENKINS_NODE_COOKIE=dontKillMe nohup java -jar build/DevOpsUsach2020-0.0.1.jar&
                 """
             }
         }

@@ -83,10 +83,11 @@ def createBranch(String origin, String newBranch){
     withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
         
         sh '''
+            pwd
             git fetch -p
             git checkout '''+origin+'''; git pull
             git checkout -b '''+newBranch+'''
-            git push https://'''+USERNAME+''':'''+PASSWORD'''+@github.com/DevopsGrupo5/ms-iclab-test.git origin '''+newBranch+'''
+            git push origin '''+newBranch+'''
             git checkout '''+origin+'''; git pull
             git branch -d '''+newBranch+'''
 

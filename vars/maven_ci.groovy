@@ -69,7 +69,7 @@ def deleteBranch(String branchName){
         //sh "git remote add origin https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git"
         sh "git config --list"
         sh "git checkout develop; git pull"
-        sh "git push https://'''+USERNAME+''':'''+PASSWORD+'''@github.com/DevopsGrupo5/ms-iclab-test.git --delete ${branchName}"
+        sh "git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git --delete ${branchName}"
         sh "git branch -D ${branchName}"
 
     }

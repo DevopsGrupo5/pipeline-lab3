@@ -68,7 +68,7 @@ def deleteBranch(String branchName){
     withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
         //sh "git remote add origin https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git"
         sh "git config --list"
-        sh "git checkout develop; git pull"
+        sh "git checkout develop"
         sh "git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git --delete ${branchName}"
 
     }

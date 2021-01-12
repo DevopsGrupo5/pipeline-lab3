@@ -176,4 +176,8 @@ class Flow {
     StepEnum[] getStagesToRun() {
         return stagesToRun
     }
+
+    String getBranch(){
+        return this.branch
+    }
 }

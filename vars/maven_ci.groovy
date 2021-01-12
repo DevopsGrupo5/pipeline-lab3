@@ -38,9 +38,9 @@ def call(flow) {
 		    env.FAILED_STAGE = StepEnum.GIT_CREATE_RELEASE
             if(checkIfBranchExist('release-v0.0.1')){
                 deleteBranch('release-v0.0.1')
-                createBranch(env.GIT_BRANCH, 'release-v0.0.1')
+                createBranch(flow.getBranch(), 'release-v0.0.1')
             } else {
-                createBranch(env.GIT_BRANCH, 'release-v0.0.1')
+                createBranch(flow.getBranch(), 'release-v0.0.1')
             }
             /*sh "git branch -D release-v0.0.1"
             sh "git checkout -b release-v0.0.1"

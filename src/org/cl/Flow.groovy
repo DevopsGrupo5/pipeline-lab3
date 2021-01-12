@@ -177,6 +177,7 @@ class Flow {
         return stagesToRun
     }
 
+    @NonCPS
     String getBranch(){
         return this.branch
     }

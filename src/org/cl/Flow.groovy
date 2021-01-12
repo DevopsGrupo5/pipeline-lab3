@@ -24,7 +24,7 @@ class Flow {
         this.repo = "ms-iclab" // utils.cleanRepo(git_url)
         this.gitUrl = git_url
         this.tech = this.repo.split('-')[0]
-        this.branch = branch_name
+        this.branch = branch_name.replace('origin/','')
         def type = branch_name.replace('origin/','').split('-')[0]
 
         this.branchType = BranchTypeEnum.getBranchTypeEnum(type)

@@ -42,7 +42,7 @@ def call(flow) {
         stage(StepEnum.GIT_MERGE_MASTER.getNombre()) {
 		    env.FAILED_STAGE = StepEnum.GIT_MERGE_MASTER
             sh 'git pull origin master'
-            sh 'git merge master'
+            sh 'git merge origin/master'
             sh 'git commit -am "Merged release-v1.0.0 branch to master'
             sh 'git push origin master'
         }

@@ -66,7 +66,7 @@ def checkIfBranchExist(String branchName){
 def deleteBranch(String branchName){
     print 'DELETE BRANCH ' + branchName
     withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-        sh "git remote add origin https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git"
+        //sh "git remote add origin https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git"
         sh "git push origin --delete ${branchName}"
 
     }

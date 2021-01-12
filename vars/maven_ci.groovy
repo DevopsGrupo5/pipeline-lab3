@@ -86,10 +86,12 @@ def createBranch(String origin, String newBranch){
         sh '''
             pwd
             git fetch -p
-            git checkout '''+origin+'''; git pull
+            git checkout '''+origin+'''
+            sudo git pull
             git checkout -b '''+newBranch+'''
             git push https://'''+USERNAME+''':'''+PASSWORD+'''@github.com/DevopsGrupo5/ms-iclab-test.git '''+newBranch+'''
-            git checkout '''+origin+'''; git pull
+            git checkout '''+origin+'''
+            sudo git pull
             git branch -d '''+newBranch+'''
 
         '''

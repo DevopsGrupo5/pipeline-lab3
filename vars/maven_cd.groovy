@@ -52,7 +52,7 @@ def call(flow) {
             env.FAILED_STAGE = StepEnum.GIT_MERGE_DEVELOP
             sh 'git pull origin develop'
             sh 'git merge develop'
-            sh 'git commit -am "Merged release-v1.0.0 branch to develop'
+            sh 'git commit -am "Merged release-v1.0.0 branch to develop"'
             sh 'git push origin develop'
         }
     }

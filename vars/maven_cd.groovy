@@ -45,7 +45,7 @@ def call(flow) {
             sh 'git merge origin/master'
             sh 'git add .'
             sh 'git commit -am "Merged release-v1.0.0 branch to master"'
-            sh 'git push origin master'
+            sh 'git push origin origin/master'
         }
     }
     if (flow.canRunStage(StepEnum.GIT_MERGE_DEVELOP)) {
@@ -53,6 +53,7 @@ def call(flow) {
             env.FAILED_STAGE = StepEnum.GIT_MERGE_DEVELOP
             sh 'git pull origin develop'
             sh 'git merge develop'
+	    sh 'git add .'	
             sh 'git commit -am "Merged release-v1.0.0 branch to develop"'
             sh 'git push origin develop'
         }

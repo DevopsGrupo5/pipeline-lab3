@@ -10,7 +10,7 @@ def call(flow) {
     if (flow.canRunStage(StepEnum.NEXUS_DOWNLOAD)) {
         stage(StepEnum.NEXUS_DOWNLOAD.getNombre()) {
 		    env.FAILED_STAGE = StepEnum.NEXUS_DOWNLOAD
-            sh 'sudo curl -X GET -u admin:123456 http://35.199.77.109:8081/repository/grupo-5/com/devopsusach2020/DevOpsUsach2020/0.0.1/DevOpsUsach2020-0.0.1.jar -O'
+            sh 'curl -X GET -u admin:123456 http://35.199.77.109:8081/repository/grupo-5/com/devopsusach2020/DevOpsUsach2020/0.0.1/DevOpsUsach2020-0.0.1.jar -O'
             // sh 'ls -ltr'
         }
     }

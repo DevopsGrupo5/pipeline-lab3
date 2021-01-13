@@ -54,9 +54,11 @@ def call(flow) {
             sh 'git pull origin develop'
             sh 'git merge develop'
 	    sh 'git add .'
-		
-            //sh 'git commit -am "Merged release-v1.0.0 branch to develop"'
-		
+	try{	
+            sh 'git commit -am "Merged release-v1.0.0 branch to develop"'
+	}catch(Exception ex) {
+             println("git commit no registra cambios");
+		}
             sh 'git push origin develop'
         }
     }

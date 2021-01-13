@@ -54,11 +54,9 @@ def call(flow) {
             sh 'git pull origin develop'
             sh 'git merge develop'
 	    sh 'git add .'
-		try{
-                      sh 'git commit -am "Merged release-v1.0.0 branch to develop"'
-		}catch(Exception ex) {
-                     println("No hay nuevos archivos para realizar un commit");
-	       }
+		
+            //sh 'git commit -am "Merged release-v1.0.0 branch to develop"'
+		
             sh 'git push origin develop'
         }
     }

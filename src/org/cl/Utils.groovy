@@ -45,11 +45,11 @@ def upVersion(String type) {
 def upVersionDev(String type) {
 	def patternBranchDev = ~/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
 
-	branch_type = BranchTypeEnum.getBranchTypeEnum(type)
+	// branch_type = BranchTypeEnum.getBranchTypeEnum(type)
 
 	println "enum $BranchTypeEnum.FEATURE"
 	println "type $type"
-	println "branch_type $branch_type"
+	// println "branch_type $branch_type"
 
 	def pom = readMavenPom file: 'pom.xml'
 	println pom.version

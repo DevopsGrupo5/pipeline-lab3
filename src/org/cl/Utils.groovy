@@ -47,7 +47,8 @@ def upVersionDev(String type) {
 
 	branch_type = BranchTypeEnum.getBranchTypeEnum(type)
 
-	println BranchTypeEnum.FEATURE
+	println "enum $BranchTypeEnum.FEATURE"
+	println "branch_type $branch_type"
 
 	def pom = readMavenPom file: 'pom.xml'
 	println pom.version

@@ -42,6 +42,23 @@ def upVersion(String type) {
 	writeMavenPom model: pom
 }
 
+def upVersionDev(String type) {
+	def patternBranchDev = ~/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
+
+	def pom = readMavenPom file: 'pom.xml'
+	println pom.version
+
+	int upMinor = type == BranchTypeEnum.FEATURE ? 1 : 0
+
+	def version = pom.version.replaceFirst(patternBranchDev) { _, major, minor, patch ->
+		"${(major as int) + upMajor}.${(minor as int) + upMinor}.${(patch as int) + upPatch}"
+	}
+
+	println version
+	// pom.version = version
+	// writeMavenPom model: pom
+}
+
 String generateRow(String text, int size = 60, padding = 1, separator = ' ') {
 	String content = "|${"".padLeft(padding, separator)}$text"
 	int currentSize = content.length()

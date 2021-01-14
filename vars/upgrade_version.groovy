@@ -12,16 +12,14 @@ def call(flow) {
 	    // writeMavenPom model: pom
         // sh "git pull origin origin/develop"
 
-        withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            
-            sh """
-                git pull
-                git commit -am 'Auto Update version to $version'
-                git merge master
-                git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git origin/develop
-                git status
-            """
-        }
+        
+        sh """
+            git checkout develop
+            git pull
+            git commit -am 'Auto Update version to $version'
+            git push
+            git status
+        """
 
     }
 }

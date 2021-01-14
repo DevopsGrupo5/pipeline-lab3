@@ -55,6 +55,9 @@ def upVersionDev(String type) {
 	int upPatch = branch_type == BranchTypeEnum.HOTFIX ? 1 : 0
 	int upMinor = branch_type == BranchTypeEnum.FEATURE ? 1 : 0
 	int upMajor = branch_type == BranchTypeEnum.CORE ? 1 : 0
+	println "upPatch $upPatch"
+	println "upMinor $upMinor"
+	println "upMajor $upMajor"
 
 	def version = pom.version.replaceFirst(patternBranchDev) { _, major, minor, patch ->
 		"${(major as int) + upMajor}.${(minor as int) + upMinor}.${(patch as int) + upPatch}"

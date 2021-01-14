@@ -42,7 +42,7 @@ def upVersion(String type) {
 	writeMavenPom model: pom
 }
 
-def upVersionDev(String type) {
+def upVersionDev(BranchTypeEnum type) {
 	def patternBranchDev = ~/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
 
 	// branch_type = BranchTypeEnum.getBranchTypeEnum(type)

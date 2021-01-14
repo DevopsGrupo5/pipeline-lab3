@@ -17,6 +17,7 @@ def call(flow) {
             sh """
                 git pull https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git origin/develop
                 git commit -am 'Auto Update version to $version'
+                git merge master
                 git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git origin/develop
                 git status
             """

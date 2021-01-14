@@ -11,7 +11,7 @@ def call(flow) {
         // pom.version = version
 	    // writeMavenPom model: pom
         sh "git commit -am 'Auto Update version to $version'"
-        sh "git push origen develop"
+        sh "git push origin develop"
 
     }
 }

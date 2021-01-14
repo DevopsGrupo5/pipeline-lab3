@@ -49,7 +49,8 @@ def call() {
 
                         stage('Validation') {
                             println 'branch type ' + branchType
-                            println 'valid ' + isValidBranch()
+                            def valid = flow.isValidBranch()
+                            println 'valid ' + valid
                             if (!flow.isValidBranch()) {
                                 env.ERROR_MESSAGE = "Branch Type $branchType is not valid!"
                                 throw new Exception(env.ERROR_MESSAGE)

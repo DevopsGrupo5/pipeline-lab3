@@ -4,11 +4,13 @@ def call(flow) {
     stage(StepEnum.UPGRADE_POM.getNombre()) {
         env.FAILED_STAGE = StepEnum.UPGRADE_POM.getNombre()
         def utils = new Utils()
-        println flow.branchType
-        utils.upVersionDev(flow.branchType)
-        println flow.tech
+        def version = utils.upVersionDev(flow.branchType)
         def pom = readMavenPom file: 'pom.xml'
-        println pom.version
+        println "old version: $pom.version"
+        println "new version: $version"
+        // sh "git commit -am 'Update version to $version'"
+        // sh "git push origen develop"
+
     }
 }
 

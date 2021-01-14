@@ -44,59 +44,16 @@ def upVersion(String type) {
 
 def upVersionDev(BranchTypeEnum type) {
 	def patternBranchDev = ~/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
-
-	// branch_type = BranchTypeEnum.getBranchTypeEnum(type)
-
-	println "enum $BranchTypeEnum.FEATURE"
-	println "type $type"
-	// println "branch_type $branch_type"
-
 	def pom = readMavenPom file: 'pom.xml'
-	println pom.version
-
 	int upPatch = type == BranchTypeEnum.HOTFIX ? 1 : 0
 	int upMinor = type == BranchTypeEnum.FEATURE ? 1 : 0
 	int upMajor = type == BranchTypeEnum.CORE ? 1 : 0
-	println "upPatch $upPatch"
-	println "upMinor $upMinor"
-	println "upMajor $upMajor"
 
 	def version = pom.version.replaceFirst(patternBranchDev) { 
-		println it
-		println it[0]
-		println it[1]
-		println it[2]
-		println it[3]
-		// _, major, minor, patch -> 
-		// "v${major}.${minor}.${(patch as int) + 1}"
-		
-		// println "_ ${_}"
-		// println typeof(_)
-
-		// String v = "$_".replace("[","").replace("]","").split(",")
-		// println v
-		// println v[0]
-		// int major = v[1]
-		// int minor = v[2]
-		// int patch = v[3]
-		// println "minor $minor"
-		// println "upMinor $upMinor"
-		// int lastMinor = minor + upMinor
-		// println "lastMinor $lastMinor"
-		// println "major $major"
-		// println "upMajor $upMajor"
-		// int lastMajor = major + upMajor
-		// println "lastMajor $lastMajor"
-		// println "patch $patch"
-		// println "upPatch $upPatch"
-		// int lastPatch = patch + upPatch
-		// println "lastPatch $lastPatch"
 		return "${(it[1] as int) + upMajor}.${(it[2] as int) + upMinor}.${(it[3] as int) + upPatch}"
-
-	
 	}
 
-	println version
+	return version
 	// pom.version = version
 	// writeMavenPom model: pom
 }

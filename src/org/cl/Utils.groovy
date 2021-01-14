@@ -63,9 +63,11 @@ def upVersionDev(BranchTypeEnum type) {
 
 	def version = pom.version.replaceFirst(patternBranchDev) { _ -> 
 		println "_ ${_}"
-		int major = _[1]
-		int minor = _[1]
-		int patch = _[2]
+		String v = _.replace("[","").replace("]","").split(",")
+		println = v[0]
+		int major = v[1]
+		int minor = v[2]
+		int patch = v[3]
 		println "minor $minor"
 		println "upMinor $upMinor"
 		int lastMinor = minor + upMinor

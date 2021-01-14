@@ -26,12 +26,6 @@ def call(flow) {
                 sh './mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
             }
         }
-        stage("Quality gate") {
-            env.FAILED_STAGE = "$StepEnum.SONAR Quality gate"
-            steps {
-                waitForQualityGate abortPipeline: true
-            }
-        }
     }
     if (flow.canRunStage(StepEnum.NEXUS_UPLOAD)) {
         stage(StepEnum.NEXUS_UPLOAD.getNombre()) {

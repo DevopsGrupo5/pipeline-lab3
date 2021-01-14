@@ -42,11 +42,6 @@ def call(flow) {
             } else {
                 createBranch(flow.getBranch(), 'release-v0.0.1')
             }
-            /*sh "git branch -D release-v0.0.1"
-            sh "git checkout -b release-v0.0.1"
-            withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                sh "git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git release-v0.0.1"
-            }*/
         }
     }
 }
@@ -66,8 +61,6 @@ def checkIfBranchExist(String branchName){
 def deleteBranch(String branchName){
     print 'DELETE BRANCH ' + branchName
     withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-        //sh "git remote add origin https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git"
-        sh "git config --list"
         sh "git checkout develop"
         sh "git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git --delete ${branchName}"
 
@@ -75,12 +68,8 @@ def deleteBranch(String branchName){
 }
 
 def createBranch(String origin, String newBranch){
-        print "ORIGEN BRANCH " + origin + " NEW BRANCH " + newBranch
+    print "ORIGEN BRANCH " + origin + " NEW BRANCH " + newBranch
 
-    /*sh 'git pull'
-    sh 'git checkout ${origin}'
-    sh 'git checkout -b ${newBranch}' 
-    sh 'git push origin ${newBranch}'*/
     withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
         
         sh '''

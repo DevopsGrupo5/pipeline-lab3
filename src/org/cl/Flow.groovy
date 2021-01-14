@@ -181,4 +181,9 @@ class Flow {
     String getBranch(){
         return this.branch
     }
+
+    @NonCPS
+    String getBranchType(){
+        return this.branchType
+    }
 }

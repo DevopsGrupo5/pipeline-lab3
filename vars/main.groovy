@@ -44,20 +44,22 @@ def call() {
                             is not valid ${flow.isValidFormatRelease('release-v1.2.9999')}
                             is not valid ${flow.isValidFormatRelease('fix-v1.2.99')}
                             """)
-
-                        if(params.ONLY_UPGRADE.toBoolean()) {
-                            upgrade_version.call(flow)
-                            throw new Exception('END TEST')
-                        }
+                        
+                        def branchType = flow.getBranchType()
 
                         stage('Validation') {
-                            def branchType = flow.getBranchType()
                             println 'branch type ' + branchType
                             if (!flow.isValidBranch()) {
                                 env.ERROR_MESSAGE = "Branch Type $branchType is not valid!"
                                 throw new Exception(env.ERROR_MESSAGE)
                             }
                         }
+                        if(params.ONLY_UPGRADE.toBoolean() || this.branchType == BranchTypeEnum.DEVELOP) {
+                            upgrade_version.call(flow)
+                            throw new Exception('END TEST')
+                        }
+
+
 
                         stage('Load Build Tool') {
                             // slackSend color: "warning", message: "[GRUPO_5][${env.JOB_NAME}][${params.TIPO_PIPELINE}] init pipeline"

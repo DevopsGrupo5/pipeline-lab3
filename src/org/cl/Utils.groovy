@@ -66,7 +66,8 @@ def upVersionDev(BranchTypeEnum type) {
 		println typeof(_)
 
 		String v = "$_".replace("[","").replace("]","").split(",")
-		println = v[0]
+		println v
+		println v[0]
 		int major = v[1]
 		int minor = v[2]
 		int patch = v[3]

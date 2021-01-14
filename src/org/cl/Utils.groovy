@@ -48,14 +48,15 @@ def upVersionDev(String type) {
 	branch_type = BranchTypeEnum.getBranchTypeEnum(type)
 
 	println "enum $BranchTypeEnum.FEATURE"
+	println "type $type"
 	println "branch_type $branch_type"
 
 	def pom = readMavenPom file: 'pom.xml'
 	println pom.version
 
-	int upPatch = branch_type == BranchTypeEnum.HOTFIX ? 1 : 0
-	int upMinor = branch_type == BranchTypeEnum.FEATURE ? 1 : 0
-	int upMajor = branch_type == BranchTypeEnum.CORE ? 1 : 0
+	int upPatch = type == BranchTypeEnum.HOTFIX ? 1 : 0
+	int upMinor = type == BranchTypeEnum.FEATURE ? 1 : 0
+	int upMajor = type == BranchTypeEnum.CORE ? 1 : 0
 	println "upPatch $upPatch"
 	println "upMinor $upMinor"
 	println "upMajor $upMajor"

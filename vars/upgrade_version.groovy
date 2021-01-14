@@ -5,7 +5,7 @@ def call(flow) {
         env.FAILED_STAGE = StepEnum.UPGRADE_POM.getNombre()
         def utils = new Utils()
         println flow.branchType
-        utils.upVersionDev("FEATURE")
+        utils.upVersionDev(flow.branchType)
         println flow.tech
         def pom = readMavenPom file: 'pom.xml'
         println pom.version

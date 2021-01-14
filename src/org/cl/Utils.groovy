@@ -92,7 +92,7 @@ def upVersionDev(BranchTypeEnum type) {
 	// writeMavenPom model: pom
 }
 
-String typeof(T variable)
+String typeof(variable)
  {
 	if (variable instanceof Integer) return ("Integer");
     else if(variable instanceof Double) return ("Double");

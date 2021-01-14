@@ -47,11 +47,13 @@ def upVersionDev(String type) {
 
 	branch_type = BranchTypeEnum.getBranchTypeEnum(type)
 
+	println BranchTypeEnum.FEATURE
+
 	def pom = readMavenPom file: 'pom.xml'
 	println pom.version
 
 	int upPatch = branch_type == BranchTypeEnum.HOTFIX ? 1 : 0
-	int upMinor = branch_type == BranchTypeEnum.FEATURE.getNombre() ? 1 : 0
+	int upMinor = branch_type == BranchTypeEnum.FEATURE ? 1 : 0
 	int upMajor = branch_type == BranchTypeEnum.CORE ? 1 : 0
 
 	def version = pom.version.replaceFirst(patternBranchDev) { _, major, minor, patch ->

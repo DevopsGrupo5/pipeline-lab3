@@ -11,10 +11,14 @@ def call(flow) {
         // pom.version = version
 	    // writeMavenPom model: pom
         // sh "git pull origin origin/develop"
-        sh "git status"
-        sh "git branch"
-        sh "git commit -am 'Auto Update version to $version'"
-        sh "git push origin origin/develop"
+
+        withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            
+            sh """
+                git commit -am 'Auto Update version to $version'
+                git push origin origin/develop
+            """
+        }
 
     }
 }

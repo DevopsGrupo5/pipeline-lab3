@@ -63,6 +63,8 @@ def upVersionDev(BranchTypeEnum type) {
 
 	def version = pom.version.replaceFirst(patternBranchDev) { _ -> 
 		println "_ ${_}"
+		println typeof(_)
+
 		String v = _.replace("[","").replace("]","").split(",")
 		println = v[0]
 		int major = v[1]
@@ -90,6 +92,15 @@ def upVersionDev(BranchTypeEnum type) {
 	// writeMavenPom model: pom
 }
 
+String typeof(T variable)
+ {
+	if (variable instanceof Integer) return ("Integer");
+    else if(variable instanceof Double) return ("Double");
+    else if(variable instanceof Float) return ("Float");
+    else if(variable instanceof String) return ("String");
+    else if(variable.getClass().isArray()) return ("Array");
+    else return ("Unsure");
+ }
 String generateRow(String text, int size = 60, padding = 1, separator = ' ') {
 	String content = "|${"".padLeft(padding, separator)}$text"
 	int currentSize = content.length()

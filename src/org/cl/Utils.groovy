@@ -45,13 +45,15 @@ def upVersion(String type) {
 def upVersionDev(String type) {
 	def patternBranchDev = ~/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
 
+	branch_type = BranchTypeEnum.getBranchTypeEnum(type)
+
 	def pom = readMavenPom file: 'pom.xml'
 	println pom.version
 
-	int upPatch = type == BranchTypeEnum.HOTFIX ? 1 : 0
-	int upMinor = type == BranchTypeEnum.FEATURE ? 1 : 0
-	int upMajor = type == BranchTypeEnum.CORE ? 1 : 0
-	
+	int upPatch = branch_type == BranchTypeEnum.HOTFIX ? 1 : 0
+	int upMinor = branch_type == BranchTypeEnum.FEATURE.getNombre() ? 1 : 0
+	int upMajor = branch_type == BranchTypeEnum.CORE ? 1 : 0
+
 	def version = pom.version.replaceFirst(patternBranchDev) { _, major, minor, patch ->
 		"${(major as int) + upMajor}.${(minor as int) + upMinor}.${(patch as int) + upPatch}"
 	}

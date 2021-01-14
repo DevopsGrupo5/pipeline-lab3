@@ -65,6 +65,8 @@ def upVersionDev(BranchTypeEnum type) {
 		println it
 		println it[0]
 		println it[1]
+		println it[2]
+		println it[3]
 		// _, major, minor, patch -> 
 		// "v${major}.${minor}.${(patch as int) + 1}"
 		
@@ -89,7 +91,7 @@ def upVersionDev(BranchTypeEnum type) {
 		// println "upPatch $upPatch"
 		// int lastPatch = patch + upPatch
 		// println "lastPatch $lastPatch"
-		// return "${(major as int) + upMajor}.${(minor as int) + upMinor}.${(patch as int) + upPatch}"
+		return "${(it[1] as int) + upMajor}.${(it[2] as int) + upMinor}.${(it[3] as int) + upPatch}"
 
 	
 	}

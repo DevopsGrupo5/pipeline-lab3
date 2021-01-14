@@ -28,8 +28,8 @@ Pipeline (Multibranch) para Laboratorio del Módulo 3
 
 ### Validaciones Adicionales
 
-- [ ] ...
-- [ ] ...
+- [ ] Que no se ejecuten dos o mas build en el pipeline
+- [ ] Esperar Quality Gate Sonar
 
 ### TODO
 

@@ -3,6 +3,9 @@ import org.cl.*
 def call() {
     pipeline {
         agent any
+        options {
+            disableConcurrentBuilds()
+        }
 
         parameters {
             choice(name: 'BUILD_TOOL', choices: ['maven', 'gradle'], description: 'Select a build tool')
@@ -11,6 +14,7 @@ def call() {
                 gitDiff, nexusDownload, run, test, gitMergeMaster, gitMergeDevelop, gitTagMaster] - separator: ";"
             ''')
             gitParameter(branch: '', branchFilter: 'origin/(.*)', defaultValue: '', selectedValue: 'NONE', name: 'BRANCH_NAME', type: 'PT_BRANCH')
+            booleanParam(defaultValue: false, description: 'Test Upgrade Version', name: 'ONLY_UPGRADE')
         }
 
         stages {
@@ -40,6 +44,12 @@ def call() {
                             is not valid ${flow.isValidFormatRelease('release-v1.2.9999')}
                             is not valid ${flow.isValidFormatRelease('fix-v1.2.99')}
                             """)
+
+                        if(params.ONLY_UPGRADE.toBoolean()) {
+                            upgrade_version.call(flow)
+                            throw new Exception('END TEST')
+                        }
+
                         stage('Validation') {
                             def branchType = flow.getBranchType()
                             println 'branch type ' + branchType

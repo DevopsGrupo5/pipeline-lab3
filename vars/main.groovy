@@ -56,10 +56,10 @@ def call() {
                                 throw new Exception(env.ERROR_MESSAGE)
                             }
                         }
-                        if(params.ONLY_UPGRADE.toBoolean() || this.branchType == BranchTypeEnum.DEVELOP) {
-                            upgrade_version.call(flow)
-                            throw new Exception('END TEST')
-                        }
+                        // if(params.ONLY_UPGRADE.toBoolean() || this.branchType == BranchTypeEnum.DEVELOP) {
+                        //     upgrade_version.call(flow)
+                        //     throw new Exception('END TEST')
+                        // }
 
 
 

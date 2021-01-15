@@ -1,16 +1,23 @@
 import org.cl.*
 
 def call(flow) {
+    def utils = new Utils()
+    def version = utils.getVersion()
+    def cleanVersion = utils.getCleanVersion()
     if (flow.canRunStage(StepEnum.GIT_DIFF)) {
         stage(StepEnum.GIT_DIFF.getNombre()) {
             env.FAILED_STAGE = StepEnum.GIT_DIFF
-            sh 'git diff origin/master'
+            sh """
+                git checkout release-v$cleanVersion
+                git diff origin/master
+            """
         }
     }
     if (flow.canRunStage(StepEnum.NEXUS_DOWNLOAD)) {
         stage(StepEnum.NEXUS_DOWNLOAD.getNombre()) {
 		    env.FAILED_STAGE = StepEnum.NEXUS_DOWNLOAD
-            sh 'curl -X GET -u admin:123456 http://35.199.77.109:8081/repository/grupo-5/com/devopsusach2020/DevOpsUsach2020/0.0.1/DevOpsUsach2020-0.0.1.jar -O'
+            sh "curl -X GET -u admin:123456 http://35.199.77.109:8081/repository/grupo-5/com/devopsusach2020/DevOpsUsach2020/$version/DevOpsUsach2020-${version}.jar -O"
+            // sh 'curl -X GET -u admin:123456 http://35.199.77.109:8081/repository/grupo-5/com/devopsusach2020/DevOpsUsach2020/0.0.1/DevOpsUsach2020-0.0.1.jar -O'
             // sh 'ls -ltr'
         }
     }
@@ -20,7 +27,7 @@ def call(flow) {
             withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
                 sh 'java -version'
                 sh """
-                    JENKINS_NODE_COOKIE=dontKillMe nohup java -jar build/DevOpsUsach2020-0.0.1.jar&
+                    JENKINS_NODE_COOKIE=dontKillMe nohup java -jar build/DevOpsUsach2020-${version}.jar&
                 """
             }
         }
@@ -41,31 +48,36 @@ def call(flow) {
     if (flow.canRunStage(StepEnum.GIT_MERGE_MASTER)) {
         stage(StepEnum.GIT_MERGE_MASTER.getNombre()) {
 		    env.FAILED_STAGE = StepEnum.GIT_MERGE_MASTER
-            sh 'git pull origin master'
-            sh 'git merge origin/master'
-            sh 'git add .'
-            sh 'git commit -am "Merged release-v1.0.0 branch to master"'
-            sh 'git push origin origin/master'
+            sh """
+                git pull origin master
+                git merge origin/master
+                git add .
+                git commit -am 'Merged release-v$cleanVersion to master'
+                git push origin origin/master
+            """
         }
     }
     if (flow.canRunStage(StepEnum.GIT_MERGE_DEVELOP)) {
         stage(StepEnum.GIT_MERGE_DEVELOP.getNombre()) {
             env.FAILED_STAGE = StepEnum.GIT_MERGE_DEVELOP
-            sh 'git pull origin develop'
-            sh 'git merge develop'
-	    sh 'git add .'
-	try{	
-            sh 'git commit -am "Merged release-v1.0.0 branch to develop"'
-	}catch(Exception ex) {
-             println("git commit no registra cambios");
-		}
+            sh """
+                git pull origin develop
+                git merge origin/develop
+                git add .
+    
+            """
+            try {	
+                sh "git commit -am 'Merged release-v$cleanVersion to develop'"
+            } catch(Exception ex) {
+                println("git commit no registra cambios");
+            }
             sh 'git push origin develop'
         }
     }
     if (flow.canRunStage(StepEnum.GIT_TAG_MASTER)) {
         stage(StepEnum.GIT_TAG_MASTER.getNombre()) {
             env.FAILED_STAGE = StepEnum.GIT_TAG_MASTER
-            sh 'git push -f origin/master v1.0.0'
+            sh "git push -f origin/master v$cleanVersion"
         }
     }
 }

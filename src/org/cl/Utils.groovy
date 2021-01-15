@@ -27,6 +27,11 @@ def validateBranchRelease(String branch) {
 
 def getVersion() {
 	def pom = readMavenPom file: 'pom.xml'
+	return pom.version
+}
+
+def getCleanVersion() {
+	def pom = readMavenPom file: 'pom.xml'
 	def version = pom.version.replace("alpha-v","").replace("rc-v","")
 	println "Current $pom.version"
 	println "Clean version $version"

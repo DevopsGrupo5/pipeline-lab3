@@ -40,20 +40,20 @@ def call() {
 
                         def flow = new Flow(env.GIT_URL, branchName, params.BUILD_TOOL, params.STAGES_TO_RUN)
 
-                        def branchType = flow.getBranchType()
+                        env.branchType = flow.getBranchType()
 
-                        slackSend color: "warning", message: "[GRUPO_5][$env.JOB_NAME][$branchType][Started]"
+                        slackSend color: "warning", message: "[GRUPO_5][$env.JOB_NAME][$env.branchType][Started]"
 
                         stage('Validation') {
-                            println 'branch type ' + branchType
+                            println 'branch type ' + env.branchType
                             def valid = flow.isValidBranch()
                             println 'valid ' + valid
                             // if (!flow.isValidBranch()) {
-                            //     env.ERROR_MESSAGE = "Branch Type $branchType is not valid!"
+                            //     env.ERROR_MESSAGE = "Branch Type $env.branchType is not valid!"
                             //     throw new Exception(env.ERROR_MESSAGE)
                             // }
                         }
-                        if (params.ONLY_UPGRADE.toBoolean() || branchType == BranchTypeEnum.DEVELOP) {
+                        if (params.ONLY_UPGRADE.toBoolean() || env.branchType == BranchTypeEnum.DEVELOP) {
                             upgrade_version.call(flow)
                         }
 
@@ -105,10 +105,10 @@ def call() {
         }
         post {
           success {
-            slackSend color: "good", message: "[GRUPO_5][$env.JOB_NAME][$branchType][Success]"
+            slackSend color: "good", message: "[GRUPO_5][$env.JOB_NAME][$env.branchType][Success]"
           }
           failure {
-            slackSend color: "danger", message: "[GRUPO_5][$env.JOB_NAME][$branchType][Error] ejecución fallida en stage [$env.FAILED_STAGE]"
+            slackSend color: "danger", message: "[GRUPO_5][$env.JOB_NAME][$env.branchType][Error] ejecución fallida en stage [$env.FAILED_STAGE]"
           }
         }
     }

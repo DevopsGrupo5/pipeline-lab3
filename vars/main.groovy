@@ -39,6 +39,7 @@ def call() {
                         println 'Se ejecutara con la rama ' + branchName
 
                         def flow = new Flow(env.GIT_URL, branchName, params.BUILD_TOOL, params.STAGES_TO_RUN)
+                        def utils = new Utils()
 
                         env.branchType = flow.getBranchType()
 
@@ -74,17 +75,17 @@ def call() {
                                     figlet "Unknown_flow"
                                 }
                             } else if (flow.isMaven() && hasMavenConfiguration)  {
-                                figlet "maven"
+                                figlet """
+        maven
+                                """
                                 if ( flow.isContinuousIntegration() ) {
-                                    figlet "continuous_integration"
-                                    figlet """
-                                    continuous
-                                    integration
-                                    """
-
+                                    figlet utils.showTemplateCI()
                                     maven_ci.call(flow)
                                 } else if ( flow.isContinuousDelivery() && flow.isValidFormatRelease() ) {
-                                    figlet "continuous_delivery"
+                                    figlet """
+        continuous
+        delivery
+                                    """
                                     maven_cd.call(flow)
                                 } else {
                                     figlet "Unknown_flow"

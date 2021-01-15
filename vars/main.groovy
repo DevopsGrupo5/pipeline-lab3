@@ -21,6 +21,7 @@ def call() {
             stage('Pipeline'){
                 steps {
                     script {
+
                         // println(env.GIT_URL)
                         //println(env.BRANCH_NAME)
                         println(params.BRANCH_NAME)
@@ -38,14 +39,10 @@ def call() {
                         println 'Se ejecutara con la rama ' + branchName
 
                         def flow = new Flow(env.GIT_URL, branchName, params.BUILD_TOOL, params.STAGES_TO_RUN)
-                        println 'stages ' + params.STAGES_TO_RUN.split(";")
-                        println ("""
-                            is valid ${flow.isValidFormatRelease('release-v1.2.99')}
-                            is not valid ${flow.isValidFormatRelease('release-v1.2.9999')}
-                            is not valid ${flow.isValidFormatRelease('fix-v1.2.99')}
-                            """)
-                        
+
                         def branchType = flow.getBranchType()
+
+                        slackSend color: "warning", message: "[GRUPO_5][$env.JOB_NAME][$branchType][Started]"
 
                         stage('Validation') {
                             println 'branch type ' + branchType
@@ -64,31 +61,30 @@ def call() {
 
 
                         stage('Load Build Tool') {
-                            // slackSend color: "warning", message: "[GRUPO_5][${env.JOB_NAME}][${params.TIPO_PIPELINE}] init pipeline"
-                            // println "Select $params.BUILD_TOOL"
-                            // env.STAGE = ''
                             def hasGradleConfiguration = fileExists './gradlew'
                             def hasMavenConfiguration = fileExists './pom.xml'
                             if (flow.isGradle() && hasGradleConfiguration)  {
+                                figlet "gradle"
                                 if ( flow.isContinuousIntegration() ) {
-                                    println "call continuous integration"
+                                    figlet "continuous integration"
                                     // gradle_ci.call(flow)
                                 } else if ( flow.isContinuousDelivery() ) {
-                                    println "call continuous delivery"
+                                    figlet "continuous delivery"
                                     // gradle_cd.call(flow)
-                                } 
-                                println "call gradle"
+                                } else {
+                                    figlet "Unknown flow"
+                                }
                             } else if (flow.isMaven() && hasMavenConfiguration)  {
+                                figlet "maven"
                                 if ( flow.isContinuousIntegration() ) {
-                                    println "call continuous integration"
+                                    figlet "continuous integration"
                                     maven_ci.call(flow)
                                 } else if ( flow.isContinuousDelivery() && flow.isValidFormatRelease() ) {
-                                    println "call continuous delivery"
+                                    figlet "continuous delivery"
                                     maven_cd.call(flow)
                                 } else {
-                                    println "exit"
+                                    figlet "Unknown flow"
                                 }
-                                println "call maven"
                             } else {
                                 env.ERROR_MESSAGE = "$flow.buildTool Configuration not found!"
                                 throw new Exception(env.ERROR_MESSAGE)
@@ -103,14 +99,14 @@ def call() {
                 }
             }
         }
-        // post {
-        //   success {
-        //     slackSend color: "good", message: "[GRUPO_5][${env.JOB_NAME}][${params.BUILD_TOOL}] ejecución exitosa"
-        //   }
-        //   failure {
-        //     slackSend color: "danger", message: "[GRUPO_5][${env.JOB_NAME}][${params.BUILD_TOOL}] ejecución fallida en stage [${env.FAILED_STAGE}]"
-        //   }
-        // }
+        post {
+          success {
+            slackSend color: "good", message: "[GRUPO_5][$env.JOB_NAME][$branchType][Success]"
+          }
+          failure {
+            slackSend color: "danger", message: "[GRUPO_5][$env.JOB_NAME][$branchType][Error] ejecución fallida en stage [$env.FAILED_STAGE]"
+          }
+        }
     }
 }
 

@@ -43,7 +43,10 @@ class Flow {
         }
     }
 
-    Boolean isValidBranch() { return validBranches.contains(this.branchType)}
+    Boolean isValidBranch() { 
+        
+        println(validBranches);
+        return validBranches.contains(this.branchType)}
 
     Boolean isContinuousIntegration() { this.pipeline == PipelineEnum.CONTINUOUS_INTEGRATION }
 

@@ -51,10 +51,10 @@ def call() {
                             println 'branch type ' + branchType
                             def valid = flow.isValidBranch()
                             println 'valid ' + valid
-                            if (!flow.isValidBranch()) {
-                                env.ERROR_MESSAGE = "Branch Type $branchType is not valid!"
-                                throw new Exception(env.ERROR_MESSAGE)
-                            }
+                            // if (!flow.isValidBranch()) {
+                            //     env.ERROR_MESSAGE = "Branch Type $branchType is not valid!"
+                            //     throw new Exception(env.ERROR_MESSAGE)
+                            // }
                         }
                         // if(params.ONLY_UPGRADE.toBoolean() || this.branchType == BranchTypeEnum.DEVELOP) {
                         //     upgrade_version.call(flow)

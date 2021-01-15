@@ -65,24 +65,29 @@ def call() {
                             if (flow.isGradle() && hasGradleConfiguration)  {
                                 figlet "gradle"
                                 if ( flow.isContinuousIntegration() ) {
-                                    figlet "continuous integration"
+                                    figlet "continuous_integration"
                                     // gradle_ci.call(flow)
                                 } else if ( flow.isContinuousDelivery() ) {
-                                    figlet "continuous delivery"
+                                    figlet "continuous_delivery"
                                     // gradle_cd.call(flow)
                                 } else {
-                                    figlet "Unknown flow"
+                                    figlet "Unknown_flow"
                                 }
                             } else if (flow.isMaven() && hasMavenConfiguration)  {
                                 figlet "maven"
                                 if ( flow.isContinuousIntegration() ) {
-                                    figlet "continuous integration"
+                                    figlet "continuous_integration"
+                                    figlet """
+                                    continuous
+                                    integration
+                                    """
+
                                     maven_ci.call(flow)
                                 } else if ( flow.isContinuousDelivery() && flow.isValidFormatRelease() ) {
-                                    figlet "continuous delivery"
+                                    figlet "continuous_delivery"
                                     maven_cd.call(flow)
                                 } else {
-                                    figlet "Unknown flow"
+                                    figlet "Unknown_flow"
                                 }
                             } else {
                                 env.ERROR_MESSAGE = "$flow.buildTool Configuration not found!"

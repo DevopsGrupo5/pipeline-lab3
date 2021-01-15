@@ -28,9 +28,7 @@ def call(flow) {
         }
         stage("Quality gate") {
             env.FAILED_STAGE = "$StepEnum.SONAR Quality gate"
-            steps {
-                waitForQualityGate abortPipeline: true
-            }
+            waitForQualityGate abortPipeline: true
         }
     }
     if (flow.canRunStage(StepEnum.NEXUS_UPLOAD)) {

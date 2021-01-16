@@ -115,7 +115,7 @@ def createBranch(String origin, String newBranch){
             git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git $newBranch
             git checkout $origin
             git pull
-            git branch -d $newBranch
+            git branch -D $newBranch
         """
 
 

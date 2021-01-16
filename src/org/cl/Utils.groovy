@@ -32,7 +32,7 @@ def getVersion() {
 
 def getCleanVersion() {
 	def pom = readMavenPom file: 'pom.xml'
-	def version = pom.version.replace("alpha-v","").replace("rc-v","")
+	def version = pom.version.replace("alpha","").replace("rc","").replace("-","").replace("v","")
 	println "Current $pom.version"
 	println "Clean version $version"
 	return version
@@ -57,7 +57,7 @@ def upVersionRC(String type) {
 }
 
 def upVersionDev(BranchTypeEnum type) {
-	def patternBranchDev = ~/^([a-z])*(-)*([a-z])*(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
+	// def patternBranchDev = ~/^([a-z])*(-)*([a-z])*(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
 	def patternBranchDev = ~/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
 	int upPatch = 0
 	int upMinor = 1
@@ -66,9 +66,10 @@ def upVersionDev(BranchTypeEnum type) {
 	def version = temp_version.replaceFirst(patternBranchDev) { 
 		return "alpha-${(it[1] as int) + upMajor}.${(it[2] as int) + upMinor}.${(it[3] as int) + upPatch}"
 	}
+
+	def pom = readMavenPom file: 'pom.xml'
 	println "Current version $pom.version"
 	println "New version $version"
-	def pom = readMavenPom file: 'pom.xml'
 	pom.version = version
 	writeMavenPom model: pom
 	return version

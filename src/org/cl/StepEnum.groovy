@@ -3,7 +3,7 @@ package org.cl
 import com.cloudbees.groovy.cps.NonCPS
 
 enum StepEnum {
-    UPGRADE_POM('Upgrade pom'),
+    // UPGRADE_POM('Upgrade pom'),
     
     COMPILE('compile'),
     UNIT_TEST('unitTest'),

@@ -25,7 +25,7 @@ class Flow {
     String stagesSelected
     def stagesToRun = []
 
-    BranchTypeEnum[] getValidBranches () {
+    List<BranchTypeEnum> getValidBranches () {
         return validBranches
     }
 

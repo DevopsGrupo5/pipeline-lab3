@@ -8,12 +8,14 @@ def call(flow) {
         if (flow.canRunStage(StepEnum.GIT_DIFF)) {
             stage(StepEnum.GIT_DIFF.getNombre()) {
                 env.FAILED_STAGE = StepEnum.GIT_DIFF
-                // sh """
-                //     git pull
-                //     git branch
-                //     git checkout release-v$cleanVersion
+  
+                sh """
+                    git pull
+                    git branch
+                    git checkout release-v$cleanVersion
+                """
                 //     git diff origin/master
-                // """
+
             }
         }
         if (flow.canRunStage(StepEnum.NEXUS_DOWNLOAD)) {
@@ -83,9 +85,9 @@ def call(flow) {
         if (flow.canRunStage(StepEnum.GIT_TAG_MASTER)) {
             stage(StepEnum.GIT_TAG_MASTER.getNombre()) {
                 env.FAILED_STAGE = StepEnum.GIT_TAG_MASTER
-                    sh """
-                    git push -f https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git master v$cleanVersion
-                    """
+                sh """
+                git push -f https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git master v$cleanVersion
+                """
 
             }
         }

@@ -149,7 +149,7 @@ class Flow {
         |                          CI / CD                         |
         +----------------------------------------------------------+
         ${utils.generateRow("Branch: ${this.branch}")}
-        ${utils.generateRow("Branch Type: ${this.branchType.getBranchType()}")}
+        ${utils.generateRow("Branch Type: ${this.branchType}")}
         ${utils.generateRow("Tech: ${this.tech}")}
         ${utils.generateRow("Pipeline: ${this.pipeline}")}
         ${utils.generateRow("Build Tool: ${this.buildTool}")}

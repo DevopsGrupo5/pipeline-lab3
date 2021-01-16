@@ -76,14 +76,10 @@ def call() {
     maven
                                 """
                                 if ( flow.isContinuousIntegration() ) {
-                                    figlet """
-    continuous_integration	
-                                    """
+                                    figlet "continuous_integration"
                                     maven_ci.call(flow)
                                 } else if ( flow.isContinuousDelivery() && flow.isValidFormatRelease() ) {
-                                    figlet """
-    continuous_delivery
-                                    """
+                                    figlet "continuous_delivery"
                                     maven_cd.call(flow)
                                 } else {
                                     figlet "Unknown_flow"

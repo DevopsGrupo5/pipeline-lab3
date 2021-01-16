@@ -22,6 +22,7 @@ def call() {
                 steps {
                     script {
                         // println(env.GIT_URL)
+                        //claudio
                         //println(env.BRANCH_NAME)
                         println(params.BRANCH_NAME)
                         println(env.GIT_BRANCH)

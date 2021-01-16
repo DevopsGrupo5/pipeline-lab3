@@ -90,7 +90,9 @@ def call(flow) {
             stage(StepEnum.GIT_TAG_MASTER.getNombre()) {
                 env.FAILED_STAGE = StepEnum.GIT_TAG_MASTER
                 sh """
-                git push -f https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git master v$cleanVersion
+                git checkout master
+                git tag v$cleanVersion -m "Tag v$cleanVersion to master"
+                git push --tags https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git master
                 """
 
             }

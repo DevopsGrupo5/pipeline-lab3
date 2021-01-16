@@ -15,7 +15,7 @@ enum BranchTypeEnum {
         this.branchType = branchType
     }
 
-    // @NonCPS
+    @NonCPS
     static BranchTypeEnum getBranchTypeEnum(String type){
         return BranchTypeEnum.values().find{it.branchType.equals(type)}
     }

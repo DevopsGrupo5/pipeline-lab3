@@ -2,10 +2,10 @@ import org.cl.*
 
 def call(flow) {
     def utils = new Utils()
-    println "sin nombre: canRunStage" + flow.canRunStage(StepEnum.GIT_CREATE_RELEASE)
-    println "con nombre: canRunStage" + flow.canRunStage(StepEnum.GIT_CREATE_RELEASE.getNombre())
     println "sin nombre: canRunAllStages " + flow.canRunAllStages(StepEnum.GIT_CREATE_RELEASE)
-    println "con nombre: canRunAllStages " + flow.canRunAllStages(StepEnum.GIT_CREATE_RELEASE.getNombre())
+    println "sin nombre: canRunStage" + flow.canRunStage(StepEnum.GIT_CREATE_RELEASE)
+    // println "con nombre: canRunStage" + flow.canRunStage(StepEnum.GIT_CREATE_RELEASE.getNombre())
+    // println "con nombre: canRunAllStages " + flow.canRunAllStages(StepEnum.GIT_CREATE_RELEASE.getNombre())
 
     // if (flow.canRunStage(StepEnum.COMPILE)) {
     //     stage(StepEnum.COMPILE.getNombre()) {

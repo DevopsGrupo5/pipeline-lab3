@@ -79,7 +79,10 @@ def call() {
         maven
                                 """
                                 if ( flow.isContinuousIntegration() ) {
-                                    figlet utils.showTemplateCI()
+                                    figlet """
+        continuous
+        integration	
+                                    """
                                     maven_ci.call(flow)
                                 } else if ( flow.isContinuousDelivery() && flow.isValidFormatRelease() ) {
                                     figlet """

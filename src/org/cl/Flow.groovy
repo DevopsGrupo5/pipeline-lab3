@@ -7,7 +7,7 @@ class Flow {
     StepEnum[] arrStepsValidsForFeature = [StepEnum.COMPILE, StepEnum.UNIT_TEST, StepEnum.JAR, StepEnum.SONAR, StepEnum.NEXUS_UPLOAD]
     StepEnum[] arrStepsValidsForDevelop = [StepEnum.COMPILE, StepEnum.UNIT_TEST, StepEnum.JAR, StepEnum.SONAR, StepEnum.NEXUS_UPLOAD, StepEnum.GIT_CREATE_RELEASE]
     StepEnum[] arrStepsValidsForRelease = [StepEnum.GIT_DIFF, StepEnum.NEXUS_DOWNLOAD, StepEnum.RUN, StepEnum.TEST, StepEnum.GIT_MERGE_MASTER, StepEnum.GIT_MERGE_DEVELOP, StepEnum.GIT_TAG_MASTER]
-    List<BranchTypeEnum> validBranches = Arrays.asList(arrBranches);
+    List<BranchTypeEnum> validBranches = Arrays.asList(arrValidBranchesBranches);
     List<StepEnum> stepsValidsForFeature = Arrays.asList(arrStepsValidsForFeature);
     List<StepEnum> stepsValidsForDevelop = Arrays.asList(arrStepsValidsForDevelop);
     List<StepEnum> stepsValidsForRelease = Arrays.asList(arrStepsValidsForRelease);

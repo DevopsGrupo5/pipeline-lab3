@@ -91,19 +91,19 @@ class Flow {
                 if( this.branchType == BranchTypeEnum.FEATURE ) {
                     println "inside feature"
 
-                    if (!(stageToRun in stepsValidsForFeature)) {
+                    if (!(stepsValidsForFeature.contains(stageToRun))) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
                         throw new Exception(ERROR_MESSAGE)
                     } 
 
                 } else if( this.branchType == BranchTypeEnum.DEVELOP ) {
-                    if (!(stageToRun in stepsValidsForDevelop)) {
+                    if (!(stepsValidsForDevelop.contains(stageToRun))) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
                         throw new Exception(ERROR_MESSAGE)
                     } 
 
                 } else if( this.branchType == BranchTypeEnum.RELEASE ) {
-                    if (!(stageToRun in stepsValidsForRelease)) {
+                    if (!(stepsValidsForRelease.contains(stageToRun))) {
                         ERROR_MESSAGE = "Stage ${stageToRun} is not valid!"
                         throw new Exception(ERROR_MESSAGE)
                     } 

@@ -41,20 +41,11 @@ def call() {
                         def flow = new Flow(env.GIT_URL, branchName, params.BUILD_TOOL, params.STAGES_TO_RUN)
                         def utils = new Utils()
 
-                        env.branchType = flow.getBranchTypeToString()
-
-                        println "PROBAMOS"
-                        def brches = flow.getValidBranches()
-                        boolean bol1
-                        if (brches.contains(flow.getBranchType())) {  bol1 = true } else { bol1 = false }
-                        println "contains $bol1"
-
+                        env.branchType = flow.getBranchType()
                         slackSend color: "warning", message: "[GRUPO_5][$env.JOB_NAME][$env.branchType][Started]"
 
                         stage('Validation') {
-                            println 'branch type ' + env.branchType
                             def valid = flow.isValidBranch()
-                            println 'valid ' + valid
                             if (!flow.isValidBranch()) {
                                 env.ERROR_MESSAGE = "Branch Type $env.branchType is not valid!"
                                 throw new Exception(env.ERROR_MESSAGE)
@@ -82,16 +73,16 @@ def call() {
                                 }
                             } else if (flow.isMaven() && hasMavenConfiguration)  {
                                 figlet """
-        maven
+    maven
                                 """
                                 if ( flow.isContinuousIntegration() ) {
                                     figlet """
-        continuous_integration	
+    continuous_integration	
                                     """
                                     maven_ci.call(flow)
                                 } else if ( flow.isContinuousDelivery() && flow.isValidFormatRelease() ) {
                                     figlet """
-        continuous_delivery
+    continuous_delivery
                                     """
                                     maven_cd.call(flow)
                                 } else {

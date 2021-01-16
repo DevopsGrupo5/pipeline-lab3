@@ -9,6 +9,7 @@ def call(flow) {
         withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
             sh """
                 git checkout develop
+                git stash
                 git pull
                 git commit -am 'Auto Update version to $version'
                 git push

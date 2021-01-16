@@ -38,9 +38,9 @@ class Flow {
         def type = branch_name.replace('origin/','').split('-')[0]
 
         this.branchType = (BranchTypeEnum) BranchTypeEnum.getBranchTypeEnum(type)
-        println "branchType $this.branchType"
+        println "branchType ${this.branchType}"
         this.buildTool = ToolEnum.getToolEnum(build_tool)
-        println "buildTool $buildTool"
+        println "buildTool ${this.buildTool}"
         this.stagesSelected = stagesSelected
         // this.stagesToRun.add(StepEnum.GIT_MERGE_DEVELOP)
 

@@ -76,6 +76,7 @@ def deleteBranch(String branchName){
 
 def createBranch(String origin, String newBranch){
     print "ORIGEN BRANCH " + origin + " NEW BRANCH " + newBranch
+    def utils = new Utils()
 
     withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 

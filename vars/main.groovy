@@ -51,9 +51,9 @@ def call() {
                             }
                         }
 
-                        if (flow.getBranchType() == BranchTypeEnum.DEVELOP) {
-                            upgrade_version.call(flow)
-                        }
+                        // if (flow.getBranchType() == BranchTypeEnum.DEVELOP) {
+                        //     upgrade_version.call(flow)
+                        // }
 
                         stage('Load Build Tool') {
                             def hasGradleConfiguration = fileExists './gradlew'

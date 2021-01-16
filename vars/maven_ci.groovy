@@ -78,13 +78,18 @@ def createBranch(String origin, String newBranch){
     print "ORIGEN BRANCH " + origin + " NEW BRANCH " + newBranch
 
     withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-        
+
         sh """
             pwd
             git fetch -p
             git checkout $origin
             git pull
             git checkout -b $newBranch
+            """
+        def version = utils.upVersionDev(flow.getBranchType())
+        figlet version
+        sh """
+            git commit -am 'Auto Update version to $version'
             git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git $newBranch
             git checkout $origin
             git pull

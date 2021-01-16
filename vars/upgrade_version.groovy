@@ -6,13 +6,16 @@ def call(flow) {
         def utils = new Utils()
         def version = utils.upVersionDev(flow.getBranchType())
         figlet version
-        sh """
-            git checkout develop
-            git pull
-            git commit -am 'Auto Update version to $version'
-            git push
-            git status
-        """
+        withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            sh """
+                git checkout develop
+                git pull
+                git commit -am 'Auto Update version to $version'
+                git push
+                git status
+            """
+        }
+
 
     }
 }

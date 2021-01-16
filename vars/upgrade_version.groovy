@@ -4,14 +4,16 @@ def call(flow) {
     stage(StepEnum.UPGRADE_POM.getNombre()) {
         env.FAILED_STAGE = StepEnum.UPGRADE_POM.getNombre()
         def utils = new Utils()
-        def version = utils.upVersionDev(flow.getBranchType())
-        figlet version
         withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
             sh """
                 git stash
                 git checkout develop
                 git stash
                 git pull
+                """
+            def version = utils.upVersionDev(flow.getBranchType())
+            figlet version
+            sh """
                 git commit -am 'Auto Update version to $version'
                 git push
                 git status

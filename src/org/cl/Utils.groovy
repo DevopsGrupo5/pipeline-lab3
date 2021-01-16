@@ -38,17 +38,10 @@ def getCleanVersion() {
 	return version
 }
 
-def upVersionRC(String type) {
-	def patternBranchRelease = ~/^alpha-v(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
+def upVersionRC() {
+	def temp_version = getCleanVersion()
+	def version = "rc-$temp_version"
 	def pom = readMavenPom file: 'pom.xml'
-
-	int upPatch = type == BranchTypeEnum.HOTFIX ? 1 : 0
-	int upMinor = type == BranchTypeEnum.FEATURE ? 1 : 0
-	int upMajor = type == BranchTypeEnum.CORE ? 1 : 0
-
-	def version = pom.version.replaceFirst(patternBranchRelease) { 
-		return "rc-v${(it[1] as int) + upMajor}.${(it[2] as int) + upMinor}.${(it[3] as int) + upPatch}"
-	}
 	println "Current version $pom.version"
 	println "New version $version"
 	pom.version = version

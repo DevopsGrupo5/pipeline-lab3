@@ -32,8 +32,7 @@ def call(flow) {
             waitForQualityGate abortPipeline: true
         }
     }
-    def version = utils.getVersion()
-    def cleanVersion = utils.getCleanVersion()
+
     if (flow.canRunStage(StepEnum.NEXUS_UPLOAD)) {
         stage(StepEnum.NEXUS_UPLOAD.getNombre()) {
             env.FAILED_STAGE = StepEnum.NEXUS_UPLOAD
@@ -43,6 +42,9 @@ def call(flow) {
     if (flow.canRunStage(StepEnum.GIT_CREATE_RELEASE)) {
         stage(StepEnum.GIT_CREATE_RELEASE.getNombre()) {
 		    env.FAILED_STAGE = StepEnum.GIT_CREATE_RELEASE
+            developBranch()
+            def version = utils.getVersion()
+            def cleanVersion = utils.getCleanVersion()
             if(checkIfBranchExist("release-v$cleanVersion")){
                 deleteBranch("release-v$cleanVersion")
                 createBranch(flow.getBranch(), "release-v$cleanVersion")
@@ -74,6 +76,23 @@ def deleteBranch(String branchName){
     }
 }
 
+def developBranch() {
+    def utils = new Utils()
+    withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        sh """
+            pwd
+            git fetch -p
+            git stash
+            git checkout develop
+        """
+        def versionDev = utils.upVersionDev(flow.getBranchType())
+        figlet versionDev
+        sh """
+            git commit -am 'Auto Update version to $versionDev'
+            """
+    }
+}
+
 def createBranch(String origin, String newBranch){
     print "ORIGEN BRANCH " + origin + " NEW BRANCH " + newBranch
     def utils = new Utils()
@@ -83,16 +102,13 @@ def createBranch(String origin, String newBranch){
         sh """
             pwd
             git fetch -p
-            git stash
             git checkout $origin
-            git stash
             git pull
-            git checkout -b $newBranch
             """
-        def version = utils.upVersionDev(flow.getBranchType())
-        figlet version
+            def versionRC = utils.upVersionRC()
+            figlet versionRC
         sh """
-            git commit -am 'Auto Update version to $version'
+            git commit -am 'Auto Update version $versionDev to $versionRC'
             git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git $newBranch
             git checkout $origin
             git pull

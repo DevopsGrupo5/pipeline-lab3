@@ -47,8 +47,12 @@ def call() {
 
                         println "PROBAMOS"
                         def brches = flow.getValidBranches()
-                        println "contains " + if (brches.contains(flow.getBranchType())) ? true : false
-                        println "in " + if (flow.getBranchType() in brches) ? true : false
+                        boolean bol1
+                        boolean bol2
+                        if (brches.contains(flow.getBranchType())) ? bol1 = true : bol1 = false
+                        if (flow.getBranchType() in brches) ? bol2 = true : bol2 = false
+                        println "contains $bol1"
+                        println "in $bol1" 
 
                         slackSend color: "warning", message: "[GRUPO_5][$env.JOB_NAME][$env.branchType][Started]"
 

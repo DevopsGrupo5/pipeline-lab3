@@ -57,7 +57,7 @@ def upVersionRC(String type) {
 }
 
 def upVersionDev(BranchTypeEnum type) {
-	def patternBranchDev = ~/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
+	def patternBranchDev = ~/^([a-z])*(-)*([a-z])*(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
 	def pom = readMavenPom file: 'pom.xml'
 	int upPatch = 0
 	int upMinor = 1
@@ -77,13 +77,6 @@ String generateRow(String text, int size = 60, padding = 1, separator = ' ') {
 	String content = "|${"".padLeft(padding, separator)}$text"
 	int currentSize = content.length()
 	return "${content.padRight(size-1, separator)}|"
-}
-
-String showTemplateCI() {
-	return """
-			continuous
-			integration	
-	"""
 }
 
 return this

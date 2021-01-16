@@ -49,8 +49,8 @@ def call() {
                         def brches = flow.getValidBranches()
                         boolean bol1
                         boolean bol2
-                        if (brches.contains(flow.getBranchType())) ? bol1 = true : bol1 = false
-                        if (flow.getBranchType() in brches) ? bol2 = true : bol2 = false
+                        if (brches.contains(flow.getBranchType())) {  bol1 = true } else { bol1 = false }
+                        if (flow.getBranchType() in brches) { bol2 = true } else { bol2 = false}
                         println "contains $bol1"
                         println "in $bol1" 
 

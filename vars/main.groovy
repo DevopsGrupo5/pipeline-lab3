@@ -36,8 +36,6 @@ def call() {
                             branchName = params.BRANCH_NAME
                         }
 
-                        
-
                         println 'Se ejecutara con la rama ' + branchName
 
                         def flow = new Flow(env.GIT_URL, branchName, params.BUILD_TOOL, params.STAGES_TO_RUN)
@@ -48,11 +46,8 @@ def call() {
                         println "PROBAMOS"
                         def brches = flow.getValidBranches()
                         boolean bol1
-                        boolean bol2
                         if (brches.contains(flow.getBranchType())) {  bol1 = true } else { bol1 = false }
-                        if (flow.getBranchType() in brches) { bol2 = true } else { bol2 = false}
                         println "contains $bol1"
-                        println "in $bol1" 
 
                         slackSend color: "warning", message: "[GRUPO_5][$env.JOB_NAME][$env.branchType][Started]"
 

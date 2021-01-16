@@ -3,10 +3,16 @@ package org.cl
 import com.cloudbees.groovy.cps.NonCPS
 
 class Flow {
-    BranchTypeEnum[] validBranches = [BranchTypeEnum.FEATURE, BranchTypeEnum.DEVELOP, BranchTypeEnum.RELEASE]
-    StepEnum[] stepsValidsForFeature = [StepEnum.COMPILE, StepEnum.UNIT_TEST, StepEnum.JAR, StepEnum.SONAR, StepEnum.NEXUS_UPLOAD]
-    StepEnum[] stepsValidsForDevelop = [StepEnum.COMPILE, StepEnum.UNIT_TEST, StepEnum.JAR, StepEnum.SONAR, StepEnum.NEXUS_UPLOAD, StepEnum.GIT_CREATE_RELEASE]
-    StepEnum[] stepsValidsForRelease = [StepEnum.GIT_DIFF, StepEnum.NEXUS_DOWNLOAD, StepEnum.RUN, StepEnum.TEST, StepEnum.GIT_MERGE_MASTER, StepEnum.GIT_MERGE_DEVELOP, StepEnum.GIT_TAG_MASTER]
+    BranchTypeEnum[] arrValidBranchesBranches = [BranchTypeEnum.FEATURE, BranchTypeEnum.DEVELOP, BranchTypeEnum.RELEASE]
+    StepEnum[] arrStepsValidsForFeature = [StepEnum.COMPILE, StepEnum.UNIT_TEST, StepEnum.JAR, StepEnum.SONAR, StepEnum.NEXUS_UPLOAD]
+    StepEnum[] arrStepsValidsForDevelop = [StepEnum.COMPILE, StepEnum.UNIT_TEST, StepEnum.JAR, StepEnum.SONAR, StepEnum.NEXUS_UPLOAD, StepEnum.GIT_CREATE_RELEASE]
+    StepEnum[] arrStepsValidsForRelease = [StepEnum.GIT_DIFF, StepEnum.NEXUS_DOWNLOAD, StepEnum.RUN, StepEnum.TEST, StepEnum.GIT_MERGE_MASTER, StepEnum.GIT_MERGE_DEVELOP, StepEnum.GIT_TAG_MASTER]
+    List<BranchTypeEnum> validBranches = Arrays.asList(arrBranches);
+    List<StepEnum> stepsValidsForFeature = Arrays.asList(arrStepsValidsForFeature);
+    List<StepEnum> stepsValidsForDevelop = Arrays.asList(arrStepsValidsForDevelop);
+    List<StepEnum> stepsValidsForRelease = Arrays.asList(arrStepsValidsForRelease);
+
+    
     def utils = new Utils()
     String branch
     BranchTypeEnum branchType;
@@ -47,10 +53,11 @@ class Flow {
         }
     }
 
-    Boolean isValidBranch() { (this.branchType in validBranches) ? true : false
+    Boolean isValidBranch() { 
+        //(this.branchType in validBranches) ? true : false
         
         // println BranchTypeEnum.FEATURE;
-        // return validBranches.contains(this.branchType)
+        return validBranches.contains(this.branchType)
     }
 
     Boolean isContinuousIntegration() { this.pipeline == PipelineEnum.CONTINUOUS_INTEGRATION }
@@ -106,17 +113,17 @@ class Flow {
             println "inside false canRunAllStages"
 
             if( this.branchType == BranchTypeEnum.FEATURE ) {
-                if (!(stage in stepsValidsForFeature)) {
+                if (!(stepsValidsForFeature.contains(stage))) {
                     runAllStages = false
                 } 
 
             } else if( this.branchType == BranchTypeEnum.DEVELOP ) {
-                if (!(stage in stepsValidsForDevelop)) {
+                if (!(stepsValidsForDevelop.contains(stage))) {
                     runAllStages = false 
                 } 
 
             } else if( this.branchType == BranchTypeEnum.RELEASE ) {
-                if (!(stage in stepsValidsForRelease)) {
+                if (!(stepsValidsForRelease.contains(stage))) {
                     runAllStages = false
                 } 
             }

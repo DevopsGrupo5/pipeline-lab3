@@ -8,7 +8,7 @@ def call(flow) {
         stage(StepEnum.GIT_DIFF.getNombre()) {
             env.FAILED_STAGE = StepEnum.GIT_DIFF
             sh """
-                gsit pull
+                git pull
                 git branch
                 git checkout release-v$cleanVersion
                 git diff origin/master

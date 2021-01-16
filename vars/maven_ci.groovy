@@ -85,6 +85,7 @@ def developBranch() {
             git fetch -p
             git stash
             git checkout develop
+            git pull
         """
         def versionDev = utils.upVersionDev(flow.getBranchType())
         figlet versionDev

@@ -14,7 +14,6 @@ def call() {
                 gitDiff, nexusDownload, run, test, gitMergeMaster, gitMergeDevelop, gitTagMaster] - separator: ";"
             ''')
             gitParameter(branch: '', branchFilter: 'origin/(.*)', defaultValue: '', selectedValue: 'NONE', name: 'BRANCH_NAME', type: 'PT_BRANCH')
-            booleanParam(defaultValue: false, description: 'Test Upgrade Version', name: 'ONLY_UPGRADE')
         }
 
         stages {
@@ -51,11 +50,10 @@ def call() {
                                 throw new Exception(env.ERROR_MESSAGE)
                             }
                         }
-                        if (params.ONLY_UPGRADE.toBoolean() || env.branchType == BranchTypeEnum.DEVELOP) {
+
+                        if (flow.getBranchType() == BranchTypeEnum.DEVELOP) {
                             upgrade_version.call(flow)
                         }
-
-
 
                         stage('Load Build Tool') {
                             def hasGradleConfiguration = fileExists './gradlew'

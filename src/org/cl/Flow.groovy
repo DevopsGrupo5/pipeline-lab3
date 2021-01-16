@@ -43,7 +43,7 @@ class Flow {
         }
     }
 
-    Boolean isValidBranch() { (this.type in validBranches) ? true : false
+    Boolean isValidBranch() { (this.branchType in validBranches) ? true : false
         
         // println BranchTypeEnum.FEATURE;
         // return validBranches.contains(this.branchType)

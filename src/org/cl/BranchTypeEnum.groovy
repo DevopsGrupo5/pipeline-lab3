@@ -15,13 +15,13 @@ enum BranchTypeEnum {
         this.branchType = branchType
     }
 
-    @NonCPS
-    static def getBranchTypeEnum(String tipoBranch){
-        return BranchTypeEnum.values().find{it.branchType.equals(tipoBranch.toLowerCase())}
+    // @NonCPS
+    static BranchTypeEnum getBranchTypeEnum(String type){
+        return BranchTypeEnum.values().find{it.branchType.equals(type)}
     }
 
-    @NonCPS
-    String getBranchType() {
-        return branchType
-    }
+    // @NonCPS
+    // String getBranchType() {
+    //     return branchType
+    // }
 }

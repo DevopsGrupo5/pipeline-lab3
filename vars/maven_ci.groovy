@@ -36,7 +36,7 @@ def call(flow) {
     if (flow.canRunStage(StepEnum.NEXUS_UPLOAD)) {
         stage(StepEnum.NEXUS_UPLOAD.getNombre()) {
             env.FAILED_STAGE = StepEnum.NEXUS_UPLOAD
-	        // nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'grupo-5', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: "/var/lib/jenkins/workspace/ms-iclab-test/build/DevOpsUsach2020-${version}.jar"]], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: version]]]
+	        nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'grupo-5', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: "build/DevOpsUsach2020-${version}.jar"]], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: version]]]
         }
     }
     if (flow.canRunStage(StepEnum.GIT_CREATE_RELEASE)) {

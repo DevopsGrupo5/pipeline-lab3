@@ -106,6 +106,7 @@ def createBranch(String origin, String newBranch){
             git fetch -p
             git checkout $origin
             git pull
+            git checkout -b $newBranch
             """
             def versionRC = utils.upVersionRC()
             figlet versionRC

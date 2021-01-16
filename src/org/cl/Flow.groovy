@@ -157,8 +157,8 @@ class Flow {
         ${utils.generateRow("Build Tool: ${this.buildTool}")}
         +----------------------------------------------------------+
         ${utils.generateRow("Repository: ${this.gitUrl}")}
-        ${utils.generateRow("Sonar: http://35.247.241.19:9000/dashboard?id=com.devopsusach2020%3ADevOpsUsach2020")}
-        ${utils.generateRow("Nexus: http://35.199.77.109:8081/repository/grupo-5/com/devopsusach2020/DevOpsUsach2020/${version}/DevOpsUsach2020-${version}.jar")}
+        | Sonar: http://35.247.241.19:9000/dashboard?id=com.devopsusach2020%3ADevOpsUsach2020
+        | Nexus: http://35.199.77.109:8081/repository/grupo-5/com/devopsusach2020/DevOpsUsach2020/${version}/DevOpsUsach2020-${version}.jar
         +----------------------------------------------------------+
         ${utils.generateRow("Team Group ${data_project.group}", 60, 23)}
         ${utils.generateRow("${data_project.git_user}", 60, 23)}

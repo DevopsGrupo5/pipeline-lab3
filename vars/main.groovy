@@ -41,12 +41,12 @@ def call() {
                         def flow = new Flow(env.GIT_URL, branchName, params.BUILD_TOOL, params.STAGES_TO_RUN)
                         def utils = new Utils()
 
-                        env.branchType = flow.getBranchType()
+                        env.branchType = flow.getBranchTypeToString()
 
                         println "PROBAMOS"
                         def brches = flow.getValidBranches()
                         boolean bol1
-                        if (brches.contains(BranchTypeEnum.FEATURE)) {  bol1 = true } else { bol1 = false }
+                        if (brches.contains(flow.)) {  bol1 = true } else { bol1 = false }
                         println "contains $bol1"
 
                         slackSend color: "warning", message: "[GRUPO_5][$env.JOB_NAME][$env.branchType][Started]"

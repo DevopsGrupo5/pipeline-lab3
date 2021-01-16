@@ -36,6 +36,7 @@ def call(flow) {
     if (flow.canRunStage(StepEnum.NEXUS_UPLOAD)) {
         stage(StepEnum.NEXUS_UPLOAD.getNombre()) {
             env.FAILED_STAGE = StepEnum.NEXUS_UPLOAD
+            def version = utils.getVersion()
 	        nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'grupo-5', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: "build/DevOpsUsach2020-${version}.jar"]], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: version]]]
         }
     }

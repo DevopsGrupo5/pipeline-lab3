@@ -32,7 +32,7 @@ def getVersion() {
 
 def getCleanVersion() {
 	def pom = readMavenPom file: 'pom.xml'
-	def version = pom.version.replace("alpha-v","").replace("rc-v","")
+	def version = pom.version.replace("alpha","").replace("rc","").replace("-","").replace("v","")
 	println "Current $pom.version"
 	println "Clean version $version"
 	return version

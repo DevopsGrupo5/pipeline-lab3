@@ -8,6 +8,7 @@ def call(flow) {
         figlet version
         withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
             sh """
+                git stash
                 git checkout develop
                 git stash
                 git pull

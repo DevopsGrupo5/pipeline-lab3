@@ -10,6 +10,7 @@ def call(flow) {
                 env.FAILED_STAGE = StepEnum.GIT_DIFF
   
                 sh """
+                    git fetch -p
                     git pull
                     git branch
                     git checkout release-v$cleanVersion
@@ -54,6 +55,7 @@ def call(flow) {
             stage(StepEnum.GIT_MERGE_MASTER.getNombre()) {
                 env.FAILED_STAGE = StepEnum.GIT_MERGE_MASTER
                 sh """
+                    git fetch -p
                     git pull origin master
                     git checkout master
                     git merge release-v$cleanVersion

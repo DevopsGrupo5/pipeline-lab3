@@ -87,7 +87,7 @@ def developBranch() {
             git checkout develop
             git pull
         """
-        def versionDev = utils.upVersionDev(flow.getBranchType())
+        def versionDev = utils.upVersionDev()
         figlet versionDev
         sh """
             git commit -am 'Auto Update version to $versionDev'

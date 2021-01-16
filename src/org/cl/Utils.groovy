@@ -49,7 +49,7 @@ def upVersionRC() {
 	return version
 }
 
-def upVersionDev(BranchTypeEnum type) {
+def upVersionDev() {
 	// def patternBranchDev = ~/^([a-z])*(-)*([a-z])*(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
 	def patternBranchDev = ~/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
 	int upPatch = 0

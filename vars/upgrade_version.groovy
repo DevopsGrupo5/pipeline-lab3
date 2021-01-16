@@ -15,9 +15,10 @@ def call(flow) {
             figlet version
             sh """
                 git commit -am 'Auto Update version to $version'
-                git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git develop
-                git status
+
             """
+            // git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git develop
+            // git status
         }
 
 

@@ -82,7 +82,9 @@ def createBranch(String origin, String newBranch){
         sh """
             pwd
             git fetch -p
+            git stash
             git checkout $origin
+            git stash
             git pull
             git checkout -b $newBranch
             """

@@ -58,16 +58,17 @@ def upVersionRC(String type) {
 
 def upVersionDev(BranchTypeEnum type) {
 	def patternBranchDev = ~/^([a-z])*(-)*([a-z])*(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
-	def pom = readMavenPom file: 'pom.xml'
+	def patternBranchDev = ~/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/
 	int upPatch = 0
 	int upMinor = 1
 	int upMajor = 0
-
-	def version = pom.version.replaceFirst(patternBranchDev) { 
+	def temp_version = getCleanVersion()
+	def version = temp_version.replaceFirst(patternBranchDev) { 
 		return "alpha-${(it[1] as int) + upMajor}.${(it[2] as int) + upMinor}.${(it[3] as int) + upPatch}"
 	}
 	println "Current version $pom.version"
 	println "New version $version"
+	def pom = readMavenPom file: 'pom.xml'
 	pom.version = version
 	writeMavenPom model: pom
 	return version

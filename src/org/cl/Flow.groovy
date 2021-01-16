@@ -47,7 +47,7 @@ class Flow {
         
         // println BranchTypeEnum.FEATURE;
         // return validBranches.contains(this.branchType)
-        }
+    }
 
     Boolean isContinuousIntegration() { this.pipeline == PipelineEnum.CONTINUOUS_INTEGRATION }
 

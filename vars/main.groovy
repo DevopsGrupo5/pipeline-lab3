@@ -36,12 +36,17 @@ def call() {
                             branchName = params.BRANCH_NAME
                         }
 
+                        
+
                         println 'Se ejecutara con la rama ' + branchName
 
                         def flow = new Flow(env.GIT_URL, branchName, params.BUILD_TOOL, params.STAGES_TO_RUN)
                         def utils = new Utils()
 
                         env.branchType = flow.getBranchType()
+
+                        println "PROBAMOS"
+                        flow.validBranches.contains(flow.getBranchType())
 
                         slackSend color: "warning", message: "[GRUPO_5][$env.JOB_NAME][$env.branchType][Started]"
 
@@ -80,14 +85,12 @@ def call() {
                                 """
                                 if ( flow.isContinuousIntegration() ) {
                                     figlet """
-        continuous
-        integration	
+        continuous_integration	
                                     """
                                     maven_ci.call(flow)
                                 } else if ( flow.isContinuousDelivery() && flow.isValidFormatRelease() ) {
                                     figlet """
-        continuous
-        delivery
+        continuous_delivery
                                     """
                                     maven_cd.call(flow)
                                 } else {

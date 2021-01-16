@@ -110,7 +110,7 @@ def createBranch(String origin, String newBranch){
             def versionRC = utils.upVersionRC()
             figlet versionRC
         sh """
-            git commit -am 'Auto Update version $versionDev to $versionRC'
+            git commit -am 'Auto Update version to $versionRC'
             git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git $newBranch
             git checkout $origin
             git pull

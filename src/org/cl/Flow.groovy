@@ -19,6 +19,10 @@ class Flow {
     String stagesSelected
     def stagesToRun = []
 
+    BranchTypeEnum[] getValidBranches () {
+        return validBranches
+    }
+
     Flow(String git_url, String branch_name, String build_tool, String stagesSelected = '') {
         println(git_url)
         this.repo = "ms-iclab" // utils.cleanRepo(git_url)

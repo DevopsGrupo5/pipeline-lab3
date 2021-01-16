@@ -7,12 +7,12 @@ def call(flow) {
     if (flow.canRunStage(StepEnum.GIT_DIFF)) {
         stage(StepEnum.GIT_DIFF.getNombre()) {
             env.FAILED_STAGE = StepEnum.GIT_DIFF
-            sh """
-                git pull
-                git branch
-                git checkout release-v$cleanVersion
-                git diff origin/master
-            """
+            // sh """
+            //     git pull
+            //     git branch
+            //     git checkout release-v$cleanVersion
+            //     git diff origin/master
+            // """
         }
     }
     if (flow.canRunStage(StepEnum.NEXUS_DOWNLOAD)) {

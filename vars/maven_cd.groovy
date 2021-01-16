@@ -39,12 +39,12 @@ def call(flow) {
 		    env.FAILED_STAGE = StepEnum.TEST
             println 'Esperando a que inicie el servidor'
             sleep(time: 10, unit: "SECONDS")
-            script {
-                final String url = "http://localhost:8082/rest/mscovid/test?msg=testing"
-                final String response = sh(script: "curl -X GET $url", returnStdout: true).trim()
+            // script {
+            //     final String url = "http://localhost:8082/rest/mscovid/test?msg=testing"
+            //     final String response = sh(script: "curl -X GET $url", returnStdout: true).trim()
 
-                echo response
-            }
+            //     echo response
+            // }
         }
     }
     if (flow.canRunStage(StepEnum.GIT_MERGE_MASTER)) {

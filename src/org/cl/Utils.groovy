@@ -66,9 +66,10 @@ def upVersionDev(BranchTypeEnum type) {
 	def version = temp_version.replaceFirst(patternBranchDev) { 
 		return "alpha-${(it[1] as int) + upMajor}.${(it[2] as int) + upMinor}.${(it[3] as int) + upPatch}"
 	}
+
+	def pom = readMavenPom file: 'pom.xml'
 	println "Current version $pom.version"
 	println "New version $version"
-	def pom = readMavenPom file: 'pom.xml'
 	pom.version = version
 	writeMavenPom model: pom
 	return version

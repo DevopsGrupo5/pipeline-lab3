@@ -60,7 +60,7 @@ def call(flow) {
                     git checkout master
                     git merge release-v$cleanVersion
                     git commit -am 'Merged release-v$cleanVersion to master'
-                    git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git master
+                    git push
                 """
             }
         }

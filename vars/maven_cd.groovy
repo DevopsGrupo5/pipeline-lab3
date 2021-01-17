@@ -56,6 +56,7 @@ def call(flow) {
                 env.FAILED_STAGE = StepEnum.GIT_MERGE_MASTER
                 sh """
                     git fetch --all
+                    git merge master
                     git checkout master
                     git merge release-v$cleanVersion
                     git commit -am 'Merged release-v$cleanVersion to master'

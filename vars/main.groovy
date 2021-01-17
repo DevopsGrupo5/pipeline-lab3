@@ -1,4 +1,5 @@
 import org.cl.*
+import hudson.model.Result
 
 def call() {
     pipeline {
@@ -51,9 +52,18 @@ def call() {
                             }
                         }
 
-                        // if (flow.getBranchType() == BranchTypeEnum.DEVELOP) {
-                        //     upgrade_version.call(flow)
-                        // }
+                        if (flow.getBranchType() == BranchTypeEnum.DEVELOP) {
+                            // upgrade_version.call(flow)
+
+                            sh "git checkout develop"
+                            def output = sh(script: "git show HEAD^0 --grep 'Auto Update version to'", returnStdout: true)
+                            if(output?.trim()){
+                                currentBuild.getRawBuild().getExecutor().interrupt(Result.SUCCESS)
+                                sleep(1)
+                            }
+                            
+
+                        }
 
                         stage('Load Build Tool') {
                             def hasGradleConfiguration = fileExists './gradlew'

@@ -61,7 +61,7 @@ def call() {
                             git pull
                             """
                             def output = sh(script: "git show HEAD^0 --grep 'Auto Update version to'", returnStdout: true)
-                            if(output?.trim()){
+                            if(!output?.trim()){
                                 currentBuild.getRawBuild().getExecutor().interrupt(Result.SUCCESS)
                                 sleep(1)
                             }

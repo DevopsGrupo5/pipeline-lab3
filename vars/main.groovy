@@ -55,7 +55,11 @@ def call() {
                         if (flow.getBranchType() == BranchTypeEnum.DEVELOP) {
                             // upgrade_version.call(flow)
 
-                            sh "git checkout develop"
+                            sh """
+                            git checkout develop
+                            git reset --hard origin/develop
+                            git pull
+                            """
                             def output = sh(script: "git show HEAD^0 --grep 'Auto Update version to'", returnStdout: true)
                             if(output?.trim()){
                                 currentBuild.getRawBuild().getExecutor().interrupt(Result.SUCCESS)

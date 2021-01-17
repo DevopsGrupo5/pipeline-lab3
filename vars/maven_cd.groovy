@@ -14,10 +14,10 @@ def call(flow) {
                     git fetch --all
                     git pull
                     git branch
-                    git checkout release-v$cleanVersion
                     git diff origin/master
-
                 """
+                    // git checkout release-v$cleanVersion
+
 
             }
         }

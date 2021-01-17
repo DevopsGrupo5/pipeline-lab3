@@ -10,13 +10,13 @@ def call(flow) {
                 env.FAILED_STAGE = StepEnum.GIT_DIFF
   
                 sh """
-                    git fetch -p
+                    git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+                    git fetch -all
                     git pull
                     git branch
                     git checkout release-v$cleanVersion
+                    git diff origin/master
                 """
-                //     git diff origin/master
-
             }
         }
         if (flow.canRunStage(StepEnum.NEXUS_DOWNLOAD)) {
@@ -53,7 +53,6 @@ def call(flow) {
             stage(StepEnum.GIT_MERGE_MASTER.getNombre()) {
                 env.FAILED_STAGE = StepEnum.GIT_MERGE_MASTER
                 sh """
-                    git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
                     git fetch --all
                     git checkout master
                     git merge release-v$cleanVersion

@@ -59,6 +59,8 @@ def call(flow) {
                     git checkout master
                     git pull
                     git checkout release-v$cleanVersion
+                    git merge master
+                    git checkout master
                     git merge release-v$cleanVersion
                     git commit -am 'Merged release-v$cleanVersion to master'
                     git push

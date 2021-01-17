@@ -42,7 +42,7 @@ def call(flow) {
             stage(StepEnum.TEST.getNombre()) {
                 env.FAILED_STAGE = StepEnum.TEST
                 println 'Esperando a que inicie el servidor'
-                sleep(time: 10, unit: "SECONDS")
+                sleep(time: 4, unit: "SECONDS")
                 script {
                     final String url = "http://localhost:8082/rest/mscovid/test?msg=testing"
                     final String response = sh(script: "curl -X GET $url", returnStdout: true).trim()
@@ -62,7 +62,7 @@ def call(flow) {
                     git merge master
                     git checkout master
                     git merge release-v$cleanVersion
-                    git push
+                    git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git master
                 """
             }
         }

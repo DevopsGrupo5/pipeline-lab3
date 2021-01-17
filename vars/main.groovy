@@ -54,7 +54,6 @@ def call() {
 
                         if (flow.getBranchType() == BranchTypeEnum.DEVELOP) {
                             // upgrade_version.call(flow)
-
                             sh """
                             git checkout develop
                             git reset --hard origin/develop
@@ -65,8 +64,6 @@ def call() {
                                 currentBuild.getRawBuild().getExecutor().interrupt(Result.SUCCESS)
                                 sleep(1)
                             }
-                            
-
                         }
 
                         stage('Load Build Tool') {

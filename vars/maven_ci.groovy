@@ -78,7 +78,7 @@ def deleteBranch(String branchName){
     print 'DELETE BRANCH ' + branchName
     withCredentials([usernamePassword(credentialsId: 'git-crendentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
         sh "git checkout develop"
-        sh "git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git --delete ${branchName}"
+        sh "git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab.git --delete ${branchName}"
 
     }
 }
@@ -118,7 +118,7 @@ def createBranch(String origin, String newBranch){
             figlet versionRC
         sh """
             git commit -am 'Auto Update version to $versionRC'
-            git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git $newBranch
+            git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab.git $newBranch
             git checkout $origin
             git pull
             git branch -D $newBranch

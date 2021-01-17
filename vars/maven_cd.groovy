@@ -63,7 +63,7 @@ def call(flow) {
                     git merge master
                     git checkout master
                     git merge release-v$cleanVersion
-                    git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git master
+                    git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab.git master
                 """
             }
         }
@@ -75,7 +75,7 @@ def call(flow) {
                     git reset --hard origin/develop
                     git pull
                     git merge master
-                    git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git develop
+                    git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab.git develop
                 """
             }
         }
@@ -85,7 +85,7 @@ def call(flow) {
                 sh """
                 git checkout master
                 git tag v$cleanVersion -m "Tag v$cleanVersion to master"
-                git push --tags https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git master
+                git push --tags https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab.git master
                 """
 
             }

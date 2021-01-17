@@ -73,16 +73,9 @@ def call(flow) {
                     git pull origin develop
                     git checkout develop
                     git pull
-                    git merge release-v$cleanVersion
+                    git merge master
+                    git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git develop
                 """
-                try {	
-                    sh "git commit -am 'Merged release-v$cleanVersion to develop'"
-                } catch(Exception ex) {
-                    println("git commit no registra cambios");
-                }
-                // sh """
-                // git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git develop
-                // """
             }
         }
         if (flow.canRunStage(StepEnum.GIT_TAG_MASTER)) {

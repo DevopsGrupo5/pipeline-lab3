@@ -15,7 +15,7 @@ def call(flow) {
                     git checkout release-v$cleanVersion
                     git pull
                     git branch
-                    git diff origin/master
+                    git diff origin/main
                 """
             }
         }
@@ -56,14 +56,14 @@ def call(flow) {
                 env.FAILED_STAGE = StepEnum.GIT_MERGE_MASTER
                 sh """
                     git fetch --all
-                    git checkout master
-                    git reset --hard origin/master
+                    git checkout main
+                    git reset --hard origin/main
                     git pull
                     git checkout release-v$cleanVersion
-                    git merge master
-                    git checkout master
+                    git merge main
+                    git checkout main
                     git merge release-v$cleanVersion
-                    git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab.git master
+                    git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab.git main
                 """
             }
         }
@@ -74,7 +74,7 @@ def call(flow) {
                     git checkout develop
                     git reset --hard origin/develop
                     git pull
-                    git merge master
+                    git merge main
                     git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab.git develop
                 """
             }
@@ -83,9 +83,9 @@ def call(flow) {
             stage(StepEnum.GIT_TAG_MASTER.getNombre()) {
                 env.FAILED_STAGE = StepEnum.GIT_TAG_MASTER
                 sh """
-                git checkout master
-                git tag v$cleanVersion -m "Tag v$cleanVersion to master"
-                git push --tags https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab.git master
+                git checkout main
+                git tag v$cleanVersion -m "Tag v$cleanVersion to main"
+                git push --tags https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab.git main
                 """
 
             }

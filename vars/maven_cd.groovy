@@ -58,7 +58,6 @@ def call(flow) {
                     git fetch --all
                     git checkout master
                     git merge release-v$cleanVersion
-                    git add .
                     git commit -am 'Merged release-v$cleanVersion to master'
                     git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git master
                 """
@@ -72,8 +71,6 @@ def call(flow) {
                     git checkout develop
                     git pull
                     git merge release-v$cleanVersion
-                    git add .
-        
                 """
                 try {	
                     sh "git commit -am 'Merged release-v$cleanVersion to develop'"

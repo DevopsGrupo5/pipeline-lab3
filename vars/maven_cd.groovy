@@ -57,7 +57,7 @@ def call(flow) {
                 sh """
                     git fetch --all
                     git checkout master
-                    git stash
+                    git reset --hard origin/master
                     git pull
                     git checkout release-v$cleanVersion
                     git merge master

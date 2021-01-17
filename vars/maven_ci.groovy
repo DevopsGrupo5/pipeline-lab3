@@ -46,6 +46,7 @@ def call(flow) {
             developBranch()
             def version = utils.getVersion()
             def cleanVersion = utils.getCleanVersion()
+	        nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'grupo-5', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: "build/DevOpsUsach2020-rc-v${cleanVersion}.jar"]], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: "rc-v$cleanVersion"]]]
             if(checkIfBranchExist("release-v$cleanVersion")){
                 deleteBranch("release-v$cleanVersion")
                 createBranch(flow.getBranch(), "release-v$cleanVersion")

@@ -23,8 +23,6 @@ def call(flow) {
             stage(StepEnum.NEXUS_DOWNLOAD.getNombre()) {
                 env.FAILED_STAGE = StepEnum.NEXUS_DOWNLOAD
                 sh "curl -X GET -u admin:123456 http://35.199.77.109:8081/repository/grupo-5/com/devopsusach2020/DevOpsUsach2020/$version/DevOpsUsach2020-${version}.jar -O"
-                // sh 'curl -X GET -u admin:123456 http://35.199.77.109:8081/repository/grupo-5/com/devopsusach2020/DevOpsUsach2020/0.0.1/DevOpsUsach2020-0.0.1.jar -O'
-                // sh 'ls -ltr'
             }
         }
         if (flow.canRunStage(StepEnum.RUN)) {
@@ -33,7 +31,7 @@ def call(flow) {
                 withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
                     sh 'java -version'
                     sh """
-                        JENKINS_NODE_COOKIE=dontKillMe nohup java -jar build/DevOpsUsach2020-${version}.jar&
+                        JENKINS_NODE_COOKIE=dontKillMe nohup java -jar DevOpsUsach2020-${version}.jar&
                     """
                 }
             }
@@ -43,12 +41,12 @@ def call(flow) {
                 env.FAILED_STAGE = StepEnum.TEST
                 println 'Esperando a que inicie el servidor'
                 sleep(time: 10, unit: "SECONDS")
-                // script {
-                //     final String url = "http://localhost:8082/rest/mscovid/test?msg=testing"
-                //     final String response = sh(script: "curl -X GET $url", returnStdout: true).trim()
+                script {
+                    final String url = "http://localhost:8082/rest/mscovid/test?msg=testing"
+                    final String response = sh(script: "curl -X GET $url", returnStdout: true).trim()
 
-                //     echo response
-                // }
+                    echo response
+                }
             }
         }
         if (flow.canRunStage(StepEnum.GIT_MERGE_MASTER)) {

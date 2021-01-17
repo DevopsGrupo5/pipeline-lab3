@@ -37,9 +37,10 @@ def call(flow) {
         stage(StepEnum.NEXUS_UPLOAD.getNombre()) {
             env.FAILED_STAGE = StepEnum.NEXUS_UPLOAD
             if (flow.branchType == BranchTypeEnum.DEVELOP) {
+                def oldVersion = utils.getVersion()
                 developBranch()
                 def cleanVersion = utils.getCleanVersion()
-	            nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'grupo-5', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: "build/DevOpsUsach2020-${version}.jar"]], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: "rc-v$cleanVersion"]]]
+	            nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'grupo-5', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: "build/DevOpsUsach2020-${oldVersion}.jar"]], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: "rc-v$cleanVersion"]]]
             } else {
                 def version = utils.getVersion()
 	            nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'grupo-5', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: "build/DevOpsUsach2020-${version}.jar"]], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: version]]]

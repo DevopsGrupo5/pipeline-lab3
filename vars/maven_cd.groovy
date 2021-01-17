@@ -69,13 +69,13 @@ def call(flow) {
         if (flow.canRunStage(StepEnum.GIT_MERGE_DEVELOP)) {
             stage(StepEnum.GIT_MERGE_DEVELOP.getNombre()) {
                 env.FAILED_STAGE = StepEnum.GIT_MERGE_DEVELOP
-                sh """
-                    git pull origin develop
-                    git checkout develop
-                    git pull
-                    git merge master
-                    git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git develop
-                """
+                // sh """
+                //     git pull origin develop
+                //     git checkout develop
+                //     git pull
+                //     git merge master
+                //     git push https://$USERNAME:$PASSWORD@github.com/DevopsGrupo5/ms-iclab-test.git develop
+                // """
             }
         }
         if (flow.canRunStage(StepEnum.GIT_TAG_MASTER)) {

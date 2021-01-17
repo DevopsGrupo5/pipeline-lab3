@@ -36,17 +36,21 @@ def call(flow) {
     if (flow.canRunStage(StepEnum.NEXUS_UPLOAD)) {
         stage(StepEnum.NEXUS_UPLOAD.getNombre()) {
             env.FAILED_STAGE = StepEnum.NEXUS_UPLOAD
-            def version = utils.getVersion()
-	        nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'grupo-5', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: "build/DevOpsUsach2020-${version}.jar"]], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: version]]]
+            if (flow.branchType == BranchTypeEnum.DEVELOP) {
+                developBranch()
+                def cleanVersion = utils.getCleanVersion()
+	            nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'grupo-5', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: "build/DevOpsUsach2020-${version}.jar"]], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: "rc-v$cleanVersion"]]]
+            } else {
+                def version = utils.getVersion()
+	            nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'grupo-5', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: "build/DevOpsUsach2020-${version}.jar"]], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: version]]]
+
+            }
         }
     }
     if (flow.canRunStage(StepEnum.GIT_CREATE_RELEASE)) {
         stage(StepEnum.GIT_CREATE_RELEASE.getNombre()) {
 		    env.FAILED_STAGE = StepEnum.GIT_CREATE_RELEASE
-            developBranch()
-            def version = utils.getVersion()
             def cleanVersion = utils.getCleanVersion()
-	        nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'grupo-5', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: "build/DevOpsUsach2020-rc-v${cleanVersion}.jar"]], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: "rc-v$cleanVersion"]]]
             if(checkIfBranchExist("release-v$cleanVersion")){
                 deleteBranch("release-v$cleanVersion")
                 createBranch(flow.getBranch(), "release-v$cleanVersion")

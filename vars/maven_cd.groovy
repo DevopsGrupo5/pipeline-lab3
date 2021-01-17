@@ -11,12 +11,14 @@ def call(flow) {
   
                 sh """
                     git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
-                    git fetch -all
+                    git fetch --all
                     git pull
                     git branch
                     git checkout release-v$cleanVersion
                     git diff origin/master
+
                 """
+
             }
         }
         if (flow.canRunStage(StepEnum.NEXUS_DOWNLOAD)) {
